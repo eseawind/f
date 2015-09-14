@@ -23,7 +23,9 @@ public class AreaController {
 
 	@RequestMapping("list.htm")
 	@ResponseBody
-	public ResBo<?> selAreas(@RequestParam("pid")int pid){
+	public ResBo<?> selAreas(@RequestParam(value="pid",defaultValue="0")int pid){
 		return new ResBo<List<Area>>(areaSer.selAreaByPID(pid));
 	}
+	
+	
 }
