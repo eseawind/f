@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f.dao.ext.KeyMapperExt" >
+  
+  <update id="updateKey" parameterType="map">
+  	update prikey set key = key + #{skip,jdbcType=BIGINT} and tname = #{table,jdbcType=VARCHAR}
+  </update>
+  
+  <insert id="insertKey" parameterType="string">
+  	insert prikey (tname) values (#{value,jdbcType=VARCHAR});
+  </insert>
+  
+  <select id="selKey" parameterType="string" resultType="long">
+  	select key from prikey where tname = #{value,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

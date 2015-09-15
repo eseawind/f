@@ -23,6 +23,10 @@
       <groupId>f</groupId>
       <artifactId>dao</artifactId>
     </dependency>
+    <dependency>
+      <groupId>f</groupId>
+      <artifactId>commons</artifactId>
+    </dependency>
   </dependencies>
   <build>
 	<resources>
