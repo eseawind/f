@@ -21,8 +21,28 @@
       <groupId>f</groupId>
       <artifactId>services</artifactId>
     </dependency>
+	<dependency>
+		<groupId>javax.servlet.jsp.jstl</groupId>
+		<artifactId>jstl-api</artifactId>
+		<version>1.2</version>
+		<exclusions>
+			<exclusion>
+				<artifactId>servlet-api</artifactId>
+				<groupId>javax.servlet</groupId>
+			</exclusion>
+			<exclusion>
+				<artifactId>jsp-api</artifactId>
+				<groupId>javax.servlet.jsp</groupId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
   </dependencies>
-  
   <build>
     <finalName>web</finalName>
   </build>
