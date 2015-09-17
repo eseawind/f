@@ -110,7 +110,32 @@
 	      badBrazilTelephoneAnswer: '输入的电话号码不正确',
 	      badBrazilCEPAnswer: '',
 	      badBrazilCPFAnswer: ''
-	    }
+	    };
+	
+	$.fn.carouselBuilder = function(arr){
+		if($.isArray(arr) && arr.length > 0){
+			var container = this;
+			container.addClass("carousel");
+			container.addClass("slide");
+			var imgContainer = $('<div class="carousel-inner">');
+			var liContainer = $('<ul class="f-carousel-btn">');
+			$.each(arr,function(i,obj){
+				if(obj instanceof $){
+					if(i == 0){
+						imgContainer.append($('<div class="active item" f-id="'+i+'">').append(obj));
+					}else{
+						imgContainer.append($('<div class="item" f-id="'+i+'">').append(obj));
+					}
+					liContainer.append($('<li f-id="'+i+'">●</li>').click(function(){
+						container.find(".item").removeClass("active");
+						container.find(".item[f-id="+$(this).attr("f-id")+"]").addClass("active");
+					}));
+				}
+			});
+			container.append(imgContainer);
+			container.append(liContainer);
+		}
+	}
 	
 	//自定义页面加载完成事件
 	$(function(){

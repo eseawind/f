@@ -1,9 +1,107 @@
 @CHARSET "UTF-8";
+
 body {
 	
 }
-.f-width50{
-	width:50%;
-	min-width:50%;
-	max-width:50%;
+
+.f-width50 {
+	width: 50%;
+	min-width: 50%;
+	max-width: 50%;
+}
+
+.carousel .f-carousel-btn {
+	position: relative;
+	left: 0px;
+	bottom: 30px;
+	color: #fff;
+	padding: 0px;
+	text-align: center;
+}
+
+.carousel .f-carousel-btn li {
+	display: inline;
+	padding-left: 5px;
+	list-style-type: outside none none;
+	cursor: pointer;
+}
+
+.f-goods-container {
+	max-width: 240px;
+	width: 240px;
+	float: left;
+	border: 1px solid #FFF;
+}
+
+.f-goods-container:hover {
+	border: 1px solid #DDD;
+}
+
+.f-goods-container .f-goods-block {
+	max-width: 220px;
+	width: 220px;
+	min-height: 386px;
+	height: 386px;
+	font: 12px/150% Arial, Verdana, "宋体";
+	font-weight: 400;
+	font-family: Verdana;
+	line-height: 22px;
+	padding: 38px 9px 10px 9px;
+}
+
+.f-goods-container .f-goods-block img {
+	width: 220px;
+	height: 220px;
+}
+
+.f-goods-container .f-goods-block ul {
+	padding: 0px;
+}
+
+.f-goods-container .f-goods-block li {
+	display: block;
+	list-style-type: outside none none;
+}
+
+.f-goods-container .f-goods-block .gprice {
+	color: red;
+	font-size: 20px
+}
+
+.f-goods-container .f-goods-block .gname {
+	min-height: 50px;
+	height: 50px;
+	color: red;
+	max-height: 50px;
+	overflow: hidden;
+	text-overflow: clip;
+}
+
+.f-goods-container .f-goods-block .goper button:hover {
+	border: 1px solid red;
+}
+
+@media (max-width: 600px){
+	.f-goods-container {
+		max-width:100%;
+		width: 100%;
+		min-width: 100%;
+	}
+	.f-goods-container .f-goods-block {
+		max-width: 100%;
+		width: 100%;
+		min-height: 386px;
+		height: 386px;
+	}
+	.f-goods-container .f-goods-block img {
+		width: 110px;
+		height: 110px;
+	}
+	.f-goods-container .f-goods-block .f-goods-img{
+		display: inline;
+		float: left;
+	}
+	.f-goods-container .f-goods-block li {
+		width: 300px;
+	}
 }
