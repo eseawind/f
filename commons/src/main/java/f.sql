@@ -1,17 +1,19 @@
 /*
-SQLyog Ultimate v11.24 (32 bit)
-MySQL - 5.5.20-log : Database - eb
+SQLyog Ultimate v11.33 (64 bit)
+MySQL - 5.6.15-log : Database - f
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+USE `f`;
+
 /*Table structure for table `area` */
 
 DROP TABLE IF EXISTS `area`;
@@ -56,6 +58,7 @@ CREATE TABLE `brand` (
   `name` varchar(20) NOT NULL COMMENT '品牌名称',
   `url` varchar(254) DEFAULT NULL COMMENT 'url',
   `isUse` int(11) NOT NULL DEFAULT '1' COMMENT '1使用0不使用',
+  `merchantId` bigint(20) NOT NULL COMMENT '商家id',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌表';
@@ -91,6 +94,7 @@ CREATE TABLE `cgoods` (
   `mprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '市场价',
   `aprice` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '活动价',
   `state` int(11) NOT NULL DEFAULT '1' COMMENT '状态1上架2下架127不可见',
+  `isDef` int(11) NOT NULL DEFAULT '1' COMMENT '1默认',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   `modifytime` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -153,7 +157,6 @@ CREATE TABLE `goods` (
   `gname` varchar(50) NOT NULL COMMENT '商品名称',
   `remark` varchar(254) DEFAULT NULL COMMENT '描述',
   `place` varchar(100) DEFAULT NULL COMMENT '产地',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT '0不可见1上架2下架',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   `modifytime` datetime DEFAULT NULL COMMENT '修改时间',
   `merchantId` bigint(20) NOT NULL COMMENT '商家id',
@@ -295,6 +298,18 @@ CREATE TABLE `orders` (
 
 /*Data for the table `orders` */
 
+/*Table structure for table `prikey` */
+
+DROP TABLE IF EXISTS `prikey`;
+
+CREATE TABLE `prikey` (
+  `tname` varchar(20) NOT NULL COMMENT '主键',
+  `key` bigint(20) NOT NULL DEFAULT '1' COMMENT '主键序列',
+  PRIMARY KEY (`tname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `prikey` */
+
 /*Table structure for table `uaddress` */
 
 DROP TABLE IF EXISTS `uaddress`;
@@ -313,20 +328,6 @@ CREATE TABLE `uaddress` (
 
 /*Data for the table `uaddress` */
 
-/*Table structure for table `userinfo` */
-
-DROP TABLE IF EXISTS `userinfo`;
-
-CREATE TABLE `userinfo` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `userId` bigint(20) NOT NULL COMMENT '前台用户id',
-  `balance` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '余额',
-  `payPassword` varchar(32) DEFAULT NULL COMMENT '支付密码',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `userinfo` */
-
 /*Table structure for table `users` */
 
 DROP TABLE IF EXISTS `users`;
@@ -335,8 +336,9 @@ CREATE TABLE `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `password` varchar(50) NOT NULL COMMENT '密码',
-  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '1前台用户2后台用户3商家',
+  `mobile` varchar(20) NOT NULL COMMENT '手机号',
+  `balance` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '余额',
+  `grade` int(11) NOT NULL DEFAULT '1' COMMENT '1普通',
   `isDel` int(11) NOT NULL DEFAULT '1' COMMENT '删除1正常127删除',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   `modifytime` datetime DEFAULT NULL COMMENT '修改时间',
@@ -345,9 +347,8 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`username`,`password`,`mobile`,`type`,`isDel`,`createtime`,`modifytime`) values (1,'fmm','45b5b81c8e2420a7aac2ff1c475711f6','13399990000',1,1,'2015-05-14 22:25:23',NULL),(2,'fmm123','45b5b81c8e2420a7aac2ff1c475711f6','13435161289',1,1,'2015-05-16 21:25:31',NULL),(3,'fmm456','45b5b81c8e2420a7aac2ff1c475711f6','13415788765',1,1,'2015-05-16 21:27:10',NULL),(4,'guohui','81dc9bdb52d04dc20036dbd8313ed055','13311543395',1,1,'2015-05-16 21:37:08',NULL);
+insert  into `users`(`id`,`username`,`password`,`mobile`,`balance`,`grade`,`isDel`,`createtime`,`modifytime`) values (1,'fmm','45b5b81c8e2420a7aac2ff1c475711f6','13399990000','0.00',1,1,'2015-05-14 22:25:23',NULL),(2,'fmm123','45b5b81c8e2420a7aac2ff1c475711f6','13435161289','0.00',1,1,'2015-05-16 21:25:31',NULL),(3,'fmm456','45b5b81c8e2420a7aac2ff1c475711f6','13415788765','0.00',1,1,'2015-05-16 21:27:10',NULL),(4,'guohui','81dc9bdb52d04dc20036dbd8313ed055','13311543395','0.00',1,1,'2015-05-16 21:37:08',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
