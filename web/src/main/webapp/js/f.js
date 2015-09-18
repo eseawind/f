@@ -16,6 +16,9 @@
 			}catch(e){
 			}
 			return data;
+		},
+		error:function(XmlHttpReq, textStatus, errorThrow){
+			f.alertError(textStatus);
 		}
 	});
 	
@@ -51,7 +54,7 @@
 	        }           
 	    }           
 	    return fmt;           
-	}
+	};
 	
 	$.fn.serializeObj = function(){
 		  var param = {};
@@ -59,14 +62,14 @@
 			  param[obj.name] = obj.value;
 		  });
 		  return param;
-	  }
+	  };
 	
 	//自定义
 	var f = window.f = {};
 	f.staUrl = "http://app.365020.com";
 	f.imgUrl = function(){
 		return f.staUrl;
-	}
+	};
 	f.dynUrl = f.staUrl;
 	f.goodsContainerTmpl = '<div class="f-goods-container">' +
 								'<div class="f-goods-block" f-id="${cgid}">' + 
@@ -84,9 +87,11 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
+	
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
-	}
+	};
+	f.colors = ['red','orange','yellow','green','cyan','blue','purple'];
 	$.formUtils.LANG = {
 	      errorTitle: '表单提交失败!',
 	      requiredFields: '你没有回答所必须的字段',
@@ -155,20 +160,28 @@
 			container.append(imgContainer);
 			container.append(liContainer);
 		}
-	}
+	};
 	
 	$.fn.goodsContainerBuilder = function(obj){
 		if($.isPlainObject(obj)){
 			$.tmpl(f.goodsContainerTmpl,obj).appendTo(this);
 		}
-	}
+	};
 	
 	//自定义页面加载完成事件
 	$(function(){
+		
 		$.fn.alertError = function(message){
 			var alertError = $('<div class="alert alert-danger" role="alert">'+message+'</div>');
 			$(this).append(alertError);
-			setTimeout(function(){alertError.remove()},2000);
-		}
-	})
+			setTimeout(function(){alertError.remove();},2000);
+		};
+		$(".f-label-fluid").each(function(){
+			var obj = $(this);
+			var length = obj.text().length;
+			var width = obj.innerWidth();
+			obj.width(width + width/2);
+			obj.css("color",f.colors[(length%f.colors.length)]);
+		});
+	});
 })(jQuery);
