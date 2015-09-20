@@ -71,7 +71,8 @@
 		return f.staUrl;
 	};
 	f.dynUrl = f.staUrl;
-	f.goodsContainerTmpl = '<div class="f-goods-container">' +
+	f.tmpl = {};
+	f.tmpl.goodsContainer = '<div class="f-goods-container">' +
 								'<div class="f-goods-block" f-id="${cgid}">' + 
 									'<div class="f-goods-img">' + 
 										'<img alt="" src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />' + 
@@ -87,11 +88,63 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
+	f.tmpl.modal = '<div class="modal">' 
+					  + '<div class="modal-dialog">'
+					  + '  <div class="modal-content">'
+					  + '    <div class="modal-body">'
+					  + '      <div class="alert alert-warning" role="alert">${content}</div>'
+					  + '    </div>'
+					  + '    <div class="modal-footer">'
+					  + '      <button type="button" class="btn btn-default" data-dismiss="modal" f-oper="close">取消</button>'
+					  + '      <button type="button" class="btn btn-primary" f-oper="ok">确认</button>'
+					  + '    </div>'
+					  + '  </div>'
+					  + ' </div>'
+					  + '</div>';
 	
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
 	};
 	f.colors = ['red','orange','yellow','green','cyan','blue','purple'];
+	f.dialogAlert = function(message){
+		var modal = $.tmpl(f.tmpl.modal,{content:message});
+		modal.find("[f-oper=close]").click(function(){
+			modal.modal("hide");
+			modal.remove();
+		});
+		modal.find("[f-oper=ok]").hide();
+		modal.modal("show");
+	};
+	f.dialogConfirm = function(message,fun){
+		var modal = $.tmpl(f.tmpl.modal,{content:message});
+		modal.find("[f-oper=close]").click(function(){
+			modal.modal("hide");
+			modal.remove();
+			fun&&fun.call(null,false);
+		});
+		modal.find("[f-oper=ok]").click(function(){
+			modal.modal("hide");
+			modal.remove();
+			fun&&fun.call(null,true);
+		}).show();
+		modal.modal("show");
+	};
+	f.backTopBtn = function(){
+		var btn = $('<i class="icon-circle-arrow-up icon-3x" style="position:fixed;bottom:50px;right:10px"><i>').click(function(){
+			$(window).scrollTop(0);
+		}).appendTo("body").hide();
+		var state = false;
+		$(window).scroll(function(){
+			var top = $(window).scrollTop();
+			if(top > 200&&!state){
+				state = true;
+				btn.show();
+			}else if(top < 200&&state){
+				state = false;
+				btn.hide();
+			}
+		});
+	};
 	$.formUtils.LANG = {
 	      errorTitle: '表单提交失败!',
 	      requiredFields: '你没有回答所必须的字段',
@@ -164,18 +217,32 @@
 	
 	$.fn.goodsContainerBuilder = function(obj){
 		if($.isPlainObject(obj)){
-			$.tmpl(f.goodsContainerTmpl,obj).appendTo(this);
+			$.tmpl(f.tmpl.goodsContainer,obj).appendTo(this);
 		}
+	};
+	
+	$.fn.showTip = function(message){
+		var obj = this;
+		obj.popover({
+			placement: arguments[2] || "auto top",
+			trigger: "manual",
+			content: message
+		});
+		obj.popover("show");
+		if(!arguments[1]){
+			setTimeout(function(){
+				obj.popover("destroy");
+			},2000);
+		}
+	};
+	$.fn.alertError = function(message){
+		var alertError = $('<div class="alert alert-danger" role="alert">'+message+'</div>');
+		$(this).append(alertError);
+		setTimeout(function(){alertError.remove();},2000);
 	};
 	
 	//自定义页面加载完成事件
 	$(function(){
-		
-		$.fn.alertError = function(message){
-			var alertError = $('<div class="alert alert-danger" role="alert">'+message+'</div>');
-			$(this).append(alertError);
-			setTimeout(function(){alertError.remove();},2000);
-		};
 		$(".f-label-fluid").each(function(){
 			var obj = $(this);
 			var length = obj.text().length;
