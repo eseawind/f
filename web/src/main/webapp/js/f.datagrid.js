@@ -33,7 +33,7 @@
 						var left = $('<div class="col-md-8 col-sm-8 col-xs-8 text-left"></div>');
 						var right = $('<div class="col-md-4 col-sm-4 col-xs-4 text-right"></div>');
 						var flush = $('<button class="btn btn-default btn-lg"><i class="icon-refresh"></i></button>');
-						var list = $('<select class="form-control" style="width:65px;max-width:65px;display:inline"></select>');
+						var list = $('<select class="form-control" style="width:85px;max-width:85px;display:inline"></select>');
 						$.each(config.rowList,function(i,row){
 							list.append('<option value="'+row+'">'+row+'</option>');
 						});
@@ -76,6 +76,7 @@
 			},conf);
 			var target = this;
 			target.addClass("table-responsive");
+			target.addClass("container-fluid");
 			target.css("min-width",768);
 			var table = $('<table class="table table-bordered"></table>')
 			var head = $('<thead></thead>');
