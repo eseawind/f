@@ -113,7 +113,7 @@
 			if(config.page == pageCount(config)){
 				eNum = config.datas.count;
 			}else{
-				eNum = sNum+config.rows-1;
+				eNum = sNum - 1 + config.rows;
 			}
 			config.pagiinfo.text(sNum+"-"+eNum+":"+config.datas.count);
 		}
@@ -122,9 +122,6 @@
 		var sel = $('<select style="display:inline;float:left;padding:3.5px;border:1px solid #ccc;"></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
-		});
-		sel.change(function(){
-			config.rows = $(this).val();
 		});
 		var txt = $('<input value="1" style="width:66px;display:inline;float:left;padding:4.5px;border:1px solid #ccc;"/>');
 		txt.blur(function(){
@@ -144,6 +141,12 @@
 		var flush = $('<li><span><i class="icon-refresh"></i></span></li>');
 		flush.click(function(){
 			dataBuilder(config);
+		});
+		sel.change(function(){
+			config.rows = parseInt($(this).val());
+			config.page = 1;
+			txt.val(config.page);
+			flush.click();
 		});
 		var pre = $('<li><span><i class="icon-caret-left"></i></span></li>');
 		pre.click(function(){
