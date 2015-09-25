@@ -21,6 +21,9 @@
 	};
 	function headBuilder(thead,config){
 		var tr = $('<tr></tr>');
+		if(config.rownumber){
+			tr.append('<td style="background-color: #e6e6e6;width:14px" f-head="rownumber"></td>');
+		}
 		if(config.check){
 			var td = $('<td style="width:23px"></td>');
 			var cbox = $('<input type="checkbox"/>');
@@ -37,14 +40,41 @@
 		}
 		$.each(config.columns,function(i,column){
 			var td = $('<td></td>');
+			var span = $('<span style="cursor:e-resize;float:left">&nbsp;</span>');
+			var state = false;
+			var x = 0;
+			span.mousedown(function(e){
+				x = e.pageX;
+				state = true;
+			});
+			thead.mouseup(function(){
+				state = false;
+			});
+			thead.mouseleave(function(){
+				state = false;
+			});
+			thead.mousemove(function(e){
+				if(state){
+					var width = td.width();
+					var range = e.pageX-x;
+					x = e.pageX;
+					if(range < width - 20){
+						td.width(width - range);
+					}
+				}
+			});
+			td.append(span);
 			config.fitColumn&&column.width&&td.css('width',column.width);
-			td.append(wrapContent(column.title,column))
+			td.append(wrapContent(column.title,column));
 			tr.append(td);
 		});
 		thead.append(tr);
 	}
 	function rowBuilder(rowIndex,data,tr,config){
 		tr.css("cursor","pointer");
+		if(config.rownumber){
+			tr.append('<td style="background-color: #e6e6e6;font-size:14px">'+(rowIndex+(config.page-1)*config.rows+1)+'</td>');
+		}
 		if(config.check){
 			tr.append('<td><input type="checkbox" f-id="'+rowIndex+'"/></td>');
 		}
@@ -59,6 +89,10 @@
 		});
 	}
 	function bodyBuilder(config){
+		if(config.rownumber){
+			var width = (""+config.page*config.rows).length*14;
+			config.target.find('thead tr td[f-head="rownumber"]').css("width",width);
+		}
 		config.body.empty();
 		$.each(config.datas.rows,function(i,data){
 			var tr = $('<tr f-id="'+i+'"></tr>');
@@ -85,18 +119,17 @@
 		}
 	}
 	function pagiBuilder(config){
-		var sel = $('<select></select>');
+		var sel = $('<select style="display:inline;float:left;padding:3.5px;border:1px solid #ccc;"></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
 		sel.change(function(){
 			config.rows = $(this).val();
 		});
-		var txt = $('<input value="1"/>');
+		var txt = $('<input value="1" style="width:66px;display:inline;float:left;padding:4.5px;border:1px solid #ccc;"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
-				console.log(page);
 				if(page>0&&page<pageCount(config)){
 					config.page = page;
 					txt.val(page);
@@ -108,11 +141,11 @@
 				txt.val(config.page);
 			}
 		});
-		var flush = $('<li><a href="#"><i class="icon-refresh"></i></a></li>');
+		var flush = $('<li><span><i class="icon-refresh"></i></span></li>');
 		flush.click(function(){
 			dataBuilder(config);
 		});
-		var pre = $('<li><a href="#"><i class="icon-caret-left"></i></a></li>');
+		var pre = $('<li><span><i class="icon-caret-left"></i></span></li>');
 		pre.click(function(){
 			if(config.page > 1){
 				config.page--;
@@ -120,7 +153,7 @@
 				flush.click();
 			}
 		});
-		var next = $('<li><a href="#"><i class="icon-caret-right"></i></a></li>');
+		var next = $('<li><span><i class="icon-caret-right"></i></span></li>');
 		next.click(function(){
 			if(config.page < pageCount(config)){
 				config.page++;
@@ -128,12 +161,12 @@
 				flush.click();
 			}
 		});
-		var btnDiv = $('<li class="previous"></li>');
-		var pagiinfo = $('<li class="next"></li>');
-		var pagiDiv = $('<nav><ul class="pager"></ul></nav>');
-		btnDiv.append(sel);
+		var btnDiv = $('<ul class="pagination  col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
+		var pagiinfo = $('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;padding:5px"><li><span></span></li></ul>');
+		var pagiDiv = $('<nav style="min-width:520px"></nav>');
+		btnDiv.append($('<span></span>').append(sel));
 		btnDiv.append(pre);
-		btnDiv.append(txt);
+		btnDiv.append($('<span></span>').append(txt));
 		btnDiv.append(next);
 		btnDiv.append(flush);
 		pagiDiv.append(btnDiv);
@@ -222,5 +255,5 @@
 			datagridBuilder(config);
 		}
 		this.data("config",config);
-	}
+	};
 })(jQuery);

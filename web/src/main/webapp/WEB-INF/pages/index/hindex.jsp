@@ -15,8 +15,7 @@ $(function(){
 		fitColumn:true,
 		columns:[{
 			field:"type",
-			title:"类型",
-			width:30
+			title:"类型"
 		},{
 			field:"name",
 			title:"名称",
@@ -27,12 +26,12 @@ $(function(){
 			width:200
 		},{
 			field:"ids",
-			title:"序号",
+			title:"序",
 			showTip:true
 		}],
 		check:true,
-		fontSize:10,
-		pagination:true
+		pagination:true,
+		rownumber:true
 	});
 })
 </script>
