@@ -4,8 +4,28 @@
 <html>
 <head>
 <%@ include file="../commons/mcommons.jsp" %>
+<script src="${staUrl }/js/f.dg.js" type="text/javascript"></script>
 </head>
 <body>
-
+<div id="dg" class="container"></div>
+<script type="text/javascript">
+$(function(){
+	$("#dg").f_dg({
+		url:"${staUrl}/mid_autumn.json",
+		columns:[{
+			field:"type",
+			title:"类型"
+		},{
+			field:"name",
+			title:"名称"
+		},{
+			field:"ids",
+			title:"序号"
+		}],
+		check:true,
+		pagination:true
+	});
+})
+</script>
 </body>
 </html>
