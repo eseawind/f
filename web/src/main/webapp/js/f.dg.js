@@ -85,14 +85,14 @@
 		}
 	}
 	function pagiBuilder(config){
-		var sel = $('<select class="form-control" style="min-width:66px;width:66px;display:inline"></select>');
+		var sel = $('<select></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
 		sel.change(function(){
 			config.rows = $(this).val();
 		});
-		var txt = $('<input class="form-control" style="min-width:66px;width:66px;display:inline" value="1"/>');
+		var txt = $('<input value="1"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
@@ -108,11 +108,11 @@
 				txt.val(config.page);
 			}
 		});
-		var flush = $('<button class="btn btn-default btn-lg" style="padding-top:7px;padding-bottom:7px"><i class="icon-refresh"></i></button>');
+		var flush = $('<li><a href="#"><i class="icon-refresh"></i></a></li>');
 		flush.click(function(){
 			dataBuilder(config);
 		});
-		var pre = $('<button class="btn btn-default btn-lg" style="padding-top:7px;padding-bottom:7px"><i class="icon-caret-left"></i></button>');
+		var pre = $('<li><a href="#"><i class="icon-caret-left"></i></a></li>');
 		pre.click(function(){
 			if(config.page > 1){
 				config.page--;
@@ -120,7 +120,7 @@
 				flush.click();
 			}
 		});
-		var next = $('<button class="btn btn-default btn-lg" style="padding-top:7px;padding-bottom:7px"><i class="icon-caret-right"></i></button>');
+		var next = $('<li><a href="#"><i class="icon-caret-right"></i></a></li>');
 		next.click(function(){
 			if(config.page < pageCount(config)){
 				config.page++;
@@ -128,10 +128,14 @@
 				flush.click();
 			}
 		});
-		var btnDiv = $('<div class="text-left col-md-6 col-sm-6" style="min-width:320px"></div>');
-		var pagiinfo = $('<div class="text-right col-md-6 col-sm-6"></div>');
-		var pagiDiv = $('<div class="row"></div>');
-		btnDiv.append(sel).append(pre).append(txt).append(next).append(flush);
+		var btnDiv = $('<li class="previous"></li>');
+		var pagiinfo = $('<li class="next"></li>');
+		var pagiDiv = $('<nav><ul class="pager"></ul></nav>');
+		btnDiv.append(sel);
+		btnDiv.append(pre);
+		btnDiv.append(txt);
+		btnDiv.append(next);
+		btnDiv.append(flush);
 		pagiDiv.append(btnDiv);
 		pagiDiv.append(pagiinfo);
 		config.target.append(pagiDiv);
