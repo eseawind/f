@@ -12,17 +12,26 @@
 $(function(){
 	$("#dg").f_dg({
 		url:"${staUrl}/mid_autumn.json",
+		fitColumn:true,
 		columns:[{
 			field:"type",
-			title:"类型"
+			title:"类型",
+			width:30
 		},{
 			field:"name",
-			title:"名称"
+			title:"名称",
+			formatter:function(v){
+				return v+"你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说";
+			},
+			showTip:true,
+			width:200
 		},{
 			field:"ids",
-			title:"序号"
+			title:"序号",
+			showTip:true
 		}],
 		check:true,
+		fontSize:10,
 		pagination:true
 	});
 })

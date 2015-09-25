@@ -1,8 +1,20 @@
 /**
- * 依赖bootstrap 3
+ * 依赖bootstrap 3 css 
  * jquery 1.11
  */
 (function($){
+	function wrapContent(value,column){
+		var content = $('<div style="white-space:nowrap;overflow:hidden;text-overflow:clip"></div>');
+		if(column.showTip){
+			content.popover({
+				placement: "auto top",
+				trigger: "hover",
+				content: value
+			});
+		}
+		content.html(value);
+		return content;
+	}
 	function pageCount(config){
 		var pageCount = Math.ceil(config.datas.count/config.rows);
 		return pageCount;
@@ -24,26 +36,25 @@
 			tr.append(td);
 		}
 		$.each(config.columns,function(i,column){
-			var td = $('<td>'+column.title+'</td>');
+			var td = $('<td></td>');
+			config.fitColumn&&column.width&&td.css('width',column.width);
+			td.append(wrapContent(column.title,column))
 			tr.append(td);
 		});
 		thead.append(tr);
 	}
-	function rowBuilder(rowIndex,tr,columns,data,check){
+	function rowBuilder(rowIndex,data,tr,config){
 		tr.css("cursor","pointer");
-		if(check){
+		if(config.check){
 			tr.append('<td><input type="checkbox" f-id="'+rowIndex+'"/></td>');
 		}
-		$.each(columns,function(i,column){
+		$.each(config.columns,function(i,column){
 			var value = data[column.field];
 			if($.isFunction(column.formatter)){
 				value = column.formatter.call(null,value,data);
 			}
 			var td = $('<td></td>');
-			if(column.showTip){
-				//增加cell提示
-			}
-			td.html(value);
+			td.append(wrapContent(value,column));
 			tr.append(td);
 		});
 	}
@@ -55,9 +66,11 @@
 				tr.parent().children("tr").removeClass("info");
 				tr.addClass("info");
 				config.click.call(null,i,data);
+			});
+			tr.dblclick(function(){
 				config.dblclick.call(null,i,data);
 			});
-			rowBuilder(i,tr,config.columns,data,config.check);
+			rowBuilder(i,data,tr,config);
 			config.body.append(tr);
 		});
 		if(config.pagination){
@@ -116,7 +129,7 @@
 			}
 		});
 		var btnDiv = $('<div class="text-left col-md-6 col-sm-6" style="min-width:320px"></div>');
-		var pagiinfo = $('<div class="text-right col-md-6 col-sm-6" style="font-size:24px"></div>');
+		var pagiinfo = $('<div class="text-right col-md-6 col-sm-6"></div>');
 		var pagiDiv = $('<div class="row"></div>');
 		btnDiv.append(sel).append(pre).append(txt).append(next).append(flush);
 		pagiDiv.append(btnDiv);
@@ -157,6 +170,12 @@
 	}
 	function datagridBuilder(config){
 		var table = $('<table class="table table-hover table-bordered table-condensed"></table>');
+		if(config.fitColumn){
+			table.css('table-layout','fixed');
+		}
+		if(config.fontSize){
+			table.css('font-size',config.fontSize);
+		}
 		var thead = $('<thead></thead>');
 		var tbody = $('<tbody></tbody>');
 		headBuilder(thead,config);
@@ -175,6 +194,7 @@
 	$.fn.f_dg = function(config){
 		config.target = this;
 		config = $.extend({
+			fitColumn:false,
 			check:false,
 			columns:[],
 			page:1,
