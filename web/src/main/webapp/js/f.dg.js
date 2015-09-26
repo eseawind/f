@@ -1,5 +1,5 @@
 /**
- * 依赖bootstrap 3 css 
+ * 依赖bootstrap 3 css jquery showloading (awesome bootstrap)
  * jquery 1.11
  */
 (function($){
@@ -65,7 +65,25 @@
 			});
 			td.append(span);
 			config.fitColumn&&column.width&&td.css('width',column.width);
-			td.append(wrapContent(column.title,column));
+			var content = wrapContent(column.title,column);
+			td.append(content);
+			if(column.sort){
+				content.css('cursor','pointer');
+				content.click(function(){
+					if(content.attr('sort') == 'asc'){
+						content.attr('sort','desc');
+						content.children('i').remove();
+						content.append('<i class="icon-sort-down" style="padding-left:10px"></i>');
+						config.defParam.sort = 'desc';
+					}else{
+						content.attr('sort','asc');
+						content.children('i').remove();
+						content.append('<i class="icon-sort-up" style="padding-left:10px"></i>');
+						config.defParam.sort = 'asc';
+					}
+					dataBuilder(config);
+				});
+			}
 			tr.append(td);
 		});
 		thead.append(tr);
@@ -95,9 +113,12 @@
 		}
 		config.body.empty();
 		$.each(config.datas.rows,function(i,data){
-			var tr = $('<tr f-id="'+i+'"></tr>');
+			var tr = $('<tr f-id="'+i+'" f-active="false"></tr>');
 			tr.click(function(){
-				tr.parent().children("tr").removeClass("info");
+				var trs = tr.parent().children("tr");
+				trs.attr('f-active','false');
+				trs.removeClass("info");
+				tr.attr('f-active','true');
 				tr.addClass("info");
 				config.click.call(null,i,data);
 			});
@@ -185,9 +206,15 @@
 		if(config.url){
 			var param = {};
 			config.before.call(null,param);
+			$.extend(param,config.defParam);
 			if(config.pagination){
 				param.page = config.page;
 				param.rows = config.rows;
+			}
+			try{
+				config.target.showLoading({loadTip:config.loadTip});
+			}catch(e){
+				console.log(e);
 			}
 			$.ajax({
 				url:config.url,
@@ -202,6 +229,13 @@
 				},
 				error:function(xhq,error,ethrown){
 					errorTip(config,error);
+				},
+				complete:function(){
+					try{
+						config.target.hideLoading();
+					}catch(e){
+						console.log(e);
+					}
 				}
 			});
 		}else{
@@ -209,6 +243,7 @@
 		}
 	}
 	function datagridBuilder(config){
+		config.target.empty();
 		var table = $('<table class="table table-hover table-bordered table-condensed"></table>');
 		if(config.fitColumn){
 			table.css('table-layout','fixed');
@@ -232,31 +267,76 @@
 		}
 	}
 	$.fn.f_dg = function(config){
-		config.target = this;
-		config = $.extend({
-			fitColumn:false,
-			check:false,
-			columns:[],
-			page:1,
-			rows:10,
-			pages:[10,50,100,500,1000],
-			click:function(index,data){
-			},
-			dblclick:function(index,data){
-			},
-			before:function(param){
-			},
-			filter:function(data){
-				return data;
-			},
-			pagination:false,
-			datas:{rows:[],count:0},
-			rownumber:false,
-			lazy:false
-		},config);
-		if(!config.lazy){
-			datagridBuilder(config);
+		if($.isPlainObject(config)){
+			config.target = this;
+			config = $.extend({
+				fitColumn:false,
+				check:false,
+				columns:[],//title,field,showTip,sort,formatter,width
+				page:1,
+				rows:10,
+				pages:[10,50,100,500,1000],
+				defParam:{},
+				click:function(index,data){
+				},
+				dblclick:function(index,data){
+				},
+				before:function(param){
+				},
+				filter:function(data){
+					return data;
+				},
+				pagination:false,
+				datas:{rows:[],count:0},
+				rownumber:false,
+				lazy:false,
+				loadTip:'处理中...'
+			},config);
+			if(!config.lazy){
+				datagridBuilder(config);
+			}
+			this.data("config",config);
+		}else{
+			var fun = config;
+			var config = this.data('config');
+			switch(fun){
+			case 'getDatas':return config.datas;
+			case 'getSelected':return getSelected(config);
+			case 'getChecked':return getChecked(config);
+			case 'reload':reload(config,arguments[1]);break;
+			case 'load':load(config,arguments[1]);break;
+			default: return undefined;
+			}
 		}
-		this.data("config",config);
+		return this;
 	};
+	function getSelected(config){
+		var obj = config.target.find('tr[f-active="true"]');
+		if(obj.length == 0){
+			return {};
+		}
+		return config.datas.rows[parseInt(obj.eq(0).attr("f-id"))];
+	}
+	function getChecked(config){
+		var datas = [];
+		if(config.check){
+			config.target.find('input[type="checkbox"][f-id]:checked').each(function(i,cbox){
+				datas.push(config.datas.rows[parseInt($(this).attr('f-id'))]);
+			});
+		}
+		return datas;
+	}
+	function reload(config,obj){
+		if($.isPlainObject(obj)){
+			$.extend(config,obj);
+		}
+		dataBuilder(config);
+	}
+	function load(config,obj){
+		config.page = 1;
+		if($.isPlainObject(obj)){
+			$.extend(config,obj);
+		}
+		datagridBuilder(config);
+	}
 })(jQuery);

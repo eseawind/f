@@ -1,9 +1,9 @@
 .loading-indicator {
-	height: 80px;
-	width: 80px;
+	height: 40px;
+	min-width: 80px;
 	background: url( '../images/loading.gif' );
 	background-repeat: no-repeat;
-	background-position: center center;
+	background-position: left center;
 }
 
 .loading-indicator-overlay {

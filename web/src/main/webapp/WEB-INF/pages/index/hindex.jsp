@@ -10,15 +10,17 @@
 <div id="dg" class="container"></div>
 <script type="text/javascript">
 $(function(){
-	$("#dg").f_dg({
+	var dg = $("#dg").f_dg({
 		url:"${staUrl}/mid_autumn.json",
 		fitColumn:true,
+		pages:[50,100,1000],
 		columns:[{
 			field:"type",
 			title:"类型"
 		},{
 			field:"name",
 			title:"名称",
+			sort:true,
 			formatter:function(v){
 				return v+"你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说。你是我的小苹果，怎么爱你都不能说";
 			},
@@ -31,7 +33,10 @@ $(function(){
 		}],
 		check:true,
 		pagination:true,
-		rownumber:true
+		rownumber:true,
+		dblclick:function(){
+			dg.f_dg('load');
+		}
 	});
 })
 </script>

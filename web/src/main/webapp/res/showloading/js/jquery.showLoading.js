@@ -36,7 +36,7 @@ jQuery.fn.showLoading = function(options) {
 
     jQuery.extend(settings, options);
     
-    var loadingDiv = jQuery('<div style="text-align:center"></div>');
+    var loadingDiv = jQuery('<div style="background-color:#fff;border:1px solid #ddd"></div>');
     var overlayDiv = jQuery('<div></div>');
 
     //
@@ -227,6 +227,7 @@ jQuery.fn.showLoading = function(options) {
     // Show the loading indicator
     //
     jQuery(loadingDiv).show();
+    jQuery(loadingDiv).html('<span style="line-height:300%;padding-left:40px;padding-right:10px">'+((options&&options.loadTip)||'努力加载中。。。')+'</span>');
 
     //
     // afterShow callback
