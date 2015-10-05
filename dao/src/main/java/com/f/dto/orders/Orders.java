@@ -30,8 +30,6 @@ public class Orders {
 
     private Date createtime;
 
-    private Date modifytime;
-
     private Long merchantId;
 
     public Long getId() {
@@ -136,14 +134,6 @@ public class Orders {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
-    }
-
-    public Date getModifytime() {
-        return modifytime;
-    }
-
-    public void setModifytime(Date modifytime) {
-        this.modifytime = modifytime;
     }
 
     public Long getMerchantId() {

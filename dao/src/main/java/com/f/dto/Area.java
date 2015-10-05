@@ -7,8 +7,6 @@ public class Area {
 
     private Integer fid;
 
-    private String code;
-
     private Integer isUse;
 
     public Integer getId() {
@@ -33,14 +31,6 @@ public class Area {
 
     public void setFid(Integer fid) {
         this.fid = fid;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
     }
 
     public Integer getIsUse() {

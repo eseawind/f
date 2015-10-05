@@ -5,6 +5,8 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="gid" property="gid" jdbcType="BIGINT" />
+    <result column="isDel" property="isDel" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, code, gid
+    id, code, gid, isDel, createtime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.goods.GCategoryExample" >
     select
@@ -88,8 +90,10 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.f.dto.goods.GCategory" >
-    insert into gcategory (id, code, gid)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT})
+    insert into gcategory (id, code, gid, 
+      isDel, createtime)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT}, 
+      #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.goods.GCategory" >
     insert into gcategory
@@ -103,6 +107,12 @@
       <if test="gid != null" >
         gid,
       </if>
+      <if test="isDel != null" >
+        isDel,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -113,6 +123,12 @@
       </if>
       <if test="gid != null" >
         #{gid,jdbcType=BIGINT},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -134,6 +150,12 @@
       <if test="record.gid != null" >
         gid = #{record.gid,jdbcType=BIGINT},
       </if>
+      <if test="record.isDel != null" >
+        isDel = #{record.isDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -143,7 +165,9 @@
     update gcategory
     set id = #{record.id,jdbcType=BIGINT},
       code = #{record.code,jdbcType=VARCHAR},
-      gid = #{record.gid,jdbcType=BIGINT}
+      gid = #{record.gid,jdbcType=BIGINT},
+      isDel = #{record.isDel,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -157,13 +181,21 @@
       <if test="gid != null" >
         gid = #{gid,jdbcType=BIGINT},
       </if>
+      <if test="isDel != null" >
+        isDel = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.f.dto.goods.GCategory" >
     update gcategory
     set code = #{code,jdbcType=VARCHAR},
-      gid = #{gid,jdbcType=BIGINT}
+      gid = #{gid,jdbcType=BIGINT},
+      isDel = #{isDel,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -16,9 +16,11 @@ public class BalanceLog {
 
     private BigDecimal afterBalance;
 
-    private Long operId;
+    private String operName;
 
     private Date createtime;
+
+    private String remark;
 
     public Long getId() {
         return id;
@@ -68,12 +70,12 @@ public class BalanceLog {
         this.afterBalance = afterBalance;
     }
 
-    public Long getOperId() {
-        return operId;
+    public String getOperName() {
+        return operName;
     }
 
-    public void setOperId(Long operId) {
-        this.operId = operId;
+    public void setOperName(String operName) {
+        this.operName = operName == null ? null : operName.trim();
     }
 
     public Date getCreatetime() {
@@ -82,5 +84,13 @@ public class BalanceLog {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

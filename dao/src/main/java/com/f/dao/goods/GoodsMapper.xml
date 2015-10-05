@@ -3,11 +3,11 @@
 <mapper namespace="com.f.dao.goods.GoodsMapper" >
   <resultMap id="BaseResultMap" type="com.f.dto.goods.Goods" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
     <result column="gname" property="gname" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="place" property="place" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     <result column="merchantId" property="merchantId" jdbcType="BIGINT" />
     <result column="brandId" property="brandId" jdbcType="BIGINT" />
   </resultMap>
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gname, remark, place, createtime, modifytime, merchantId, brandId
+    id, sku, gname, remark, place, createtime, merchantId, brandId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.goods.GoodsExample" >
     select
@@ -93,11 +93,11 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.f.dto.goods.Goods" >
-    insert into goods (id, gname, remark, 
-      place, createtime, modifytime, 
+    insert into goods (id, sku, gname, 
+      remark, place, createtime, 
       merchantId, brandId)
-    values (#{id,jdbcType=BIGINT}, #{gname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{place,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{sku,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{place,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{merchantId,jdbcType=BIGINT}, #{brandId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.goods.Goods" >
@@ -105,6 +105,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="sku != null" >
+        sku,
       </if>
       <if test="gname != null" >
         gname,
@@ -118,9 +121,6 @@
       <if test="createtime != null" >
         createtime,
       </if>
-      <if test="modifytime != null" >
-        modifytime,
-      </if>
       <if test="merchantId != null" >
         merchantId,
       </if>
@@ -131,6 +131,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
       </if>
       <if test="gname != null" >
         #{gname,jdbcType=VARCHAR},
@@ -143,9 +146,6 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifytime != null" >
-        #{modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="merchantId != null" >
         #{merchantId,jdbcType=BIGINT},
@@ -167,6 +167,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.sku != null" >
+        sku = #{record.sku,jdbcType=VARCHAR},
+      </if>
       <if test="record.gname != null" >
         gname = #{record.gname,jdbcType=VARCHAR},
       </if>
@@ -178,9 +181,6 @@
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.merchantId != null" >
         merchantId = #{record.merchantId,jdbcType=BIGINT},
@@ -196,11 +196,11 @@
   <update id="updateByExample" parameterType="map" >
     update goods
     set id = #{record.id,jdbcType=BIGINT},
+      sku = #{record.sku,jdbcType=VARCHAR},
       gname = #{record.gname,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       place = #{record.place,jdbcType=VARCHAR},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
       merchantId = #{record.merchantId,jdbcType=BIGINT},
       brandId = #{record.brandId,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -210,6 +210,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.f.dto.goods.Goods" >
     update goods
     <set >
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
       <if test="gname != null" >
         gname = #{gname,jdbcType=VARCHAR},
       </if>
@@ -222,9 +225,6 @@
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="modifytime != null" >
-        modifytime = #{modifytime,jdbcType=TIMESTAMP},
-      </if>
       <if test="merchantId != null" >
         merchantId = #{merchantId,jdbcType=BIGINT},
       </if>
@@ -236,11 +236,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.f.dto.goods.Goods" >
     update goods
-    set gname = #{gname,jdbcType=VARCHAR},
+    set sku = #{sku,jdbcType=VARCHAR},
+      gname = #{gname,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       place = #{place,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      modifytime = #{modifytime,jdbcType=TIMESTAMP},
       merchantId = #{merchantId,jdbcType=BIGINT},
       brandId = #{brandId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

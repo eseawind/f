@@ -466,63 +466,73 @@ public class BalanceLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andOperIdIsNull() {
-            addCriterion("operId is null");
+        public Criteria andOperNameIsNull() {
+            addCriterion("operName is null");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdIsNotNull() {
-            addCriterion("operId is not null");
+        public Criteria andOperNameIsNotNull() {
+            addCriterion("operName is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdEqualTo(Long value) {
-            addCriterion("operId =", value, "operId");
+        public Criteria andOperNameEqualTo(String value) {
+            addCriterion("operName =", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdNotEqualTo(Long value) {
-            addCriterion("operId <>", value, "operId");
+        public Criteria andOperNameNotEqualTo(String value) {
+            addCriterion("operName <>", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdGreaterThan(Long value) {
-            addCriterion("operId >", value, "operId");
+        public Criteria andOperNameGreaterThan(String value) {
+            addCriterion("operName >", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("operId >=", value, "operId");
+        public Criteria andOperNameGreaterThanOrEqualTo(String value) {
+            addCriterion("operName >=", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdLessThan(Long value) {
-            addCriterion("operId <", value, "operId");
+        public Criteria andOperNameLessThan(String value) {
+            addCriterion("operName <", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdLessThanOrEqualTo(Long value) {
-            addCriterion("operId <=", value, "operId");
+        public Criteria andOperNameLessThanOrEqualTo(String value) {
+            addCriterion("operName <=", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdIn(List<Long> values) {
-            addCriterion("operId in", values, "operId");
+        public Criteria andOperNameLike(String value) {
+            addCriterion("operName like", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdNotIn(List<Long> values) {
-            addCriterion("operId not in", values, "operId");
+        public Criteria andOperNameNotLike(String value) {
+            addCriterion("operName not like", value, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdBetween(Long value1, Long value2) {
-            addCriterion("operId between", value1, value2, "operId");
+        public Criteria andOperNameIn(List<String> values) {
+            addCriterion("operName in", values, "operName");
             return (Criteria) this;
         }
 
-        public Criteria andOperIdNotBetween(Long value1, Long value2) {
-            addCriterion("operId not between", value1, value2, "operId");
+        public Criteria andOperNameNotIn(List<String> values) {
+            addCriterion("operName not in", values, "operName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperNameBetween(String value1, String value2) {
+            addCriterion("operName between", value1, value2, "operName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperNameNotBetween(String value1, String value2) {
+            addCriterion("operName not between", value1, value2, "operName");
             return (Criteria) this;
         }
 
@@ -583,6 +593,76 @@ public class BalanceLogExample {
 
         public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
             addCriterion("createtime not between", value1, value2, "createtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
             return (Criteria) this;
         }
     }

@@ -5,6 +5,8 @@ import java.util.Date;
 public class Goods {
     private Long id;
 
+    private String sku;
+
     private String gname;
 
     private String remark;
@@ -12,8 +14,6 @@ public class Goods {
     private String place;
 
     private Date createtime;
-
-    private Date modifytime;
 
     private Long merchantId;
 
@@ -25,6 +25,14 @@ public class Goods {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku == null ? null : sku.trim();
     }
 
     public String getGname() {
@@ -57,14 +65,6 @@ public class Goods {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
-    }
-
-    public Date getModifytime() {
-        return modifytime;
-    }
-
-    public void setModifytime(Date modifytime) {
-        this.modifytime = modifytime;
     }
 
     public Long getMerchantId() {

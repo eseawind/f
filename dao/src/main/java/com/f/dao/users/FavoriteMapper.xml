@@ -6,6 +6,7 @@
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="cgoodsId" property="cgoodsId" jdbcType="BIGINT" />
     <result column="isDel" property="isDel" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userId, cgoodsId, isDel
+    id, userId, cgoodsId, isDel, createtime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.users.FavoriteExample" >
     select
@@ -90,9 +91,9 @@
   </select>
   <insert id="insert" parameterType="com.f.dto.users.Favorite" >
     insert into favorite (id, userId, cgoodsId, 
-      isDel)
+      isDel, createtime)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{cgoodsId,jdbcType=BIGINT}, 
-      #{isDel,jdbcType=INTEGER})
+      #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.users.Favorite" >
     insert into favorite
@@ -109,6 +110,9 @@
       <if test="isDel != null" >
         isDel,
       </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -122,6 +126,9 @@
       </if>
       <if test="isDel != null" >
         #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="record.isDel != null" >
         isDel = #{record.isDel,jdbcType=INTEGER},
       </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -156,7 +166,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       userId = #{record.userId,jdbcType=BIGINT},
       cgoodsId = #{record.cgoodsId,jdbcType=BIGINT},
-      isDel = #{record.isDel,jdbcType=INTEGER}
+      isDel = #{record.isDel,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -173,6 +184,9 @@
       <if test="isDel != null" >
         isDel = #{isDel,jdbcType=INTEGER},
       </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -180,7 +194,8 @@
     update favorite
     set userId = #{userId,jdbcType=BIGINT},
       cgoodsId = #{cgoodsId,jdbcType=BIGINT},
-      isDel = #{isDel,jdbcType=INTEGER}
+      isDel = #{isDel,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

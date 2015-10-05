@@ -8,8 +8,9 @@
     <result column="platform" property="platform" jdbcType="INTEGER" />
     <result column="money" property="money" jdbcType="INTEGER" />
     <result column="afterBalance" property="afterBalance" jdbcType="DECIMAL" />
-    <result column="operId" property="operId" jdbcType="BIGINT" />
+    <result column="operName" property="operName" jdbcType="VARCHAR" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, userId, type, platform, money, afterBalance, operId, createtime
+    id, userId, type, platform, money, afterBalance, operName, createtime, remark
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.users.BalanceLogExample" >
     select
@@ -95,10 +96,12 @@
   <insert id="insert" parameterType="com.f.dto.users.BalanceLog" >
     insert into balancelog (id, userId, type, 
       platform, money, afterBalance, 
-      operId, createtime)
+      operName, createtime, remark
+      )
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
       #{platform,jdbcType=INTEGER}, #{money,jdbcType=INTEGER}, #{afterBalance,jdbcType=DECIMAL}, 
-      #{operId,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP})
+      #{operName,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.users.BalanceLog" >
     insert into balancelog
@@ -121,11 +124,14 @@
       <if test="afterBalance != null" >
         afterBalance,
       </if>
-      <if test="operId != null" >
-        operId,
+      <if test="operName != null" >
+        operName,
       </if>
       <if test="createtime != null" >
         createtime,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -147,11 +153,14 @@
       <if test="afterBalance != null" >
         #{afterBalance,jdbcType=DECIMAL},
       </if>
-      <if test="operId != null" >
-        #{operId,jdbcType=BIGINT},
+      <if test="operName != null" >
+        #{operName,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -182,11 +191,14 @@
       <if test="record.afterBalance != null" >
         afterBalance = #{record.afterBalance,jdbcType=DECIMAL},
       </if>
-      <if test="record.operId != null" >
-        operId = #{record.operId,jdbcType=BIGINT},
+      <if test="record.operName != null" >
+        operName = #{record.operName,jdbcType=VARCHAR},
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -201,8 +213,9 @@
       platform = #{record.platform,jdbcType=INTEGER},
       money = #{record.money,jdbcType=INTEGER},
       afterBalance = #{record.afterBalance,jdbcType=DECIMAL},
-      operId = #{record.operId,jdbcType=BIGINT},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+      operName = #{record.operName,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -225,11 +238,14 @@
       <if test="afterBalance != null" >
         afterBalance = #{afterBalance,jdbcType=DECIMAL},
       </if>
-      <if test="operId != null" >
-        operId = #{operId,jdbcType=BIGINT},
+      <if test="operName != null" >
+        operName = #{operName,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -241,8 +257,9 @@
       platform = #{platform,jdbcType=INTEGER},
       money = #{money,jdbcType=INTEGER},
       afterBalance = #{afterBalance,jdbcType=DECIMAL},
-      operId = #{operId,jdbcType=BIGINT},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      operName = #{operName,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

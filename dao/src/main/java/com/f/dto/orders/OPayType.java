@@ -1,5 +1,7 @@
 package com.f.dto.orders;
 
+import java.util.Date;
+
 public class OPayType {
     private Long id;
 
@@ -10,6 +12,8 @@ public class OPayType {
     private String name;
 
     private String account;
+
+    private Date createtime;
 
     public Long getId() {
         return id;
@@ -49,5 +53,13 @@ public class OPayType {
 
     public void setAccount(String account) {
         this.account = account == null ? null : account.trim();
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

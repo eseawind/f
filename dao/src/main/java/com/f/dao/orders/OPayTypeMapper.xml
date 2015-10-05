@@ -7,6 +7,7 @@
     <result column="code" property="code" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, orderId, code, name, account
+    id, orderId, code, name, account, createtime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.orders.OPayTypeExample" >
     select
@@ -91,9 +92,11 @@
   </select>
   <insert id="insert" parameterType="com.f.dto.orders.OPayType" >
     insert into opaytype (id, orderId, code, 
-      name, account)
+      name, account, createtime
+      )
     values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{code,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR})
+      #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.orders.OPayType" >
     insert into opaytype
@@ -113,6 +116,9 @@
       <if test="account != null" >
         account,
       </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -129,6 +135,9 @@
       </if>
       <if test="account != null" >
         #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -156,6 +165,9 @@
       <if test="record.account != null" >
         account = #{record.account,jdbcType=VARCHAR},
       </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -167,7 +179,8 @@
       orderId = #{record.orderId,jdbcType=BIGINT},
       code = #{record.code,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      account = #{record.account,jdbcType=VARCHAR}
+      account = #{record.account,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -187,6 +200,9 @@
       <if test="account != null" >
         account = #{account,jdbcType=VARCHAR},
       </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -195,7 +211,8 @@
     set orderId = #{orderId,jdbcType=BIGINT},
       code = #{code,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
-      account = #{account,jdbcType=VARCHAR}
+      account = #{account,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

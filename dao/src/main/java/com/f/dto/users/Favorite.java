@@ -1,5 +1,7 @@
 package com.f.dto.users;
 
+import java.util.Date;
+
 public class Favorite {
     private Long id;
 
@@ -8,6 +10,8 @@ public class Favorite {
     private Long cgoodsId;
 
     private Integer isDel;
+
+    private Date createtime;
 
     public Long getId() {
         return id;
@@ -39,5 +43,13 @@ public class Favorite {
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

@@ -20,8 +20,6 @@ public class Users {
 
     private Date createtime;
 
-    private Date modifytime;
-
     public Long getId() {
         return id;
     }
@@ -84,13 +82,5 @@ public class Users {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
-    }
-
-    public Date getModifytime() {
-        return modifytime;
-    }
-
-    public void setModifytime(Date modifytime) {
-        this.modifytime = modifytime;
     }
 }

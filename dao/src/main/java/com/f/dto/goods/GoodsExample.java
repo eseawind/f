@@ -165,6 +165,76 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andSkuIsNull() {
+            addCriterion("sku is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIsNotNull() {
+            addCriterion("sku is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuEqualTo(String value) {
+            addCriterion("sku =", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotEqualTo(String value) {
+            addCriterion("sku <>", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuGreaterThan(String value) {
+            addCriterion("sku >", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuGreaterThanOrEqualTo(String value) {
+            addCriterion("sku >=", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLessThan(String value) {
+            addCriterion("sku <", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLessThanOrEqualTo(String value) {
+            addCriterion("sku <=", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLike(String value) {
+            addCriterion("sku like", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotLike(String value) {
+            addCriterion("sku not like", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIn(List<String> values) {
+            addCriterion("sku in", values, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotIn(List<String> values) {
+            addCriterion("sku not in", values, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuBetween(String value1, String value2) {
+            addCriterion("sku between", value1, value2, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotBetween(String value1, String value2) {
+            addCriterion("sku not between", value1, value2, "sku");
+            return (Criteria) this;
+        }
+
         public Criteria andGnameIsNull() {
             addCriterion("gname is null");
             return (Criteria) this;
@@ -432,66 +502,6 @@ public class GoodsExample {
 
         public Criteria andCreatetimeNotBetween(Date value1, Date value2) {
             addCriterion("createtime not between", value1, value2, "createtime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeIsNull() {
-            addCriterion("modifytime is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeIsNotNull() {
-            addCriterion("modifytime is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeEqualTo(Date value) {
-            addCriterion("modifytime =", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotEqualTo(Date value) {
-            addCriterion("modifytime <>", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeGreaterThan(Date value) {
-            addCriterion("modifytime >", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("modifytime >=", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeLessThan(Date value) {
-            addCriterion("modifytime <", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeLessThanOrEqualTo(Date value) {
-            addCriterion("modifytime <=", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeIn(List<Date> values) {
-            addCriterion("modifytime in", values, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotIn(List<Date> values) {
-            addCriterion("modifytime not in", values, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeBetween(Date value1, Date value2) {
-            addCriterion("modifytime between", value1, value2, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotBetween(Date value1, Date value2) {
-            addCriterion("modifytime not between", value1, value2, "modifytime");
             return (Criteria) this;
         }
 

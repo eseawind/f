@@ -714,66 +714,6 @@ public class MerchantExample {
             addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
-
-        public Criteria andModifytimeIsNull() {
-            addCriterion("modifytime is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeIsNotNull() {
-            addCriterion("modifytime is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeEqualTo(Date value) {
-            addCriterion("modifytime =", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotEqualTo(Date value) {
-            addCriterion("modifytime <>", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeGreaterThan(Date value) {
-            addCriterion("modifytime >", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("modifytime >=", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeLessThan(Date value) {
-            addCriterion("modifytime <", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeLessThanOrEqualTo(Date value) {
-            addCriterion("modifytime <=", value, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeIn(List<Date> values) {
-            addCriterion("modifytime in", values, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotIn(List<Date> values) {
-            addCriterion("modifytime not in", values, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeBetween(Date value1, Date value2) {
-            addCriterion("modifytime between", value1, value2, "modifytime");
-            return (Criteria) this;
-        }
-
-        public Criteria andModifytimeNotBetween(Date value1, Date value2) {
-            addCriterion("modifytime not between", value1, value2, "modifytime");
-            return (Criteria) this;
-        }
     }
 
     public static class Criteria extends GeneratedCriteria {

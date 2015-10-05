@@ -5,7 +5,6 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="fid" property="fid" jdbcType="INTEGER" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="isUse" property="isUse" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -67,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, fid, code, isUse
+    id, name, fid, isUse
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.AreaExample" >
     select
@@ -91,9 +90,9 @@
   </select>
   <insert id="insert" parameterType="com.f.dto.Area" >
     insert into area (id, name, fid, 
-      code, isUse)
+      isUse)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fid,jdbcType=INTEGER}, 
-      #{code,jdbcType=VARCHAR}, #{isUse,jdbcType=INTEGER})
+      #{isUse,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.Area" >
     insert into area
@@ -106,9 +105,6 @@
       </if>
       <if test="fid != null" >
         fid,
-      </if>
-      <if test="code != null" >
-        code,
       </if>
       <if test="isUse != null" >
         isUse,
@@ -123,9 +119,6 @@
       </if>
       <if test="fid != null" >
         #{fid,jdbcType=INTEGER},
-      </if>
-      <if test="code != null" >
-        #{code,jdbcType=VARCHAR},
       </if>
       <if test="isUse != null" >
         #{isUse,jdbcType=INTEGER},
@@ -150,9 +143,6 @@
       <if test="record.fid != null" >
         fid = #{record.fid,jdbcType=INTEGER},
       </if>
-      <if test="record.code != null" >
-        code = #{record.code,jdbcType=VARCHAR},
-      </if>
       <if test="record.isUse != null" >
         isUse = #{record.isUse,jdbcType=INTEGER},
       </if>
@@ -166,7 +156,6 @@
     set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       fid = #{record.fid,jdbcType=INTEGER},
-      code = #{record.code,jdbcType=VARCHAR},
       isUse = #{record.isUse,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -181,9 +170,6 @@
       <if test="fid != null" >
         fid = #{fid,jdbcType=INTEGER},
       </if>
-      <if test="code != null" >
-        code = #{code,jdbcType=VARCHAR},
-      </if>
       <if test="isUse != null" >
         isUse = #{isUse,jdbcType=INTEGER},
       </if>
@@ -194,7 +180,6 @@
     update area
     set name = #{name,jdbcType=VARCHAR},
       fid = #{fid,jdbcType=INTEGER},
-      code = #{code,jdbcType=VARCHAR},
       isUse = #{isUse,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

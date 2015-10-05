@@ -10,7 +10,6 @@
     <result column="grade" property="grade" jdbcType="INTEGER" />
     <result column="isDel" property="isDel" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, password, mobile, balance, grade, isDel, createtime, modifytime
+    id, username, password, mobile, balance, grade, isDel, createtime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.users.UsersExample" >
     select
@@ -96,12 +95,10 @@
   <insert id="insert" parameterType="com.f.dto.users.Users" >
     insert into users (id, username, password, 
       mobile, balance, grade, 
-      isDel, createtime, modifytime
-      )
+      isDel, createtime)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}, #{grade,jdbcType=INTEGER}, 
-      #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{modifytime,jdbcType=TIMESTAMP}
-      )
+      #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.users.Users" >
     insert into users
@@ -130,9 +127,6 @@
       <if test="createtime != null" >
         createtime,
       </if>
-      <if test="modifytime != null" >
-        modifytime,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -158,9 +152,6 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifytime != null" >
-        #{modifytime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -197,9 +188,6 @@
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.modifytime != null" >
-        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -214,8 +202,7 @@
       balance = #{record.balance,jdbcType=DECIMAL},
       grade = #{record.grade,jdbcType=INTEGER},
       isDel = #{record.isDel,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -244,9 +231,6 @@
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="modifytime != null" >
-        modifytime = #{modifytime,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -258,8 +242,7 @@
       balance = #{balance,jdbcType=DECIMAL},
       grade = #{grade,jdbcType=INTEGER},
       isDel = #{isDel,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      modifytime = #{modifytime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
