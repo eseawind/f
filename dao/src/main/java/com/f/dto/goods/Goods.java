@@ -11,8 +11,6 @@ public class Goods {
 
     private String remark;
 
-    private String place;
-
     private Date createtime;
 
     private Long merchantId;
@@ -49,14 +47,6 @@ public class Goods {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place == null ? null : place.trim();
     }
 
     public Date getCreatetime() {

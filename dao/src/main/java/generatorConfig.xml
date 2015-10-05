@@ -19,16 +19,16 @@
             <property name="forceBigDecimals" value="true"/>  
         </javaTypeResolver>  
         <!-- 生成模型的包名和位置-->  
-        <javaModelGenerator targetPackage="com.f.dto.orders" targetProject="src/main/java">  
+        <javaModelGenerator targetPackage="com.f.dto.goods" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>  
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="com.f.dao.orders" targetProject="src/main/java">  
+        <sqlMapGenerator targetPackage="com.f.dao.goods" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.orders" targetProject="src/main/java">  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.goods" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         

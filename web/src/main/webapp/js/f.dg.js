@@ -144,7 +144,7 @@
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
-		var txt = $('<input value="1" style="width:66px;display:inline;float:left;padding:4.5px;border:1px solid #ccc;"/>');
+		var txt = $('<input value="1" style="width:66px;display:inline;float:left;padding:4.5px 5px 2.5px 5px;border:1px solid #ccc;"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
@@ -187,7 +187,7 @@
 		});
 		var btnDiv = $('<ul class="pagination  col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
 		var pagiinfo = $('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;padding:5px"><li><span></span></li></ul>');
-		var pagiDiv = $('<nav style="min-width:520px"></nav>');
+		var pagiDiv = $('<nav style="min-width:520px;color:#337AB7"></nav>');
 		btnDiv.append($('<span></span>').append(sel));
 		btnDiv.append(pre);
 		btnDiv.append($('<span></span>').append(txt));
@@ -305,6 +305,8 @@
 			case 'getChecked':return getChecked(config);
 			case 'reload':reload(config,arguments[1]);break;
 			case 'load':load(config,arguments[1]);break;
+			case 'addRow':addRow(config,arguments[1],arguments[2]);break;
+			case 'delRow':delRow(config,arguments[1]);break;
 			default: return undefined;
 			}
 		}
@@ -338,5 +340,21 @@
 			$.extend(config,obj);
 		}
 		datagridBuilder(config);
+	}
+	function addRow(config,data,index){
+		index = parseInt(index);
+		if(index>=0){
+			config.datas.splice(index,0,data);
+		}else{
+			config.datas.push(data);
+		}
+		dataBuilder(config);
+	}
+	function delRow(config,index){
+		index = parseInt(index);
+		if(index>=0){
+			config.datas.splice(index,1);
+		}
+		dataBuilder(config);
 	}
 })(jQuery);

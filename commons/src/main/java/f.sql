@@ -159,7 +159,6 @@ CREATE TABLE `goods` (
   `sku` varchar(100) DEFAULT NULL COMMENT '商品sku',
   `gname` varchar(50) NOT NULL COMMENT '商品名称',
   `remark` varchar(254) DEFAULT NULL COMMENT '描述',
-  `place` varchar(100) DEFAULT NULL COMMENT '产地',
   `createtime` datetime NOT NULL COMMENT '创建时间',
   `merchantId` bigint(20) NOT NULL COMMENT '商家id',
   `brandId` bigint(20) DEFAULT NULL COMMENT '品牌id',
