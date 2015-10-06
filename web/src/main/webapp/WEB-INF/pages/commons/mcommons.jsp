@@ -18,5 +18,5 @@
 <script src="${staUrl }/res/validator.min.js"></script>
 <script src="${staUrl }/res/inputmask/inputmask/jquery.inputmask.min.js"></script>
 <script src="${staUrl }/res/bootstrap/jquery.bootstrap.min.js"></script>
-<script src="${staUrl }/js/f.js"></script>
+<script src="${staUrl }/js/mf.js"></script>
 

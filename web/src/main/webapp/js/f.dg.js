@@ -295,10 +295,10 @@
 			if(!config.lazy){
 				datagridBuilder(config);
 			}
-			this.data("config",config);
+			this.data('f_config',config);
 		}else{
 			var fun = config;
-			var config = this.data('config');
+			var config = this.data('f_config');
 			switch(fun){
 			case 'getDatas':return config.datas;
 			case 'getSelected':return getSelected(config);
