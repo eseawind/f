@@ -136,7 +136,7 @@
 				default: return undefined;
 				}
 			}
-		}
+		};
 		$(function(){
 			$('input[f-type="number"]').each(function(){
 				var input = $(this);
@@ -251,7 +251,7 @@
 					blur:function(){},
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data},
+					filter:function(data){return data;},
 					url:'',
 					datas:[],
 					textField:'k',
@@ -305,7 +305,7 @@
 				default: return undefined;
 				}
 			}
-		}
+		};
 		$(function(){
 			$('input[f-type="input_combobox"]').each(function(){
 				var input = $(this);
@@ -415,7 +415,7 @@
 					errMsg:undefined,
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data},
+					filter:function(data){return data;},
 					valueField:'v',
 					textField:'k'
 				},config);
@@ -441,11 +441,11 @@
 				}else{
 					comboboxBuilder(config);
 				}
-				this.data('f_config',config);
+				this.data('f-config',config);
 				return this;
 			}else{
 				var fun = config;
-				config = this.data('f_config');
+				config = this.data('f-config');
 				switch(fun){
 				case 'getValue':return getValue(config);
 				case 'getText':return getText(config);
@@ -455,7 +455,7 @@
 				default:return undefined;
 				}
 			}
-		}
+		};
 		$(function(){
 			$('select[f-type="combobox"]').each(function(){
 				var select = $(this);
@@ -477,9 +477,113 @@
 			}
 		}
 		function pickerBuilder(config){
-			var picker = config.picker = $('<div></div>');
+			var picker = config.picker = 
+				$('<div style="background-color:white;border:1px solid #ccc;cursor:pointer;display:none">'
+					+'<div class="row text-center" style="margin:0;padding:5px 0">'
+					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<button type="button" f-id="leftBtn2" class="btn btn-xs"><i class="icon-angle-left"></i></button>'
+					+'		<button type="button" f-id="leftBtn" class="btn btn-xs"><i class="icon-double-angle-left"></i></button>'
+					+'	</div>'
+					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<select f-id="year_combo" style="font-size:10px;padding:0;height:22px;" class="form-control">'
+					+'		</select>'
+					+'	</div>'
+					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<select f-id="month_combo" style="font-size:10px;padding:0;height:22px;" class="form-control">'
+					+'		</select>'
+					+'	</div>'
+					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<button type="button" f-id="rightBtn" class="btn btn-xs"><i class="icon-angle-right"></i></button>'
+					+'		<button type="button" f-id="rightBtn2" class="btn btn-xs"><i class="icon-double-angle-right"></i></button>'
+					+'	</div>'
+					+'</div>'
+					+'<table class="table table-condensed table-bordered text-center" style="font-size:10px">'
+					+'	<thead>'
+					+'		<tr>'
+					+'			<td>日</td>'
+					+'			<td>一</td>'
+					+'			<td>二</td>'
+					+'			<td>三</td>'
+					+'			<td>四</td>'
+					+'			<td>五</td>'
+					+'			<td>六</td>'
+					+'		</tr>'
+					+'	</thead>'
+					+'	<tbody f-id="body">'
+					+'	</tbody>'
+					+'</table>'
+					+'<div class="row text-center" style="font-size:10px;margin:0;border-top:1px solid #ccc;padding:5px 0 5px 0">'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<span>时</span>'
+					+'		<input style="width:20px" f-id="input_hours"/>'
+					+'	</div>'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<span>分</span>'
+					+'		<input style="width:20px" f-id="input_minutes"/>'
+					+'	</div>'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<span>秒</span>'
+					+'		<input style="width:20px" f-id="input_seconds"/>'
+					+'	</div>'
+					+'</div>'
+					+'<div class="row text-center" style="font-size:10px;margin:0;border-top:1px solid #ccc;padding:5px 0 5px 0">'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<button class="btn btn-xs" f-id="todayBtn" style="font-size:10px">今天</button>'
+					+'	</div>'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<button class="btn btn-xs" f-id="calBtn" style="font-size:10px">取消</button>'
+					+'	</div>'
+					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'		<button class="btn btn-xs" f-id="okBtn" style="font-size:10px">确定</button>'
+					+'	</div>'
+					+'</div>'
+					+'</div>');
 			picker.css('position','absolute');
 			picker.css('z-index',99999);
+			picker.css('width',config.width||200);
+			config.canHide = true;
+			picker.mouseenter(function(){
+				config.canHide = false;
+			});
+			picker.mouseleave(function(){
+				config.canHide = true;
+			});
+			config.target.after(picker);
+			config.oper = {};
+			config.oper.leftBtn2 = picker.find('[f-id="leftBtn2"]').eq(0);
+			config.oper.leftBtn = picker.find('[f-id="leftBtn"]').eq(0);
+			config.oper.rightBtn = picker.find('[f-id="rightBtn"]').eq(0);
+			config.oper.rightBtn2 = picker.find('[f-id="rightBtn2"]').eq(0);
+			config.oper.year = picker.find('[f-id="year_combo"]').eq(0);
+			config.oper.month = picker.find('[f-id="month_combo"]').eq(0);
+			config.oper.body = picker.find('[f-id="body"]').eq(0);
+			config.oper.hours = picker.find('[f-id="input_hours"]').eq(0);
+			config.oper.minutes = picker.find('[f-id="input_minutes"]').eq(0);
+			config.oper.seconds = picker.find('[f-id="input_seconds"]').eq(0);
+			config.oper.todayBtn = picker.find('[f-id="todayBtn"]').eq(0);
+			config.oper.calBtn = picker.find('[f-id="calBtn"]').eq(0);
+			config.oper.okBtn = picker.find('[f-id="okBtn"]').eq(0);
+			if(!$.isArray(config.years)||config.years.length==0){
+				config.years = [];
+				for(var i = 2050;i>=1970;i--){
+					config.years.push(i);
+				}
+			}
+			$.each(config.years,function(i,y){
+				config.oper.year.append('<option value="'+y+'">'+y+'</option>');
+			});
+			if(!$.isArray(config.months)||config.months.length==0){
+				config.months = [1,2,3,4,5,6,7,8,9,10,11,12];
+			}
+			$.each(config.months,function(i,m){
+				config.oper.month.append('<option value="'+m+'">'+m+'</option>');
+			});
+			bodyBuilder(config);
+		}
+		function bodyBuilder(config){
+			var year = config.oper.year.val();
+			var month = config.oper.month.val();
+			
 		}
 		function show(config){
 			var position = config.target.position();
@@ -500,6 +604,9 @@
 					errMsg:undefined,
 					hint:undefined,
 					blur:function(){},
+					months:[],
+					defDate:new Date(),
+					years:[],
 					dsep:'-',
 					tsep:':',
 					select:function(){}
@@ -507,15 +614,21 @@
 				config.target = this;
 				input_init(config);
 				config.target.prop('readonly','readonly');
+				config.target.click(function(){
+					show(config);
+				});
 				config.target.blur(function(){
+					if(config.canHide){
+						hide(config);
+					}
 					config.blur.call(config.target);
 				});
 				pickerBuilder(config);
-				this.data('f_config',config);
+				this.data('f-config',config);
 				return this;
 			}else{
 				var fun = config;
-				config = this.data('f_config');
+				config = this.data('f-config');
 				switch(fun){
 				case 'getValue':return getValue(config);
 				case 'isValid':return isValid(config);
@@ -523,6 +636,6 @@
 				default:return undefined;
 				}
 			}
-		}
+		};
 	})();
 })(jQuery);

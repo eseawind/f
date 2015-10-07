@@ -33,8 +33,12 @@
 	</div>
 </form>
 </div>
+
 <script type="text/javascript">
 $(function(){
+	$('#sku').f_input_combobox({datas:[{k:'hello1',v:1},{k:'hello2',v:2},{k:'nihao',v:1},{k:'wangyang',v:2},{k:'guohui',v:1},{k:'fengming',v:2}]});
+	$('#brandId').f_combobox({datas:[{k:'hello1',v:1},{k:'hello2',v:2}]});
+	$('#time').f_input_datepicker({});
 })
 </script>
 </body>
