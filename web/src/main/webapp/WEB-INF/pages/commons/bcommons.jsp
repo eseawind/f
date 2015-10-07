@@ -10,5 +10,6 @@
 <script src="${staUrl }/res/bootstrap/js/bootstrap.min.js"></script>
 <script src="${staUrl }/res/showloading/js/jquery.showLoading.min.js"></script>
 <script src="${staUrl }/res/bootstrap/jquery.bootstrap.min.js"></script>
+<script src="${staUrl }/js/f.input.js"></script>
 <script src="${staUrl }/js/bf.js"></script>
 
