@@ -568,19 +568,19 @@
 			var picker = config.picker = 
 				$('<div style="background-color:white;border:1px solid #ccc;cursor:pointer;display:none">'
 					+'<div class="row text-center" style="margin:0;padding:5px 0">'
-					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<button type="button" f-id="leftBtn2" class="btn btn-xs"><i class="icon-double-angle-left"></i></button>'
 					+'		<button type="button" f-id="leftBtn" class="btn btn-xs"><i class="icon-angle-left"></i></button>'
 					+'	</div>'
-					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<select f-id="year_combo" style="font-size:10px;padding:0;height:22px;" class="form-control">'
 					+'		</select>'
 					+'	</div>'
-					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<select f-id="month_combo" style="font-size:10px;padding:0;height:22px;" class="form-control">'
 					+'		</select>'
 					+'	</div>'
-					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<button type="button" f-id="rightBtn" class="btn btn-xs"><i class="icon-angle-right"></i></button>'
 					+'		<button type="button" f-id="rightBtn2" class="btn btn-xs"><i class="icon-double-angle-right"></i></button>'
 					+'	</div>'
@@ -819,7 +819,6 @@
 		function bodyBuilder(config){
 			var year = parseInt(config.oper.year.val());
 			var month = parseInt(config.oper.month.val());
-			var day = parseInt(config.oper.value);
 			var body = config.oper.body;
 			var arr = [[]];
 			var days = 31;
@@ -884,7 +883,7 @@
 							td.css('background-color','#ccc');
 							config.oper.value = v;
 						}
-					})
+					});
 					tr.append(td);
 				});
 				body.append(tr);
@@ -954,6 +953,6 @@
 				}
 				input.f_input_datepicker(config);
 			});
-		})
+		});
 	})();
 })(jQuery);

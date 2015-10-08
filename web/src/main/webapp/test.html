@@ -121,18 +121,20 @@
 	<p>
 		$("#").f_dg({})支持列排序，改变列宽，行单击，行双击，check
 	</p>
-	<div id="dg">		
+	<div class="container">
+		<div id="dg"></div>	
 	</div>
+	<br/>
 	<pre>
 		$("#dg").f_dg({
-			fitColumn:false,//列宽改变时其他列自动改变
+			fitColumn:false,//true，width属性生效
 			check:false,//显示选择框
 			columns:[],//title,field,showTip,sort,formatter,width
 			page:1,//页数
 			url:'',//ajax地址
 			method:'GET',//ajax请求方式
-			rows:10,//每页行数
-			pages:[10,50,100,500,1000],
+			rows:20,//每页行数
+			pages:[20,50,100,500,1000],
 			defParam:{},//默认请求参数
 			click:function(index,data){
 			},
@@ -145,7 +147,7 @@
 			},//ajax请求成功调用
 			pagination:false,//是否分页
 			datas:{rows:[],count:0},//本地静态数据
-			rownumber:false,
+			rownumber:false,//显示行数
 			lazy:false,//数据懒加载
 			loadTip:'处理中...'//加载中的提示
 	})
@@ -192,11 +194,56 @@ $(function(){
 	});
 	$("#dg").f_dg({
 		fitColumn:false,
-		check:false,
-		columns:[],//title,field,showTip,sort,formatter,width
+		check:true,
+		rownumber:true,
+		columns:[{
+        	field:"id",title:"商品id",width:20
+        },{
+        	field:"sku",title:"商品货号",width:20
+        },{
+        	field:"goodsName",title:"商品名称",width:20,sort:true
+        },{
+        	field:"isSale",title:"状态",width:20,formatter:function(value){if(value==1){return '上架'}else if(value==2){return '下架'} else {return '删除'}}
+        },{
+        	field:"price",title:"价格",width:40
+		},{
+        	field:"marketPrice",title:"市场价格",width:20
+		},{
+        	field:"barCode",title:"条形码",width:20
+		},{
+        	field:"operatorName",title:"操作人"
+		},{
+        	field:"providerName",title:"供货商",showTip:true
+		},{
+			field:"isUseCoupon",title:"优惠券",width:20,formatter:function(v){
+				switch(parseInt(v)){
+				case 1:return "是";
+				case 0:return "否";
+				}
+			}
+		},{
+        	field:"isReal",title:"是否虚拟",width:20,formatter:function(value){if(value==0){return '否'}else if(value==1){return '是'}}
+		},{
+			field:'virtualNumber',title:'库存',width:20
+		},{
+			field:'limittype',title:'限制级别',width:20,formatter:function(value){switch(value){case 0:return '不限制';case 1:return '省';case 2:return '市';case 3:return '区';case 4:return '商圈';case 5:return '亭子'}}
+		},{
+        	field:"place",title:"场地",width:20
+		},{
+        	field:"remark",title:"备注",width:20
+		},{
+			field:'brandName',title:'品牌名称',width:20
+		},{
+        	field:"areaName",title:"范围",width:20
+		},{
+        	field:"createtime",title:"创建时间",width:20
+		},{
+        	field:"modifytime",title:"修改时间"
+		}],//title,field,showTip,sort,formatter,width
+		url:'/test_dg.json',
 		page:1,
-		rows:10,
-		pages:[10,50,100,500,1000],
+		rows:20,
+		pages:[20,50,100,500,1000],
 		defParam:{},
 		click:function(index,data){
 		},
@@ -207,9 +254,8 @@ $(function(){
 		filter:function(data){
 			return data;
 		},
-		pagination:false,
+		pagination:true,
 		datas:{rows:[],count:0},
-		rownumber:false,
 		lazy:false,
 		loadTip:'处理中...'
 	})

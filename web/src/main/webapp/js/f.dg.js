@@ -4,7 +4,7 @@
  */
 (function($){
 	function wrapContent(value,column){
-		var content = $('<div style="white-space:nowrap;overflow:hidden;text-overflow:clip"></div>');
+		var content = $('<div style="white-space:nowrap;overflow:hidden;text-overflow:clip;padding-right:5px"></div>');
 		if(column.showTip){
 			content.popover({
 				placement: "auto top",
@@ -64,7 +64,6 @@
 				}
 			});
 			td.append(span);
-			config.fitColumn&&column.width&&td.css('width',column.width);
 			var content = wrapContent(column.title,column);
 			td.append(content);
 			if(column.sort){
@@ -102,6 +101,10 @@
 				value = column.formatter.call(null,value,data);
 			}
 			var td = $('<td></td>');
+			if(config.fitColumn&&column.width){
+				td.css('width',column.width);
+				td.css('max-width', column.width);
+			}
 			td.append(wrapContent(value,column));
 			tr.append(td);
 		});
@@ -140,11 +143,11 @@
 		}
 	}
 	function pagiBuilder(config){
-		var sel = $('<select style="display:inline;float:left;padding:3.5px;border:1px solid #ccc;"></select>');
+		var sel = $('<select style="padding-bottom:5px;padding-top:5px;display:inline;float:left;border:1px solid #ccc;margin-right:1px"></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
-		var txt = $('<input value="1" style="width:66px;display:inline;float:left;padding:4.5px 5px 2.5px 5px;border:1px solid #ccc;"/>');
+		var txt = $('<input value="1" style="padding-bottom:7px;padding-top:5px;width:46px;display:inline;float:left;border:1px solid #ccc;margin-right:1px"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
@@ -159,7 +162,7 @@
 				txt.val(config.page);
 			}
 		});
-		var flush = $('<li><span><i class="icon-refresh"></i></span></li>');
+		var flush = $('<li><span style="border-width:0"><i class="icon-refresh"></i></span></li>');
 		flush.click(function(){
 			dataBuilder(config);
 		});
@@ -169,7 +172,7 @@
 			txt.val(config.page);
 			flush.click();
 		});
-		var pre = $('<li><span><i class="icon-caret-left"></i></span></li>');
+		var pre = $('<li><span style="border-width:0"><i class="icon-caret-left"></i></span></li>');
 		pre.click(function(){
 			if(config.page > 1){
 				config.page--;
@@ -177,7 +180,7 @@
 				flush.click();
 			}
 		});
-		var next = $('<li><span><i class="icon-caret-right"></i></span></li>');
+		var next = $('<li><span style="border-width:0"><i class="icon-caret-right"></i></span></li>');
 		next.click(function(){
 			if(config.page < pageCount(config)){
 				config.page++;
@@ -245,7 +248,7 @@
 	function datagridBuilder(config){
 		config.target.empty();
 		var table = $('<table class="table table-hover table-bordered table-condensed"></table>');
-		if(config.fitColumn){
+		if(!config.fitColumn){
 			table.css('table-layout','fixed');
 		}
 		if(config.fontSize){
