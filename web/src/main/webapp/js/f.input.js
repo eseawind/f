@@ -10,15 +10,15 @@
 		if(config.required){
 			var hint = '必填';
 			if(typeof config.hint == 'string'){
-				hint = hint +'|'+ config.hint;
+				hint = hint +' '+ config.hint;
 			}
 			config.target.attr('placeholder',hint);
 		}else if(typeof config.hint == 'string'){
-			config.target.attr('placeholder',config.hint);
+			config.target.attr('placeholder', config.hint);
 		}
 		if(config.errMsg && typeof config.errMsg == 'string'){
 			config.target.popover({
-				placement: "auto right",
+				placement: config.errDir||"auto right",
 				trigger: "manual",
 				content: config.errMsg
 			});
@@ -154,6 +154,7 @@
 		function comboboxBuilder(config){
 			config.body = $('<ul class="list-group" style="display:none;z-index:99999"></ul>');
 			config.body.css('position','absolute');
+			config.body.css('min-width',config.target.width());
 			config.canHide = true;
 			config.body.mouseenter(function(){
 				config.canHide = false;
@@ -205,9 +206,12 @@
 			});
 		}
 		function isValid(config){
+			var re = true;
 			if(getValue(config) == ''&&config.required){
 				errorTip(config);
+				re = false;
 			}
+			return re;
 		}
 		function show(config){
 			var position = config.target.position();
@@ -331,6 +335,7 @@
 				if(typeof config.regex == 'string'&&!(new RegExp(config.regex)).test(value))re = false;
 			}
 			if(!re)errorTip(config);
+			return re;
 		};
 		$.fn.f_input_text = function(config){
 			if(this.get(0).tagName != 'INPUT'){
@@ -400,9 +405,12 @@
 			config.target.children('option[value="'+value+'"]').prop('selected','selected');
 		}
 		function isValid(config){
+			var re = true;
 			if(!getValue(config)&&config.required){
 				errorTip(config);
+				re = false;
 			}
+			return re;
 		}
 		$.fn.f_combobox = function(config){
 			if(this.get(0).tagName != 'SELECT'){
@@ -472,17 +480,97 @@
 	//input datetimepicker
 	(function(){
 		function isValid(config){
+			var re = true;
 			if(getValue(config) == ''&&config.required){
 				errorTip(config);
+				re = false;
 			}
+			return re;
+		}
+		function getDate(config){
+			if(config.tsep){
+				return new Date(config.oper.year.val(),config.oper.month.val()-1,config.oper.value,config.oper.hours.val(),config.oper.minutes.val(),config.oper.seconds.val());
+			}
+			return new Date(config.oper.year.val(),config.oper.month.val()-1,config.oper.value);
+		}
+		function getValue(config){
+			var year = config.oper.year.val();
+			var month = parseInt(config.oper.month.val());
+			var day = parseInt(config.oper.value);
+			var value = year + config.dsep;
+			if(month < 10){
+				month = '0' + month;
+			}
+			value = value + month + config.dsep;
+			if(day < 10){
+				day = '0' + day;
+			}
+			value = value + day;
+			if(config.tsep){
+				value = value + config.sep;
+				var h = parseInt(config.oper.hours.val());
+				var m = parseInt(config.oper.minutes.val());
+				var s = parseInt(config.oper.seconds.val());
+				if(h < 10){
+					h = '0' + h;
+				}
+				if(m < 10){
+					m = '0' + m;
+				}
+				if(s < 10){
+					s = '0' + s;
+				}
+				value = value + h + config.tsep;
+				value = value + m + config.tsep;
+				value = value + s;
+			}
+			return value;
+		}
+		function setValue(config,date){
+			var year = config.oper.year.val();
+			var month = config.oper.month.val();
+			config.oper.year.val(date.getFullYear());
+			if(config.oper.year.val()){
+				config.oper.month.val(date.getMonth()+1);
+				if(config.oper.month.val()){
+					config.oper.value = date.getDate();
+					if(config.tsep){
+						config.oper.hours.val(date.getHours());
+						config.oper.minutes.val(date.getMinutes());
+						config.oper.seconds.val(date.getSeconds());
+					}
+					bodyBuilder(config);
+					config.target.val(getValue(config));
+				}else{
+					config.oper.year.val(year);
+					config.oper.month.val(month);
+				}
+			}else{
+				config.oper.year.val(year);
+			}
+		}
+		function keypress(key){
+			if(key == 8)return true;
+			if(key>=48&&key<=57){
+				return true;
+			}
+			return false;
+		}
+		function selectedIndex(arr,v){
+			for(var i = 0;i<arr.length;i++){
+				if(arr[i] == v){
+					return i;
+				}
+			}
+			return -1;
 		}
 		function pickerBuilder(config){
 			var picker = config.picker = 
 				$('<div style="background-color:white;border:1px solid #ccc;cursor:pointer;display:none">'
 					+'<div class="row text-center" style="margin:0;padding:5px 0">'
 					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
-					+'		<button type="button" f-id="leftBtn2" class="btn btn-xs"><i class="icon-angle-left"></i></button>'
-					+'		<button type="button" f-id="leftBtn" class="btn btn-xs"><i class="icon-double-angle-left"></i></button>'
+					+'		<button type="button" f-id="leftBtn2" class="btn btn-xs"><i class="icon-double-angle-left"></i></button>'
+					+'		<button type="button" f-id="leftBtn" class="btn btn-xs"><i class="icon-angle-left"></i></button>'
 					+'	</div>'
 					+'	<div class="col-md-3 col-xs-4 col-sm-4" style="padding:0">'
 					+'		<select f-id="year_combo" style="font-size:10px;padding:0;height:22px;" class="form-control">'
@@ -497,7 +585,7 @@
 					+'		<button type="button" f-id="rightBtn2" class="btn btn-xs"><i class="icon-double-angle-right"></i></button>'
 					+'	</div>'
 					+'</div>'
-					+'<table class="table table-condensed table-bordered text-center" style="font-size:10px">'
+					+'<table class="table table-condensed table-bordered text-center" style="font-size:10px;margin:0">'
 					+'	<thead>'
 					+'		<tr>'
 					+'			<td>日</td>'
@@ -512,7 +600,7 @@
 					+'	<tbody f-id="body">'
 					+'	</tbody>'
 					+'</table>'
-					+'<div class="row text-center" style="font-size:10px;margin:0;border-top:1px solid #ccc;padding:5px 0 5px 0">'
+					+'<div f-id="time" class="row text-center" style="font-size:10px;margin:0;border-top:1px solid #ccc;padding:5px 0 5px 0">'
 					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
 					+'		<span>时</span>'
 					+'		<input style="width:20px" f-id="input_hours"/>'
@@ -531,7 +619,7 @@
 					+'		<button class="btn btn-xs" f-id="todayBtn" style="font-size:10px">今天</button>'
 					+'	</div>'
 					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
-					+'		<button class="btn btn-xs" f-id="calBtn" style="font-size:10px">取消</button>'
+					+'		<button class="btn btn-xs" f-id="celBtn" style="font-size:10px">取消</button>'
 					+'	</div>'
 					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
 					+'		<button class="btn btn-xs" f-id="okBtn" style="font-size:10px">确定</button>'
@@ -549,7 +637,7 @@
 				config.canHide = true;
 			});
 			config.target.after(picker);
-			config.oper = {};
+			config.oper = {value:config.defDate.getDate()};
 			config.oper.leftBtn2 = picker.find('[f-id="leftBtn2"]').eq(0);
 			config.oper.leftBtn = picker.find('[f-id="leftBtn"]').eq(0);
 			config.oper.rightBtn = picker.find('[f-id="rightBtn"]').eq(0);
@@ -557,15 +645,16 @@
 			config.oper.year = picker.find('[f-id="year_combo"]').eq(0);
 			config.oper.month = picker.find('[f-id="month_combo"]').eq(0);
 			config.oper.body = picker.find('[f-id="body"]').eq(0);
+			config.oper.time = picker.find('[f-id="time"]').eq(0);
 			config.oper.hours = picker.find('[f-id="input_hours"]').eq(0);
 			config.oper.minutes = picker.find('[f-id="input_minutes"]').eq(0);
 			config.oper.seconds = picker.find('[f-id="input_seconds"]').eq(0);
 			config.oper.todayBtn = picker.find('[f-id="todayBtn"]').eq(0);
-			config.oper.calBtn = picker.find('[f-id="calBtn"]').eq(0);
+			config.oper.celBtn = picker.find('[f-id="celBtn"]').eq(0);
 			config.oper.okBtn = picker.find('[f-id="okBtn"]').eq(0);
 			if(!$.isArray(config.years)||config.years.length==0){
 				config.years = [];
-				for(var i = 2050;i>=1970;i--){
+				for(var i = 1970;i<3000;i++){
 					config.years.push(i);
 				}
 			}
@@ -576,14 +665,230 @@
 				config.months = [1,2,3,4,5,6,7,8,9,10,11,12];
 			}
 			$.each(config.months,function(i,m){
+				if(m<1||m>12)return;
 				config.oper.month.append('<option value="'+m+'">'+m+'</option>');
 			});
+			config.oper.year.val(config.defDate.getFullYear());
+			if(!config.oper.year.val()){
+				config.oper.year.val(config.years[0]);
+			}
+			config.oper.month.val(config.defDate.getMonth()+1);
+			if(!config.oper.month.val()){
+				config.oper.month.val(config.months[0]);
+			}
+			config.oper.year.change(function(){
+				bodyBuilder(config);
+			});
+			config.oper.month.change(function(){
+				bodyBuilder(config);
+			});
+			//顶部按钮事件
+			config.oper.leftBtn2.click(function(e){
+				var i = selectedIndex(config.years,config.oper.year.val());
+				if(i > 0){
+					config.oper.year.val(config.years[i-1]);
+					bodyBuilder(config);
+				}
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.leftBtn.click(function(e){
+				var i = selectedIndex(config.months,config.oper.month.val());
+				if(i > 0){
+					config.oper.month.val(config.months[i-1]);
+					bodyBuilder(config);
+				}
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.rightBtn.click(function(e){
+				var i = selectedIndex(config.months,config.oper.month.val());
+				if(i < config.months.length - 1){
+					config.oper.month.val(config.months[i+1]);
+					bodyBuilder(config);
+				}
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.rightBtn2.click(function(e){
+				var i = selectedIndex(config.years,config.oper.year.val());
+				if(i < config.years.length - 1){
+					config.oper.year.val(config.years[i+1]);
+					bodyBuilder(config);
+				}
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			//底部按钮事件
+			config.oper.todayBtn.click(function(e){
+				config.oper.year.val(config.defDate.getFullYear());
+				if(config.oper.year.val()){
+					config.oper.month.val(config.defDate.getMonth()+1);
+					if(config.oper.month.val()){
+						config.oper.value = config.defDate.getDate();
+					}else{
+						config.oper.month.val(config.months[0]);
+					}
+				}else{
+					config.oper.year.val(config.years[0]);
+				}
+				bodyBuilder(config);
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.celBtn.click(function(e){
+				hide(config);
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.okBtn.click(function(e){
+				var value = getValue(config);
+				config.target.val(value);
+				hide(config);
+				config.select.call(config.target);
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			//时间框事件
+			if(config.tsep){
+				config.oper.hours.val(config.defDate.getHours());
+				config.oper.minutes.val(config.defDate.getMinutes());
+				config.oper.seconds.val(config.defDate.getSeconds());
+				config.oper.hours.keypress(function(e){
+					if(!keypress(e.which)){
+						e.preventDefault();
+					}
+				});
+				config.oper.minutes.keypress(function(e){
+					if(!keypress(e.which)){
+						e.preventDefault();
+					}
+				});
+				config.oper.seconds.keypress(function(e){
+					if(!keypress(e.which)){
+						e.preventDefault();
+					}
+				});
+				config.oper.hours.keyup(function(){
+					var value = parseInt(config.oper.hours.val());
+					if(!value){
+						value = 0;
+					}else{
+						if(value<0||value>=24){
+							value = 0;
+						}
+					}
+					config.oper.hours.val(value);
+				});
+				config.oper.minutes.keyup(function(){
+					var value = parseInt(config.oper.minutes.val());
+					if(!value){
+						value = 0;
+					}else{
+						if(value<0||value>=60){
+							value = 0;
+						}
+					}
+					config.oper.minutes.val(value);
+				});
+				config.oper.seconds.keyup(function(){
+					var value = parseInt(config.oper.seconds.val());
+					if(!value){
+						value = 0;
+					}else{
+						if(value<0||value>=60){
+							value = 0;
+						}
+					}
+					config.oper.seconds.val(value);
+				});
+				config.oper.hours.focus(function(){
+					$(this).select();
+				});
+				config.oper.minutes.focus(function(){
+					$(this).select();
+				});
+				config.oper.seconds.focus(function(){
+					$(this).select();
+				});
+			}else{
+				config.oper.time.hide();
+			}
 			bodyBuilder(config);
 		}
 		function bodyBuilder(config){
-			var year = config.oper.year.val();
-			var month = config.oper.month.val();
-			
+			var year = parseInt(config.oper.year.val());
+			var month = parseInt(config.oper.month.val());
+			var day = parseInt(config.oper.value);
+			var body = config.oper.body;
+			var arr = [[]];
+			var days = 31;
+			//计算每月天数
+			if((month<=7&&month%2==0)||(month>=8&&month%2==1)){
+				days = 30;
+			}
+			if(month == 2){
+				days = 28;
+				if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
+					days = 29;
+				}
+			}
+			var j = (new Date(year,month-1,1).getDay());
+			for(var i=0;i<j;i++){
+				arr[0].push('');
+			}
+			for(var i=0,x=0;i<days;i++){
+				arr[x][j] = i+1;
+				if(j == 6&&i<days-1){
+					arr.push([]);
+					j = 0;
+					x++;
+				}else{
+					j++;
+				}
+			}
+			for(var i=7-arr[arr.length-1].length;i>0;i--){
+				arr[arr.length-1].push('');
+			}
+			body.empty();
+			$.each(arr,function(i,arr1){
+				var tr = $('<tr></tr>');
+				$.each(arr1,function(i,v){
+					var td = $('<td f-value="'+v+'">'+v+'</td>');
+					//处理换月最后一天天数异常
+					if(v >= 28){
+						if(month == 2){
+							if(year % 4 == 0 && year % 100 != 0 || year % 400 == 0){
+								if(config.oper.value > 29&&v==29){
+									config.oper.value = 29;
+								}
+							}else{
+								if(config.oper.value > 28&&v==28){
+									config.oper.value = 28;
+								}
+							}
+						}else if((month<=7&&month%2==0)||(month>=8&&month%2==1)){
+							if(config.oper.value > 30&&v==30){
+								config.oper.value = 30;
+							}
+						}
+					}
+					if(config.oper.value == v){
+						td.css('background-color','#ccc');
+					}else{
+						td.css('background-color','#fff');
+					}
+					td.click(function(){
+						if(td.attr('f-value') != ''){
+							body.find('td').css('background-color','#fff');
+							td.css('background-color','#ccc');
+							config.oper.value = v;
+						}
+					})
+					tr.append(td);
+				});
+				body.append(tr);
+			});
 		}
 		function show(config){
 			var position = config.target.position();
@@ -609,6 +914,7 @@
 					years:[],
 					dsep:'-',
 					tsep:':',
+					sep:' ',
 					select:function(){}
 				},config);
 				config.target = this;
@@ -631,11 +937,23 @@
 				config = this.data('f-config');
 				switch(fun){
 				case 'getValue':return getValue(config);
+				case 'getDate':return getDate(config);
 				case 'isValid':return isValid(config);
 				case 'setValue':setValue(config,arguments[1]);break;
 				default:return undefined;
 				}
 			}
 		};
+		$(function(){
+			$('input[f-type="datepicker"]').each(function(){
+				var input = $(this);
+				var config = {};
+				var options = input.attr('f-options');
+				if(options){
+					config = configBuilder(options);
+				}
+				input.f_input_datepicker(config);
+			});
+		})
 	})();
 })(jQuery);
