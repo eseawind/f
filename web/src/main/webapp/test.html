@@ -89,10 +89,10 @@
 	<p>
 		combobox 支持数据过滤 ajax数据过滤（查询条件最后跟空格）
 	</p>
-	<input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',url:'/test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/>
+	<input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',url:'test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/>
 	<pre>
 		&lt;input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',
-		url:'/test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/&gt;
+		url:'test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/&gt;
 	</pre>
 	
 	<input id="input_combobox" class="form-control"/>
@@ -113,7 +113,7 @@
 	})
 	</pre>
 	<h3>5.f_combobox</h3>
-	<select f-type="combobox" class="form-control" f-options="url:'/test_combobox.json'"></select>
+	<select f-type="combobox" class="form-control" f-options="url:'test_combobox.json'"></select>
 	<pre>
 		$("#id").f_combobox({
 			required:false,
@@ -235,7 +235,7 @@ $(function(){
 				return '<button onclick="beginEdit('+rowIndex+')">编辑</button><button onclick="celEdit('+rowIndex+')">取消</button><button onclick="endEdit('+rowIndex+')">保存</button>'
 			}
 		}],//title,field,showTip,sort,formatter,width
-		url:'/test_dg.json',
+		url:'test_dg.json',
 		page:1,
 		rows:20,
 		pages:[20,50,100,500,1000],
