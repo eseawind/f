@@ -193,7 +193,7 @@ $(function(){
 		select:function(option){}
 	});
 	$("#dg").f_dg({
-		fitColumn:false,
+		fitColumn:true,
 		check:true,
 		rownumber:true,
 		columns:[{
@@ -201,7 +201,7 @@ $(function(){
         },{
         	field:"sku",title:"商品货号",width:20
         },{
-        	field:"goodsName",title:"商品名称",width:20,sort:true
+        	field:"goodsName",title:"商品名称",width:120,sort:true
         },{
         	field:"isSale",title:"状态",width:20,formatter:function(value){if(value==1){return '上架'}else if(value==2){return '下架'} else {return '删除'}}
         },{
@@ -258,7 +258,7 @@ $(function(){
 		datas:{rows:[],count:0},
 		lazy:false,
 		loadTip:'处理中...'
-	})
+	});
 })
 </script>
 </div>

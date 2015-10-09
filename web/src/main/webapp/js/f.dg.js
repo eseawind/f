@@ -162,6 +162,14 @@
 				txt.val(config.page);
 			}
 		});
+		txt.keypress(function(e){
+			if(e.which == 8){
+				return;
+			}
+			if(e.which<48||e.which>57){
+				e.preventDefault();
+			}
+		});
 		var flush = $('<li><span style="border-width:0"><i class="icon-refresh"></i></span></li>');
 		flush.click(function(){
 			dataBuilder(config);
@@ -189,7 +197,7 @@
 			}
 		});
 		var btnDiv = $('<ul class="pagination  col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
-		var pagiinfo = $('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;padding:5px"><li><span></span></li></ul>');
+		var pagiinfo = $('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;padding:5px"></ul>');
 		var pagiDiv = $('<nav style="min-width:520px;color:#337AB7"></nav>');
 		btnDiv.append($('<span></span>').append(sel));
 		btnDiv.append(pre);
