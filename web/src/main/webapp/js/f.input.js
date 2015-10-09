@@ -30,9 +30,15 @@
 		config.defValue = config.target.val();
 		config.target.blur(function(){
 			if(config.defValue == $(this).val()){
-				$(this).attr('f-change', false);
+				$(this).data('f-change', false);
 			}else{
-				$(this).attr('f-change', true);
+				$(this).data('f-change', true);
+			}
+		});
+		config.target.focus(function(){
+			var obj = $(this);
+			if(obj.get(0).tagName == 'INPUT'){
+				obj.select();
 			}
 		});
 	}
@@ -125,7 +131,7 @@
 					}
 				});
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_number');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -136,6 +142,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="number"]').each(function(){
@@ -198,12 +205,18 @@
 				option.click(function(e){
 					config.target.data('f-value',d[config.valueField]);
 					config.target.val(d[config.textField]);
+					if(config.defValue == d[config.textField]){
+						config.target.data('f-change', false);
+					}else{
+						config.target.data('f-change', true);
+					}
 					hide(config);
 					config.select.call(null,d);
 					e.stopPropagation();
 					e.preventDefault();
 				});
 			});
+			config.renderAfter.call(config.target,config.datas);
 		}
 		function isValid(config){
 			var re = true;
@@ -255,8 +268,9 @@
 					blur:function(){},
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data;},
+					filter:function(datas){return datas;},
 					url:'',
+					renderAfter:function(datas){},
 					datas:[],
 					textField:'k',
 					valueField:'v',
@@ -298,7 +312,7 @@
 				});
 				comboboxBuilder(config);
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_combobox');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -309,6 +323,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="input_combobox"]').each(function(){
@@ -357,7 +372,7 @@
 					config.blur.call(config.target);
 				});
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_text');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -368,6 +383,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="text"]').each(function(){
@@ -388,6 +404,7 @@
 			$.each(config.datas,function(i,d){
 				config.target.append('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
 			});
+			config.renderAfter.call(config.target,config.datas);
 		}
 		function getValue(config){
 			return config.target.children('option:selected').val();
@@ -420,10 +437,12 @@
 				config = $.extend({
 					required:false,
 					datas:[],
+					url:'',
 					errMsg:undefined,
+					renderAfter:function(datas){},
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data;},
+					filter:function(datas){return datas;},
 					valueField:'v',
 					textField:'k'
 				},config);
@@ -450,7 +469,7 @@
 					comboboxBuilder(config);
 				}
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_combobox');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -463,6 +482,7 @@
 				default:return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('select[f-type="combobox"]').each(function(){
@@ -527,6 +547,10 @@
 			return value;
 		}
 		function setValue(config,date){
+			if(typeof date == 'string'){
+				config.target.val(date);
+				return;
+			}
 			var year = config.oper.year.val();
 			var month = config.oper.month.val();
 			config.oper.year.val(date.getFullYear());
@@ -653,10 +677,7 @@
 			config.oper.celBtn = picker.find('[f-id="celBtn"]').eq(0);
 			config.oper.okBtn = picker.find('[f-id="okBtn"]').eq(0);
 			if(!$.isArray(config.years)||config.years.length==0){
-				config.years = [];
-				for(var i = 1970;i<3000;i++){
-					config.years.push(i);
-				}
+				config.years = [1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050];
 			}
 			$.each(config.years,function(i,y){
 				config.oper.year.append('<option value="'+y+'">'+y+'</option>');
@@ -744,6 +765,11 @@
 			config.oper.okBtn.click(function(e){
 				var value = getValue(config);
 				config.target.val(value);
+				if(config.defValue == value){
+					config.target.data('f-change',false);
+				}else{
+					config.target.data('f-change',true);
+				}
 				hide(config);
 				config.select.call(config.target);
 				e.preventDefault();
@@ -930,7 +956,7 @@
 				});
 				pickerBuilder(config);
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_datepicker');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -942,6 +968,7 @@
 				default:return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="datepicker"]').each(function(){
