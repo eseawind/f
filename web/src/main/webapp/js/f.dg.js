@@ -1,5 +1,5 @@
 /**
- * 依赖bootstrap 3 css jquery showloading (awesome bootstrap)
+ * 依赖bootstrap 3 css jquery (awesome bootstrap)
  * jquery 1.11
  */
 (function($){
@@ -88,6 +88,8 @@
 		thead.append(tr);
 	}
 	function rowBuilder(rowIndex,data,tr,config){
+		tr.empty();
+		tr.data('f-editor',false);
 		tr.css("cursor","pointer");
 		if(config.rownumber){
 			tr.append('<td style="background-color: #e6e6e6;font-size:14px">'+(rowIndex+(config.page-1)*config.rows+1)+'</td>');
@@ -98,7 +100,7 @@
 		$.each(config.columns,function(i,column){
 			var value = data[column.field];
 			if($.isFunction(column.formatter)){
-				value = column.formatter.call(null,value,data);
+				value = column.formatter.call(null,value,data,rowIndex);
 			}
 			var td = $('<td></td>');
 			if(config.fitColumn&&column.width){
@@ -143,11 +145,11 @@
 		}
 	}
 	function pagiBuilder(config){
-		var sel = $('<select style="padding-bottom:5px;padding-top:5px;display:inline;float:left;border:1px solid #ccc;margin-right:1px"></select>');
+		var sel = $('<select class="form-control" style="width:70px;margin-right:1px;display:inline-block;float:left"></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
-		var txt = $('<input value="1" style="padding-bottom:7px;padding-top:5px;width:46px;display:inline;float:left;border:1px solid #ccc;margin-right:1px"/>');
+		var txt = $('<input value="1" class="form-control" style="width:60px;margin-right:1px;display:inline-block;float:left"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
@@ -162,7 +164,16 @@
 				txt.val(config.page);
 			}
 		});
-		var flush = $('<li><span style="border-width:0"><i class="icon-refresh"></i></span></li>');
+		txt.keypress(function(e){
+			if(e.which == 8){
+				return;
+			}
+			if(e.which<48||e.which>57){
+				e.preventDefault();
+			}
+		});
+		var flush = $('<li><span class="btn"><i class="icon-refresh"></i></span></li>');
+		flush.css('cursor','pointer');
 		flush.click(function(){
 			dataBuilder(config);
 		});
@@ -172,7 +183,8 @@
 			txt.val(config.page);
 			flush.click();
 		});
-		var pre = $('<li><span style="border-width:0"><i class="icon-caret-left"></i></span></li>');
+		var pre = $('<li><span class="btn"><i class="icon-caret-left"></i></span></li>');
+		pre.css('cursor','pointer');
 		pre.click(function(){
 			if(config.page > 1){
 				config.page--;
@@ -180,7 +192,8 @@
 				flush.click();
 			}
 		});
-		var next = $('<li><span style="border-width:0"><i class="icon-caret-right"></i></span></li>');
+		var next = $('<li><span class="btn"><i class="icon-caret-right"></i></span></li>');
+		next.css('cursor','pointer');
 		next.click(function(){
 			if(config.page < pageCount(config)){
 				config.page++;
@@ -188,8 +201,8 @@
 				flush.click();
 			}
 		});
-		var btnDiv = $('<ul class="pagination  col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
-		var pagiinfo = $('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;padding:5px"><li><span></span></li></ul>');
+		var btnDiv = $('<ul class="pagination col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
+		var pagiinfo = $('<span class="btn"><span>');
 		var pagiDiv = $('<nav style="min-width:520px;color:#337AB7"></nav>');
 		btnDiv.append($('<span></span>').append(sel));
 		btnDiv.append(pre);
@@ -197,7 +210,7 @@
 		btnDiv.append(next);
 		btnDiv.append(flush);
 		pagiDiv.append(btnDiv);
-		pagiDiv.append(pagiinfo);
+		pagiDiv.append($('<ul class="pagination col-md-9 col-sm-7 col-xs-5 text-right" style="margin:0;"></ul>').append(pagiinfo));
 		config.target.append(pagiDiv);
 		config.pagiinfo = pagiinfo;
 	}
@@ -215,7 +228,7 @@
 				param.rows = config.rows;
 			}
 			try{
-				config.target.showLoading({loadTip:config.loadTip});
+				config.target.startMask({maskTip:config.maskTip});
 			}catch(e){
 				console.log(e);
 			}
@@ -223,7 +236,7 @@
 				url:config.url,
 				type:config.method||'GET',
 				cache:false,
-				dataType:"json",
+				dataType:config.ajaxType||"json",
 				data:param,
 				success:function(datas,ts){
 					datas = config.filter.call(null,datas);
@@ -235,7 +248,7 @@
 				},
 				complete:function(){
 					try{
-						config.target.hideLoading();
+						config.target.closeMask();
 					}catch(e){
 						console.log(e);
 					}
@@ -272,13 +285,15 @@
 	$.fn.f_dg = function(config){
 		if($.isPlainObject(config)){
 			config.target = this;
+			config.target.css('border','1px solid #ccc');
 			config = $.extend({
 				fitColumn:false,
 				check:false,
-				columns:[],//title,field,showTip,sort,formatter,width
+				columns:[],//title,field,showTip,sort,formatter(value,rowData,rowIndex),width,editor:{type:'',options:{}}|'text'|'number'|'combobox'|'select'|'datepicker'
 				page:1,
 				rows:10,
-				pages:[10,50,100,500,1000],
+				pages:[10,50,100,500],
+				ajaxType:'json',
 				defParam:{},
 				click:function(index,data){
 				},
@@ -293,7 +308,10 @@
 				datas:{rows:[],count:0},
 				rownumber:false,
 				lazy:false,
-				loadTip:'处理中...'
+				maskTip:'处理中...',
+				beginEdit:function(index,rowData){},
+				endEdit:function(index,rowData,changes){return true;},
+				celEdit:function(index,rowData){}
 			},config);
 			if(!config.lazy){
 				datagridBuilder(config);
@@ -310,11 +328,131 @@
 			case 'load':load(config,arguments[1]);break;
 			case 'addRow':addRow(config,arguments[1],arguments[2]);break;
 			case 'delRow':delRow(config,arguments[1]);break;
+			case 'beginEdit':beginEdit(config,arguments[1]);break;
+			case 'endEdit':endEdit(config,arguments[1]);break;
+			case 'celEdit':celEdit(config,arguments[1]);break;
 			default: return undefined;
 			}
 		}
 		return this;
 	};
+	function beginEdit(config,index){
+		var tr = config.body.children('[f-id="'+index+'"]');
+		if(tr.length == 1){
+			tr = tr.eq(0);
+			if(tr.data('f-editor')){
+				return;
+			}
+			tr.data('f-editor',true);
+			var tds = tr.children('td');
+			var s = 0;
+			if(config.rownumber)s++;
+			if(config.check)s++;
+			tds.each(function(i){
+				var td = $(this);
+				if(i>=s){
+					var column = config.columns[i-s];
+					if($.isPlainObject(column.editor)||typeof column.editor == 'string'){
+						var type = column.editor.type||column.editor;
+						type = $.trim(type);
+						var options = $.extend({},column.editor.options);
+						if(type == 'select'){
+							var select = $('<select class="form-control" style="padding:0"></select>');
+							td.empty();
+							td.append(select);
+							if(options.url){
+								var renderAfter = options.renderAfter;
+								options.renderAfter = function(datas){
+									if(config.datas.rows[index][column.field] != undefined){
+										select.f_combobox('setValue', config.datas.rows[index][column.field]);
+									}
+									renderAfter&&renderAfter.call(select,datas);
+								};
+							}
+							select.f_combobox(options);
+							if(!options.url){
+								if(config.datas.rows[index][column.field] != undefined){
+									select.f_combobox('setValue', config.datas.rows[index][column.field]);
+								}
+							}
+							td.data('f-editor',select);
+						}else{
+							var input = $('<input class="form-control" style="padding:0"/>');
+							td.empty();
+							td.append(input);
+							var fun = 'f_input_'+type;
+							if(config.datas.rows[index][column.field] != undefined){
+								if(type == 'combobox'&&options.url){
+									var renderAfter = options.renderAfter;
+									options.renderAfter = function(datas){
+										if(config.datas.rows[index][column.field] != undefined){
+											input[fun].call(input,'setValue',config.datas.rows[index][column.field]);
+										}
+										renderAfter&&renderAfter.call(input,datas);
+									};
+									input[fun].call(input,options);
+								}else{
+									input[fun].call(input,options);
+									input[fun].call(input,'setValue',config.datas.rows[index][column.field]);
+								}
+							}
+							td.data('f-editor',input);
+						}
+					}
+				}
+			});
+			config.beginEdit.call(null,index,config.datas.rows[index]);
+		}
+	}
+	function endEdit(config,index){
+		var tr = config.body.children('[f-id="'+index+'"]');
+		if(tr.length == 1){
+			tr = tr.eq(0);
+			if(!tr.data('f-editor')){
+				return;
+			}
+			var tds = tr.children('td');
+			var s = 0;
+			if(config.rownumber)s++;
+			if(config.check)s++;
+			var validSuc = true;
+			var changes = {};
+			tds.each(function(i){
+				var td = $(this);
+				if(i>=s){
+					var column = config.columns[i-s];
+					if($.isPlainObject(column.editor)||typeof column.editor == 'string'){
+						var obj = td.data('f-editor');
+						if(!obj[obj.data('f-name')].call(obj,'isValid')){
+							validSuc = false;
+						}
+						if(obj.data('f-change')){
+							changes[column.field] = obj[obj.data('f-name')].call(obj,'getValue');
+						}
+					}
+				}
+			});
+			if(validSuc){
+				if(config.endEdit.call(null,index,config.datas.rows[index],changes)){
+					$.extend(config.datas.rows[index],changes);
+				}
+				rowBuilder(index,config.datas.rows[index],tr,config);
+				tr.data('f-editor',false);
+			}
+		}
+	}
+	function celEdit(config,index){
+		var tr = config.body.children('[f-id="'+index+'"]');
+		if(tr.length == 1){
+			tr = tr.eq(0);
+			if(!tr.data('f-editor')){
+				return;
+			}
+			config.celEdit.call(null,index,config.datas.rows[index]);
+			rowBuilder(index,config.datas.rows[index],tr,config);
+			tr.data('f-editor',false);
+		}
+	}
 	function getSelected(config){
 		var obj = config.target.find('tr[f-active="true"]');
 		if(obj.length == 0){
@@ -347,17 +485,19 @@
 	function addRow(config,data,index){
 		index = parseInt(index);
 		if(index>=0){
-			config.datas.splice(index,0,data);
+			config.datas.rows.splice(index,0,data);
 		}else{
-			config.datas.push(data);
+			config.datas.rows.push(data);
 		}
+		config.datas.count++;
 		dataBuilder(config);
 	}
 	function delRow(config,index){
 		index = parseInt(index);
 		if(index>=0){
-			config.datas.splice(index,1);
+			config.datas.rows.splice(index,1);
+			config.datas.count--;
+			dataBuilder(config);
 		}
-		dataBuilder(config);
 	}
 })(jQuery);

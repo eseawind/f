@@ -27,12 +27,10 @@
 	function input_init(config){
 		config.border = config.target.css('border');
 		input_init_hint(config);
-		config.defValue = config.target.val();
-		config.target.blur(function(){
-			if(config.defValue == $(this).val()){
-				$(this).attr('f-change', false);
-			}else{
-				$(this).attr('f-change', true);
+		config.target.focus(function(){
+			var obj = $(this);
+			if(obj.get(0).tagName == 'INPUT'){
+				obj.select();
 			}
 		});
 	}
@@ -115,7 +113,13 @@
 				},config);
 				config.target = this;
 				input_init(config);
+				config.defValue = config.target.val();
 				config.target.blur(function(){
+					if(config.defValue == getValue(config)){
+						$(this).data('f-change', false);
+					}else{
+						$(this).data('f-change', true);
+					}
 					config.blur.call(config.target);
 				});
 				config.target.keypress(function(e){
@@ -125,7 +129,7 @@
 					}
 				});
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_number');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -136,6 +140,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="number"]').each(function(){
@@ -174,7 +179,7 @@
 					url:config.url,
 					cache:false,
 					data:param,
-					dataType:'json',
+					dataType:config.ajaxType||'json',
 					type:config.method||'GET',
 					success:function(data){
 						config.datas = config.filter.call(null,data);
@@ -199,11 +204,17 @@
 					config.target.data('f-value',d[config.valueField]);
 					config.target.val(d[config.textField]);
 					hide(config);
-					config.select.call(null,d);
+					if(config.defValue == getValue(config)){
+						config.target.data('f-change', false);
+					}else{
+						config.target.data('f-change', true);
+					}
+					config.select.call(config.target,d);
 					e.stopPropagation();
 					e.preventDefault();
 				});
 			});
+			config.renderAfter.call(config.target,config.datas);
 		}
 		function isValid(config){
 			var re = true;
@@ -231,18 +242,14 @@
 		function setValue(config,value){
 			$.each(config.datas,function(i,d){
 				if(d[config.valueField] == value){
-					config.defValue = d[config.textField];
+					config.defValue = value;
 					config.target.data('f-value',value);
 					config.target.val(d[config.textField]);
 				}
 			});
 		}
 		function getValue(config){
-			var value = config.target.data('f-value');
-			if(value){
-				return value;
-			}
-			return '';
+			return config.target.data('f-value')||'';
 		}
 		$.fn.f_input_combobox = function(config){
 			if(this.get(0).tagName != 'INPUT'){
@@ -255,8 +262,10 @@
 					blur:function(){},
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data;},
+					filter:function(datas){return datas;},
 					url:'',
+					ajaxType:'json',
+					renderAfter:function(datas){},
 					datas:[],
 					textField:'k',
 					valueField:'v',
@@ -266,6 +275,7 @@
 				config.target = this;
 				config.initDatas = config.datas;
 				input_init(config);
+				config.defValue = '';
 				config.target.focus(function(){
 					show(config);
 				});
@@ -298,7 +308,7 @@
 				});
 				comboboxBuilder(config);
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_combobox');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -309,6 +319,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="input_combobox"]').each(function(){
@@ -349,15 +360,22 @@
 					regex:undefined,
 					maxLength: Infinity,
 					minLength: 0,
+					formatter:function(text){return text},
 					blur:function(){}
 				},config);
 				config.target = this;
 				input_init(config);
+				config.defValue = config.target.val();
 				config.target.blur(function(){
+					if(config.defValue == getValue(config)){
+						$(this).data('f-change', false);
+					}else{
+						$(this).data('f-change', true);
+					}
 					config.blur.call(config.target);
 				});
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_text');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -368,6 +386,7 @@
 				default: return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="text"]').each(function(){
@@ -388,12 +407,13 @@
 			$.each(config.datas,function(i,d){
 				config.target.append('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
 			});
+			config.renderAfter.call(config.target,config.datas);
 		}
 		function getValue(config){
-			return config.target.children('option:selected').val();
+			return config.target.val()||'';
 		}
 		function getText(config){
-			return config.target.children('option:selected').text();
+			return config.target.children('option:selected').text()||'';
 		}
 		function loadData(config,data){
 			config.datas = data;
@@ -420,22 +440,35 @@
 				config = $.extend({
 					required:false,
 					datas:[],
+					url:'',
+					ajaxType:'json',
 					errMsg:undefined,
+					renderAfter:function(datas){},
 					hint:undefined,
 					before:function(param){},
-					filter:function(data){return data;},
+					filter:function(datas){return datas;},
 					valueField:'v',
-					textField:'k'
+					textField:'k',
+					blur:function(){}
 				},config);
 				config.target = this;
 				input_init(config);
+				config.defValue = config.target.val()||'';
+				config.target.blur(function(){
+					if(config.defValue == getValue(config)){
+						$(this).data('f-change', false);
+					}else{
+						$(this).data('f-change', true);
+					}
+					config.blur.call(config.target);
+				})
 				if(config.url){
 					var param = {};
 					config.before.call(null,param);
 					$.ajax({
 						url:config.url,
 						type:config.method||'GET',
-						dataType:'json',
+						dataType:config.ajaxType||'json',
 						cache:false,
 						data:param,
 						success:function(data){
@@ -450,7 +483,7 @@
 					comboboxBuilder(config);
 				}
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_combobox');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -463,6 +496,7 @@
 				default:return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('select[f-type="combobox"]').each(function(){
@@ -487,13 +521,27 @@
 			}
 			return re;
 		}
-		function getDate(config){
+		function getPikcerDate(config){
 			if(config.tsep){
 				return new Date(config.oper.year.val(),config.oper.month.val()-1,config.oper.value,config.oper.hours.val(),config.oper.minutes.val(),config.oper.seconds.val());
 			}
 			return new Date(config.oper.year.val(),config.oper.month.val()-1,config.oper.value);
 		}
-		function getValue(config){
+		function getDate(config){
+			var date = getValue(config);
+			if(date){
+				var arr = date.split(config.sep);
+				if(arr.length == 1){
+					arr = arr[0].split(config.dsep);
+					return new Date(arr[0],arr[1] - 1,arr[2]);
+				}else{
+					var time = arr[1].split(config.tsep);
+					arr = arr[0].split(config.dsep);
+					return new Date(arr[0],arr[1] - 1,arr[2],time[0],time[1],time[2]);
+				}
+			}
+		}
+		function getPickerValue(config){
 			var year = config.oper.year.val();
 			var month = parseInt(config.oper.month.val());
 			var day = parseInt(config.oper.value);
@@ -526,7 +574,16 @@
 			}
 			return value;
 		}
+		function getValue(config){
+			return config.target.data('f-value')||'';
+		}
 		function setValue(config,date){
+			if(typeof date == 'string'){
+				config.defValue = date;
+				config.target.data('f-value',date);
+				config.target.val(date);
+				return;
+			}
 			var year = config.oper.year.val();
 			var month = config.oper.month.val();
 			config.oper.year.val(date.getFullYear());
@@ -540,7 +597,9 @@
 						config.oper.seconds.val(date.getSeconds());
 					}
 					bodyBuilder(config);
-					config.target.val(getValue(config));
+					config.defValue = getPickerValue(config);
+					config.target.data('f-value',config.defValue);
+					config.target.val(config.defValue);
 				}else{
 					config.oper.year.val(year);
 					config.oper.month.val(month);
@@ -615,13 +674,16 @@
 					+'	</div>'
 					+'</div>'
 					+'<div class="row text-center" style="font-size:10px;margin:0;border-top:1px solid #ccc;padding:5px 0 5px 0">'
-					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<button class="btn btn-xs" f-id="todayBtn" style="font-size:10px">今天</button>'
 					+'	</div>'
-					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<button class="btn btn-xs" f-id="celBtn" style="font-size:10px">取消</button>'
 					+'	</div>'
-					+'	<div class="col-md-4 col-xs-4 col-sm-4" style="padding:0">'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
+					+'		<button class="btn btn-xs" f-id="blankBtn" style="font-size:10px">置空</button>'
+					+'	</div>'
+					+'	<div class="col-md-3 col-xs-3 col-sm-3" style="padding:0">'
 					+'		<button class="btn btn-xs" f-id="okBtn" style="font-size:10px">确定</button>'
 					+'	</div>'
 					+'</div>'
@@ -652,11 +714,9 @@
 			config.oper.todayBtn = picker.find('[f-id="todayBtn"]').eq(0);
 			config.oper.celBtn = picker.find('[f-id="celBtn"]').eq(0);
 			config.oper.okBtn = picker.find('[f-id="okBtn"]').eq(0);
+			config.oper.blankBtn = picker.find('[f-id="blankBtn"]').eq(0);
 			if(!$.isArray(config.years)||config.years.length==0){
-				config.years = [];
-				for(var i = 1970;i<3000;i++){
-					config.years.push(i);
-				}
+				config.years = [1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050];
 			}
 			$.each(config.years,function(i,y){
 				config.oper.year.append('<option value="'+y+'">'+y+'</option>');
@@ -742,10 +802,28 @@
 				e.stopPropagation();
 			});
 			config.oper.okBtn.click(function(e){
-				var value = getValue(config);
+				var value = getPickerValue(config);
+				config.target.data('f-value',value);
 				config.target.val(value);
+				if(config.defValue == value){
+					config.target.data('f-change',false);
+				}else{
+					config.target.data('f-change',true);
+				}
 				hide(config);
 				config.select.call(config.target);
+				e.preventDefault();
+				e.stopPropagation();
+			});
+			config.oper.blankBtn.click(function(e){
+				config.target.val('');
+				config.target.removeData('f-value');
+				if(config.defValue == ''){
+					config.target.data('f-change',false);
+				}else{
+					config.target.data('f-change',true);
+				}
+				hide(config);
 				e.preventDefault();
 				e.stopPropagation();
 			});
@@ -918,6 +996,7 @@
 				},config);
 				config.target = this;
 				input_init(config);
+				config.defValue = config.target.val();
 				config.target.prop('readonly','readonly');
 				config.target.click(function(){
 					show(config);
@@ -930,7 +1009,7 @@
 				});
 				pickerBuilder(config);
 				this.data('f-config',config);
-				return this;
+				this.data('f-name','f_input_datepicker');
 			}else{
 				var fun = config;
 				config = this.data('f-config');
@@ -942,6 +1021,7 @@
 				default:return undefined;
 				}
 			}
+			return this;
 		};
 		$(function(){
 			$('input[f-type="datepicker"]').each(function(){
