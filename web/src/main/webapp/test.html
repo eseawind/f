@@ -18,6 +18,15 @@
 <div class="container">
 	<h1>example：input数字 input文本 input时间 datagrid</h1>
 	<hr/>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<h3>依赖：</h3>
+			font-awesome<br/>
+			jquery 1.11<br/>
+			bootstrap 3<br/>
+			jquery.showLoading.js<br/>
+		</div>
+	</div>
 	<h3>1.f_input_text</h3>
 	<input id="input_text" class="form-control"/>
 	<pre>
@@ -80,10 +89,10 @@
 	<p>
 		combobox 支持数据过滤 ajax数据过滤（查询条件最后跟空格）
 	</p>
-	<input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',url:'/test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/>
+	<input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',url:'test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/>
 	<pre>
 		&lt;input class="form-control" f-type="input_combobox" f-options="required:true,hint:'not empty',
-		url:'/test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/&gt;
+		url:'test_combobox.json',blur:function(){this.f_input_combobox('isValid')}"/&gt;
 	</pre>
 	
 	<input id="input_combobox" class="form-control"/>
@@ -104,7 +113,7 @@
 	})
 	</pre>
 	<h3>5.f_combobox</h3>
-	<select f-type="combobox" class="form-control" f-options="url:'/test_combobox.json'"></select>
+	<select f-type="combobox" class="form-control" f-options="url:'test_combobox.json'"></select>
 	<pre>
 		$("#id").f_combobox({
 			required:false,
@@ -158,6 +167,15 @@
 	
 <script type="text/javascript">
 $(function(){
+	beginEdit = function(index){
+		dg.f_dg("beginEdit",index);
+	}
+	endEdit = function(index){
+		dg.f_dg("endEdit",index);
+	}
+	celEdit = function(index){
+		dg.f_dg("celEdit",index);
+	}
 	var input_text = $("#input_text").f_input_text({
 		required:true,
 		errMsg:'输入格式不正确',
@@ -192,55 +210,32 @@ $(function(){
 		queryField:'q',
 		select:function(option){}
 	});
-	$("#dg").f_dg({
-		fitColumn:false,
+	var dg = $("#dg").f_dg({
+		fitColumn:true,
 		check:true,
 		rownumber:true,
 		columns:[{
-        	field:"id",title:"商品id",width:20
+        	field:"id",title:"商品id",width:20,editor:'text'
         },{
-        	field:"sku",title:"商品货号",width:20
+        	field:"sku",title:"商品货号",width:20,editor:{type:'combobox',options:{datas:[{k:'123456',v:1},{k:'abcdefg',v:2},{k:'你好',v:3},{k:'helloworld',v:4},{k:'f5',v:5},{k:'f6',v:6}]}}
         },{
-        	field:"goodsName",title:"商品名称",width:20,sort:true
+        	field:"goodsName",title:"商品名称",width:120,sort:true,editor:'text'
         },{
-        	field:"isSale",title:"状态",width:20,formatter:function(value){if(value==1){return '上架'}else if(value==2){return '下架'} else {return '删除'}}
+        	field:"isSale",title:"状态",width:20,formatter:function(value){value=parseInt(value);if(value==1){return '上架'}else if(value==2){return '下架'} else {return '删除'}},editor:{type:'select',options:{datas:[{k:'上架',v:1},{k:'下架',v:2}]}}
         },{
-        	field:"price",title:"价格",width:40
+        	field:"price",title:"价格",width:40,editor:'number'
 		},{
-        	field:"marketPrice",title:"市场价格",width:20
+        	field:"marketPrice",title:"市场价格",width:20,editor:{type:'number',options:{precision:2}}
 		},{
-        	field:"barCode",title:"条形码",width:20
-		},{
-        	field:"operatorName",title:"操作人"
-		},{
-        	field:"providerName",title:"供货商",showTip:true
-		},{
-			field:"isUseCoupon",title:"优惠券",width:20,formatter:function(v){
-				switch(parseInt(v)){
-				case 1:return "是";
-				case 0:return "否";
-				}
-			}
-		},{
-        	field:"isReal",title:"是否虚拟",width:20,formatter:function(value){if(value==0){return '否'}else if(value==1){return '是'}}
-		},{
-			field:'virtualNumber',title:'库存',width:20
-		},{
-			field:'limittype',title:'限制级别',width:20,formatter:function(value){switch(value){case 0:return '不限制';case 1:return '省';case 2:return '市';case 3:return '区';case 4:return '商圈';case 5:return '亭子'}}
-		},{
-        	field:"place",title:"场地",width:20
-		},{
-        	field:"remark",title:"备注",width:20
-		},{
-			field:'brandName',title:'品牌名称',width:20
-		},{
-        	field:"areaName",title:"范围",width:20
-		},{
-        	field:"createtime",title:"创建时间",width:20
+        	field:"createtime",title:"创建时间",width:20,editor:'datepicker'
 		},{
         	field:"modifytime",title:"修改时间"
+		},{
+			field:"btn1",title:"操作",formatter:function(v,rowData,rowIndex){
+				return '<button onclick="beginEdit('+rowIndex+')">编辑</button><button onclick="celEdit('+rowIndex+')">取消</button><button onclick="endEdit('+rowIndex+')">保存</button>'
+			}
 		}],//title,field,showTip,sort,formatter,width
-		url:'/test_dg.json',
+		url:'test_dg.json',
 		page:1,
 		rows:20,
 		pages:[20,50,100,500,1000],
@@ -255,11 +250,15 @@ $(function(){
 			return data;
 		},
 		pagination:true,
+		endEdit:function(index,data,changes){
+			console.log(changes);
+			return true;
+		},
 		datas:{rows:[],count:0},
 		lazy:false,
 		loadTip:'处理中...'
-	})
-})
+	});
+});
 </script>
 </div>
 </body>
