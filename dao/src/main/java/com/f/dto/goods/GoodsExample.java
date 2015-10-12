@@ -554,6 +554,76 @@ public class GoodsExample {
             addCriterion("brandId not between", value1, value2, "brandId");
             return (Criteria) this;
         }
+
+        public Criteria andDescriptIsNull() {
+            addCriterion("descript is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptIsNotNull() {
+            addCriterion("descript is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptEqualTo(String value) {
+            addCriterion("descript =", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptNotEqualTo(String value) {
+            addCriterion("descript <>", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptGreaterThan(String value) {
+            addCriterion("descript >", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptGreaterThanOrEqualTo(String value) {
+            addCriterion("descript >=", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptLessThan(String value) {
+            addCriterion("descript <", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptLessThanOrEqualTo(String value) {
+            addCriterion("descript <=", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptLike(String value) {
+            addCriterion("descript like", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptNotLike(String value) {
+            addCriterion("descript not like", value, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptIn(List<String> values) {
+            addCriterion("descript in", values, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptNotIn(List<String> values) {
+            addCriterion("descript not in", values, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptBetween(String value1, String value2) {
+            addCriterion("descript between", value1, value2, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andDescriptNotBetween(String value1, String value2) {
+            addCriterion("descript not between", value1, value2, "descript");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

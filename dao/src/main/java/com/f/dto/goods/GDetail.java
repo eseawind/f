@@ -15,8 +15,6 @@ public class GDetail {
 
     private String photo4;
 
-    private String descript;
-
     public Long getId() {
         return id;
     }
@@ -71,13 +69,5 @@ public class GDetail {
 
     public void setPhoto4(String photo4) {
         this.photo4 = photo4 == null ? null : photo4.trim();
-    }
-
-    public String getDescript() {
-        return descript;
-    }
-
-    public void setDescript(String descript) {
-        this.descript = descript == null ? null : descript.trim();
     }
 }

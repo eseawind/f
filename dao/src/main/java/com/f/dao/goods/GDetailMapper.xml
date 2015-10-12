@@ -9,7 +9,6 @@
     <result column="photo2" property="photo2" jdbcType="VARCHAR" />
     <result column="photo3" property="photo3" jdbcType="VARCHAR" />
     <result column="photo4" property="photo4" jdbcType="VARCHAR" />
-    <result column="descript" property="descript" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, cgid, photo, photo1, photo2, photo3, photo4, descript
+    id, cgid, photo, photo1, photo2, photo3, photo4
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.goods.GDetailExample" >
     select
@@ -95,10 +94,10 @@
   <insert id="insert" parameterType="com.f.dto.goods.GDetail" >
     insert into gdetail (id, cgid, photo, 
       photo1, photo2, photo3, 
-      photo4, descript)
+      photo4)
     values (#{id,jdbcType=BIGINT}, #{cgid,jdbcType=BIGINT}, #{photo,jdbcType=VARCHAR}, 
       #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
-      #{photo4,jdbcType=VARCHAR}, #{descript,jdbcType=VARCHAR})
+      #{photo4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.goods.GDetail" >
     insert into gdetail
@@ -124,9 +123,6 @@
       <if test="photo4 != null" >
         photo4,
       </if>
-      <if test="descript != null" >
-        descript,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -149,9 +145,6 @@
       </if>
       <if test="photo4 != null" >
         #{photo4,jdbcType=VARCHAR},
-      </if>
-      <if test="descript != null" >
-        #{descript,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -185,9 +178,6 @@
       <if test="record.photo4 != null" >
         photo4 = #{record.photo4,jdbcType=VARCHAR},
       </if>
-      <if test="record.descript != null" >
-        descript = #{record.descript,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,8 +191,7 @@
       photo1 = #{record.photo1,jdbcType=VARCHAR},
       photo2 = #{record.photo2,jdbcType=VARCHAR},
       photo3 = #{record.photo3,jdbcType=VARCHAR},
-      photo4 = #{record.photo4,jdbcType=VARCHAR},
-      descript = #{record.descript,jdbcType=VARCHAR}
+      photo4 = #{record.photo4,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,9 +217,6 @@
       <if test="photo4 != null" >
         photo4 = #{photo4,jdbcType=VARCHAR},
       </if>
-      <if test="descript != null" >
-        descript = #{descript,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -241,8 +227,7 @@
       photo1 = #{photo1,jdbcType=VARCHAR},
       photo2 = #{photo2,jdbcType=VARCHAR},
       photo3 = #{photo3,jdbcType=VARCHAR},
-      photo4 = #{photo4,jdbcType=VARCHAR},
-      descript = #{descript,jdbcType=VARCHAR}
+      photo4 = #{photo4,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

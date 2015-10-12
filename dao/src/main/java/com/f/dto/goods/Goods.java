@@ -17,6 +17,8 @@ public class Goods {
 
     private Long brandId;
 
+    private String descript;
+
     public Long getId() {
         return id;
     }
@@ -71,5 +73,13 @@ public class Goods {
 
     public void setBrandId(Long brandId) {
         this.brandId = brandId;
+    }
+
+    public String getDescript() {
+        return descript;
+    }
+
+    public void setDescript(String descript) {
+        this.descript = descript == null ? null : descript.trim();
     }
 }
