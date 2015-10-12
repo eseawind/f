@@ -20,10 +20,15 @@
 			var obj = $(this);
 			if(obj.prop('name')){
 				if(obj.get(0).tagName == 'SELECT'){
+					if(obj.data('f-name')&&!obj.data('f-change')){
+						return;
+					}
 					param[$.trim(obj.prop('name'))] = obj.val();
 				}else{
 					if(obj.data('f-name')){
-						param[$.trim(obj.prop('name'))] = obj[obj.data('f-name')].call(obj,'getValue');
+						if(obj.data('f-change')){
+							param[$.trim(obj.prop('name'))] = obj[obj.data('f-name')].call(obj,'getValue');
+						}
 					}else{
 						if(obj.prop('type')&&(obj.prop('type').toLowerCase() == 'radio'||obj.prop('type').toLowerCase() == 'checkbox')){
 							if(obj.prop('checked')){
@@ -79,3 +84,4 @@
 		return this;
 	}
 })(jQuery);
+
