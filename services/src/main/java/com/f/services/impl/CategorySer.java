@@ -1,5 +1,6 @@
 package com.f.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,17 @@ public class CategorySer implements ICategory{
 		CategoryExample e = new CategoryExample();
 		e.createCriteria().andFidEqualTo(reqBo.getParamInt("fid"));
 		return new ResBo<List<Category>>(categoryMapper.selectByExample(e));
+	}
+
+	@Override
+	public ResBo<?> insertOrUpdateCategroy(Category category) {
+		if(category.getId() == null){
+			category.setCreatetime(new Date());
+			categoryMapper.insert(category);
+		}else{
+			categoryMapper.updateByPrimaryKey(category);
+		}
+		return new ResBo<Object>();
 	}
 
 }

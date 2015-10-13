@@ -31,6 +31,6 @@ public class CategoryController {
 	@RequestMapping("/addOrUpd.htm")
 	@ResponseBody
 	public ResBo<?> addOrUpd(@ModelAttribute Category category){
-		return null;
+		return categorySer.insertOrUpdateCategroy(category);
 	}
 }

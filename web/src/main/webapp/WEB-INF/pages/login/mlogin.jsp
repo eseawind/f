@@ -35,7 +35,7 @@ $(function(){
 				if(d.success){
 					window.location.href = f.staUrl+f.result;
 				}else{
-					$("#alertError").alertError(d.errMsg);
+					$("#alertError").f_alertError(d.errMsg);
 				}
 			},"json");
 		}

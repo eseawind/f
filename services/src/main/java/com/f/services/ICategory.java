@@ -10,5 +10,7 @@ import framework.web.ResBo;
 public interface ICategory {
 	
 	public ResBo<List<Category>> selectCategories(ReqBo reqBo);
+	
+	public ResBo<?> insertOrUpdateCategroy(Category category);
 
 }
