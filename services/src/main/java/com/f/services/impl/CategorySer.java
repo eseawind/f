@@ -31,9 +31,9 @@ public class CategorySer implements ICategory{
 	public ResBo<?> insertOrUpdateCategroy(Category category) {
 		if(category.getId() == null){
 			category.setCreatetime(new Date());
-			categoryMapper.insert(category);
+			categoryMapper.insertSelective(category);
 		}else{
-			categoryMapper.updateByPrimaryKey(category);
+			categoryMapper.updateByPrimaryKeySelective(category);
 		}
 		return new ResBo<Object>();
 	}

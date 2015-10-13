@@ -74,14 +74,52 @@
 	}
 	
 	$.fn.f_formLoad = function(data){
-		this.find('[f-type]').each(function(){
+		this.find('input[name],select[name]').each(function(){
 		    var obj = $(this);
 			var name = $.trim(obj.prop('name'));
-			if(obj.data('f-name')&&name&&data[name]){
-				obj[obj.data('f-name')].call(obj,'setValue',data[name]);
-			}
+			if(name&&data[name] != undefined){
+				if(obj.data('f-name')){
+					obj[obj.data('f-name')].call(obj,'setValue',data[name]);
+				}else{
+					if(obj.prop('type')&&(obj.prop('type').toLowerCase() == 'radio'||obj.prop('type').toLowerCase() == 'checkbox')){
+						if(obj.val() == data[name]){
+							obj.prop('checked','checked');
+						}else{
+							obj.removeProp('checked');
+						}
+					}else{
+						obj.val(data[name]);
+					}
+				}
+			}			
 		});
 		return this;
+	}
+	
+	$.fn.f_formReset = function(){
+		if(this.get(0).tagName == 'FORM'){
+			this.get(0).reset();
+		}
+		this.find('input[name],select[name]').each(function(){
+			var obj = $(this);
+			if(obj.data('f-name')){
+				obj[obj.data('f-name')].call(obj,'reset');
+			}else{
+				obj.val('');
+			}
+		});
+	}
+	
+	$.fn.f_formClear = function(){
+		if(this.get(0).tagName == 'FORM'){
+			this.get(0).reset();
+		}
+		this.find('input[name],select[name]').each(function(){
+			var obj = $(this);
+			if(obj.data('f-name')){
+				obj[obj.data('f-name')].call(obj,'clear');
+			}
+		});
 	}
 })(jQuery);
 

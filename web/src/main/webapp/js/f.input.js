@@ -41,6 +41,21 @@
 		config.defValue = value;
 		config.target.val(value);
 	}
+	function reset(config){
+		config.target.val(config.defValue);
+	}
+	function clear(config){
+		config.target.val('');
+	}
+	function destory(config){
+		config.target.removeData('f-name');
+		config.target.removeData('f-value');
+		config.target.removeData('f-change');
+		config.target.removeData('f-config');
+		$.each(config.events,function(i,event){
+			config.target.unbind(event.type,event.fun);
+		});
+	}
 	function errorTip(config){
 		config.target.css('border','1px solid red');
 		if(config.errMsg && typeof config.errMsg == 'string'){
@@ -102,6 +117,9 @@
 				return undefined;
 			}
 			if($.isPlainObject(config)){
+				if(this.data('f-name')){
+					destory(config);
+				}
 				config = $.extend({
 					required:false,
 					errMsg:undefined,
@@ -112,22 +130,27 @@
 					blur:function(){}
 				},config);
 				config.target = this;
+				config.events = [];
 				input_init(config);
 				config.defValue = config.target.val();
-				config.target.blur(function(){
+				var event = {type:'blur',fun:function(){
 					if(config.defValue == getValue(config)){
 						$(this).data('f-change', false);
 					}else{
 						$(this).data('f-change', true);
 					}
 					config.blur.call(config.target);
-				});
-				config.target.keypress(function(e){
+				}};
+				config.target.blur(event.fun);
+				config.events.push(event);
+				event = {type:'keypress',fun:function(e){
 					if(e.which == 8) return;
 					if(e.which<45||e.which>57){
 						e.preventDefault();
 					}
-				});
+				}}
+				config.target.keypress(event.fun);
+				config.events.push(event);
 				this.data('f-config',config);
 				this.data('f-name','f_input_number');
 			}else{
@@ -136,7 +159,10 @@
 				switch(fun){
 				case 'isValid':return isValid(config);
 				case 'getValue':return getValue(config);
-				case 'setValue':return setValue(config,arguments[1]);
+				case 'setValue':setValue(config,arguments[1]);break;
+				case 'reset':reset(config);break;
+				case 'clear':clear(config);break;
+				case 'destory':destory(config);break;
 				default: return undefined;
 				}
 			}
@@ -156,6 +182,16 @@
 	})();
 	//input combobox
 	(function(){
+		function destory(config){
+			config.target.removeData('f-name');
+			config.target.removeData('f-value');
+			config.target.removeData('f-change');
+			config.target.removeData('f-config');
+			$.each(config.events,function(i,event){
+				config.target.unbind(event.type,event.fun);
+			});
+			config.body.remove();
+		}
 		function comboboxBuilder(config){
 			config.body = $('<ul class="list-group" style="display:none;z-index:99999"></ul>');
 			config.body.css('position','absolute');
@@ -251,11 +287,20 @@
 		function getValue(config){
 			return config.target.data('f-value')||'';
 		}
+		function reset(config){
+			setValue(config, config.defValue);
+		}
+		function clear(config){
+			setValue(config, '');
+		}
 		$.fn.f_input_combobox = function(config){
 			if(this.get(0).tagName != 'INPUT'){
 				return undefined;
 			}
 			if($.isPlainObject(config)){
+				if(this.data('f-name')){
+					destory(config);
+				}
 				config = $.extend({
 					required:false,
 					errMsg:undefined,
@@ -273,19 +318,24 @@
 					select:function(option){}
 				},config);
 				config.target = this;
+				config.events = [];
 				config.initDatas = config.datas;
 				input_init(config);
 				config.defValue = '';
-				config.target.focus(function(){
+				var event = {type:'focus',fun:function(){
 					show(config);
-				});
-				config.target.blur(function(){
+				}};
+				config.target.focus(event.fun);
+				config.events.push(event);
+				event = {type:'blur',fun:function(){
 					if(config.canHide){
 						hide(config);
 					}
 					config.blur.call(config.target);
-				});
-				config.target.keyup(function(e){
+				}};
+				config.target.blur(event.fun);
+				config.events.push(event);
+				event = {type:'keyup',fun:function(e){
 					config.target.removeData('f-value');
 					if(e.which == 32&&config.url){
 						var query = $.trim(config.target.val());
@@ -305,7 +355,9 @@
 						}
 					}
 					dataBuilder(config);
-				});
+				}};
+				config.target.keyup(event.fun);
+				config.events.push(event);
 				comboboxBuilder(config);
 				this.data('f-config',config);
 				this.data('f-name','f_input_combobox');
@@ -315,7 +367,10 @@
 				switch(fun){
 				case 'isValid':return isValid(config);
 				case 'getValue':return getValue(config);
-				case 'setValue':return setValue(config,arguments[1]);
+				case 'setValue':setValue(config,arguments[1]);break;
+				case 'reset':reset(config);break;
+				case 'clear':clear(config);break;
+				case 'destory':destory(config);break;
 				default: return undefined;
 				}
 			}
@@ -353,6 +408,9 @@
 				return undefined;
 			}
 			if($.isPlainObject(config)){
+				if(this.data('f-name')){
+					destory(config);
+				}
 				config = $.extend({
 					required:false,
 					errMsg:undefined,
@@ -364,16 +422,19 @@
 					blur:function(){}
 				},config);
 				config.target = this;
+				config.events = [];
 				input_init(config);
 				config.defValue = config.target.val();
-				config.target.blur(function(){
+				var event = {type:'blur',fun:function(){
 					if(config.defValue == getValue(config)){
 						$(this).data('f-change', false);
 					}else{
 						$(this).data('f-change', true);
 					}
 					config.blur.call(config.target);
-				});
+				}};
+				config.target.blur(event.fun);
+				config.events.push(event);
 				this.data('f-config',config);
 				this.data('f-name','f_input_text');
 			}else{
@@ -382,7 +443,10 @@
 				switch(fun){
 				case 'isValid':return isValid(config);
 				case 'getValue':return getValue(config);
-				case 'setValue':return setValue(config,arguments[1]);
+				case 'setValue':setValue(config,arguments[1]);break;
+				case 'reset':reset(config);break;
+				case 'clear':clear(config);break;
+				case 'destory':destory(config);break;
 				default: return undefined;
 				}
 			}
@@ -437,6 +501,9 @@
 				return undefined;
 			}
 			if($.isPlainObject(config)){
+				if(this.data('f-name')){
+					destory(config);
+				}
 				config = $.extend({
 					required:false,
 					datas:[],
@@ -452,16 +519,19 @@
 					blur:function(){}
 				},config);
 				config.target = this;
+				config.events = [];
 				input_init(config);
 				config.defValue = config.target.val()||'';
-				config.target.blur(function(){
+			    var event = {type:'blur',fun:function(){
 					if(config.defValue == getValue(config)){
 						$(this).data('f-change', false);
 					}else{
 						$(this).data('f-change', true);
 					}
 					config.blur.call(config.target);
-				})
+				}};
+				config.target.blur(event.fun);
+				config.events.push(event);
 				if(config.url){
 					var param = {};
 					config.before.call(null,param);
@@ -493,6 +563,9 @@
 				case 'isValid':return isValid(config);
 				case 'loadData':loadData(config,arguments[1]);break;
 				case 'setValue':setValue(config,arguments[1]);break;
+				case 'reset':reset(config);break;
+				case 'clear':clear(config);break;
+				case 'destory':destory(config);break;
 				default:return undefined;
 				}
 			}
@@ -607,6 +680,22 @@
 			}else{
 				config.oper.year.val(year);
 			}
+		}
+		function reset(config){
+			setValue(config,config.defValue);
+		}
+		function clear(config){
+			setValue(config,'');
+		}
+		function destory(config){
+			config.target.removeData('f-name');
+			config.target.removeData('f-value');
+			config.target.removeData('f-change');
+			config.target.removeData('f-config');
+			$.each(config.events,function(i,event){
+				config.target.unbind(event.type,event.fun);
+			});
+			config.picker.remove();
 		}
 		function keypress(key){
 			if(key == 8)return true;
@@ -981,6 +1070,9 @@
 				return undefined;
 			}
 			if($.isPlainObject(config)){
+				if(this.data('f-name')){
+					destory(config);
+				}
 				config = $.extend({
 					required:false,
 					errMsg:undefined,
@@ -995,18 +1087,23 @@
 					select:function(){}
 				},config);
 				config.target = this;
+				config.events = [];
 				input_init(config);
 				config.defValue = config.target.val();
 				config.target.prop('readonly','readonly');
-				config.target.click(function(){
+				var event = {type:'click',fun:function(){
 					show(config);
-				});
-				config.target.blur(function(){
+				}};
+				config.target.click(event.fun);
+				config.events.push(event);
+				event = {type:'blur',fun:function(){
 					if(config.canHide){
 						hide(config);
 					}
 					config.blur.call(config.target);
-				});
+				}}
+				config.target.blur(event.fun);
+				config.events.push(event);
 				pickerBuilder(config);
 				this.data('f-config',config);
 				this.data('f-name','f_input_datepicker');

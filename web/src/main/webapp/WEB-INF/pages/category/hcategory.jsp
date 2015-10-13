@@ -46,10 +46,12 @@ $(function(){
 	var tree = $("#category");
 	win.f_modal({});
 	addCategory = function(){
+		form.f_formClear();
 		win.f_modal('setTitle','新增分类');
 		win.f_modal('show');
 	}
 	updCategory = function(){
+		form.f_formClear();
 		win.f_modal('setTitle','维护分类');
 		win.f_modal('show');
 		form.f_formLoad({id:curNode.id,code:curNode.code,name:curNode.relName,isUse:curNode.isUse});
@@ -67,7 +69,7 @@ $(function(){
 					f.alertError(d.errMsg);
 				}else{
 					var treeObj = $.fn.zTree.getZTreeObj(treeId);
-					treeObj.reAsyncChildNodes(curNode, "refresh");
+					treeObj.reAsyncChildNodes(param.id?curNode.getParentNode():curNode, "refresh");
 				}
 				win.closeMask();
 				win.f_modal('hide');
@@ -97,6 +99,7 @@ $(function(){
 						node.relName = d.name;
 						node.layer = d.layer;
 						node.isParent = d.layer == 3?false:true;
+						node.isUse = d.isUse;
 						arr.push(node);
 					});
 				}
