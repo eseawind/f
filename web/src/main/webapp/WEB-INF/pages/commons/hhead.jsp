@@ -5,6 +5,15 @@
       <li class="active"><a href="#">后台管理系统</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          	商家
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="${staUrl }/page/merchant/hmerchant.htm">商家维护</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           	商品
           <span class="caret"></span>
         </a>

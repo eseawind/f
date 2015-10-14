@@ -139,7 +139,7 @@
 			if(config.page == pageCount(config)){
 				eNum = config.datas.count;
 			}else{
-				eNum = sNum - 1 + config.rows;
+				eNum = sNum - 1 + config.datas.rows.length;
 			}
 			config.pagiinfo.text(sNum+"-"+eNum+":"+config.datas.count);
 		}
@@ -201,9 +201,9 @@
 				flush.click();
 			}
 		});
-		var btnDiv = $('<ul class="pagination col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0"></ul>');
+		var btnDiv = $('<ul class="pagination col-md-3 col-sm-5 col-xs-7" style="float:left;margin:0;"></ul>');
 		var pagiinfo = $('<span class="btn"><span>');
-		var pagiDiv = $('<nav style="min-width:520px;color:#337AB7"></nav>');
+		var pagiDiv = $('<nav style="min-width:520px;color:#337AB7;border-top:1px solid #ccc"></nav>');
 		btnDiv.append($('<span></span>').append(sel));
 		btnDiv.append(pre);
 		btnDiv.append($('<span></span>').append(txt));
@@ -291,8 +291,8 @@
 				check:false,
 				columns:[],//title,field,showTip,sort,formatter(value,rowData,rowIndex),width,editor:{type:'',options:{}}|'text'|'number'|'combobox'|'select'|'datepicker'
 				page:1,
-				rows:10,
-				pages:[10,50,100,500],
+				rows:20,
+				pages:[20,50,100,500],
 				ajaxType:'json',
 				defParam:{},
 				click:function(index,data){

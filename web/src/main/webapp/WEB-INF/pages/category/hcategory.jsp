@@ -46,15 +46,19 @@ $(function(){
 	var tree = $("#category");
 	win.f_modal({});
 	addCategory = function(){
-		form.f_formClear();
-		win.f_modal('setTitle','新增分类');
-		win.f_modal('show');
+		if(curNode.open && curNode.layer < 3){
+			form.f_formClear();
+			win.f_modal('setTitle','新增分类');
+			win.f_modal('show');
+		}
 	}
 	updCategory = function(){
-		form.f_formClear();
-		win.f_modal('setTitle','维护分类');
-		win.f_modal('show');
-		form.f_formLoad({id:curNode.id,code:curNode.code,name:curNode.relName,isUse:curNode.isUse});
+		if(curNode.layer>0 && curNode.layer < 4){
+			form.f_formClear();
+			win.f_modal('setTitle','维护分类');
+			win.f_modal('show');
+			form.f_formLoad({id:curNode.id,code:curNode.code,name:curNode.relName,isUse:curNode.isUse});
+		}
 	}
 	$("#submit").click(function(e){
 		if(form.f_isValid()){
@@ -120,12 +124,10 @@ $(function(){
 			},
 			onRightClick:function(e,tid,treeNode){
 				treeId = tid;
-				if(treeNode.open&&treeNode.layer < 2){
-					curNode = treeNode;
-					menu.css('top',e.pageY);
-					menu.css('left',e.pageX);
-					menu.show();
-				}
+				curNode = treeNode;
+				menu.css('top',e.pageY);
+				menu.css('left',e.pageX);
+				menu.show();
 			}
 		}
 	};

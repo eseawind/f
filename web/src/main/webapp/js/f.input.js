@@ -469,7 +469,13 @@
 		function comboboxBuilder(config){
 			config.target.empty();
 			$.each(config.datas,function(i,d){
-				config.target.append('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
+				var options = $('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
+				options.click(function(e){
+					config.select.call(config.target,d);
+					e.preventDefault();
+					e.stopPropagation();
+				});
+				config.target.append(options);
 			});
 			config.renderAfter.call(config.target,config.datas);
 		}
@@ -516,6 +522,7 @@
 					filter:function(datas){return datas;},
 					valueField:'v',
 					textField:'k',
+					select:function(){},
 					blur:function(){}
 				},config);
 				config.target = this;
