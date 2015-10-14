@@ -33,21 +33,30 @@
 						}
 					}
 					,select:function(d){
-						$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
-							if(d.success){
-								$('#category2').f_combobox('loadData',d.result);
-							}
-						});
+						if(d.id){
+							$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
+								if(d.success){
+									$('#category2').f_combobox('loadData',d.result);
+								}
+							});
+						}else{
+							$('#category2').f_combobox('loadData',[]);
+							$('#category3').f_combobox('loadData',[]);
+						}
 					}"></select>
 				</td>
 				<td>
 					<label>二级品类:</label>
 					<select class="form-control" id="category2" f-type="combobox" f-options="select:function(d){
-						$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
-							if(d.success){
-								$('#category3').f_combobox('loadData',d.result);
-							}
-						});
+						if(d.id){
+							$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
+								if(d.success){
+									$('#category3').f_combobox('loadData',d.result);
+								}
+							});
+						}else{
+							$('#category3').f_combobox('loadData',[]);
+						}
 					}"></select>
 				</td>
 				<td>
@@ -248,7 +257,21 @@ $(function(){
 	$("#saveGoodsBtn").click(function(){
 		if(goodsDiv.f_isValid()){
 			var param = goodsDiv.f_serialized();
-			console.log(param)
+			if(gid)param.id = gid;
+			param.descript = editor.html();
+			var c1 = $("#category1").f_combobox('getValue');
+			var c2 = $("#category2").f_combobox('getValue');
+			var c3 = $("#category3").f_combobox('getValue');
+			param.code = c3||c2||c1;
+			goodsDiv.startMask();
+			$.post(f.dynUrl+'/goods/addOrUpd.htm',param,function(d){
+				goodsDiv.closeMask();
+				if(d.success){
+					gid = d.result;
+				}else{
+					f.alertError(d.errMsg);
+				}
+			},'json');
 		}
 	});
 	$("#add_standard_btn").click(function(){
@@ -289,6 +312,7 @@ $(function(){
 			},
 			success : function (data) {
 				obj.parent().closeMask();
+				
 			}
 		});
 	}

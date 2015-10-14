@@ -3,6 +3,22 @@
  * 支持验证，格式化，
  */
 (function($){
+	function canCreate(obj){
+		if(obj.get(0).tagName != 'INPUT'){
+			return false;
+		}
+		var type = obj.prop('type')||'';
+		switch(obj.prop('type').toLowerCase()){
+			case 'button':return false;
+			case 'radio':return false;
+			case 'file':return false;
+			case 'checkbox':return false;
+			case 'image':return false;
+			case 'reset':return false;
+			case 'submit':return false;
+		}
+		return true;
+	}
 	function configBuilder(type){
 		return eval('({'+type+'})');
 	}
@@ -113,7 +129,7 @@
 			return re;
 		}
 		$.fn.f_input_number = function(config){
-			if(this.get(0).tagName != 'INPUT'){
+			if(!canCreate(this)){
 				return undefined;
 			}
 			if($.isPlainObject(config)){
@@ -285,7 +301,11 @@
 			});
 		}
 		function getValue(config){
-			return config.target.data('f-value')||'';
+			var value = config.target.data('f-value');
+			if(value == undefined||value == null){
+				return '';
+			}
+			return value;
 		}
 		function reset(config){
 			setValue(config, config.defValue);
@@ -294,7 +314,7 @@
 			setValue(config, '');
 		}
 		$.fn.f_input_combobox = function(config){
-			if(this.get(0).tagName != 'INPUT'){
+			if(!canCreate(this)){
 				return undefined;
 			}
 			if($.isPlainObject(config)){
@@ -404,7 +424,7 @@
 			return re;
 		};
 		$.fn.f_input_text = function(config){
-			if(this.get(0).tagName != 'INPUT'){
+			if(!canCreate(this)){
 				return undefined;
 			}
 			if($.isPlainObject(config)){
@@ -468,6 +488,12 @@
 	(function(){
 		function comboboxBuilder(config){
 			config.target.empty();
+			if(!config.required){
+				var emptyObj = {};
+				emptyObj[config.textField] = '';
+				emptyObj[config.valueField] = '';
+				config.datas.unshift(emptyObj);
+			}
 			$.each(config.datas,function(i,d){
 				var options = $('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
 				options.click(function(e){
@@ -480,10 +506,14 @@
 			config.renderAfter.call(config.target,config.datas);
 		}
 		function getValue(config){
-			return config.target.val()||'';
+			var value = config.target.val();
+			if(value == null||value == undefined){
+				return '';
+			}
+			return value;
 		}
 		function getText(config){
-			return config.target.children('option:selected').text()||'';
+			return config.target.children('option:selected').text();
 		}
 		function loadData(config,data){
 			config.datas = data;
@@ -528,7 +558,7 @@
 				config.target = this;
 				config.events = [];
 				input_init(config);
-				config.defValue = config.target.val()||'';
+				config.defValue = '';
 			    var event = {type:'blur',fun:function(){
 					if(config.defValue == getValue(config)){
 						$(this).data('f-change', false);
@@ -655,7 +685,7 @@
 			return value;
 		}
 		function getValue(config){
-			return config.target.data('f-value')||'';
+			return config.target.data('f-value')||config.defValue;
 		}
 		function setValue(config,date){
 			if(typeof date == 'string'){
@@ -1073,7 +1103,7 @@
 			config.picker.hide();
 		}
 		$.fn.f_input_datepicker = function(config){
-			if(this.get(0).tagName != 'INPUT'){
+			if(!canCreate(this)){
 				return undefined;
 			}
 			if($.isPlainObject(config)){

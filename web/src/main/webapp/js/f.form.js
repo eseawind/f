@@ -13,20 +13,20 @@
 		return validSuc;
 	};
 	
-	$.fn.f_serialized = function(){
+	$.fn.f_serialized = function(filter){
 		var form = $(this);
 		var param = {};
 		form.find('input[name],select[name]').each(function(){
 			var obj = $(this);
 			if(obj.prop('name')){
 				if(obj.get(0).tagName == 'SELECT'){
-					if(obj.data('f-name')&&!obj.data('f-change')){
+					if(obj.data('f-name')&&filter&&!obj.data('f-change')){
 						return;
 					}
-					param[$.trim(obj.prop('name'))] = obj.val();
+					param[$.trim(obj.prop('name'))] = obj.val() == null?'':obj.val();
 				}else{
 					if(obj.data('f-name')){
-						if(obj.data('f-change')){
+						if(!filter||obj.data('f-change')){
 							param[$.trim(obj.prop('name'))] = obj[obj.data('f-name')].call(obj,'getValue');
 						}
 					}else{

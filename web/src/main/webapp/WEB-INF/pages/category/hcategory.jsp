@@ -19,7 +19,7 @@
 </ul>
 <div id="win" style="display:none">
 	<form class="form" id="form">
-		<input name="id" type="hidden"/>
+		<input name="id" type="hidden" f-type="text"/>
 		<div class="form-group">
 			<label>分类code：</label>
 			<input class="form-control" f-type="text" name="code" f-options="required:true,maxLength:9" />
