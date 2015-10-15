@@ -23,4 +23,14 @@
       #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
       #{photo4,jdbcType=VARCHAR})
   </insert>
+  
+  <insert id="insertGCategory" parameterType="com.f.dto.goods.GCategory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	insert into gcategory (code, gid, isDel, createtime)
+    values (#{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT}, #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insertGStock" parameterType="com.f.dto.goods.GStock" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+  	insert into gstock (cgid, number, anumber)
+    values (#{cgid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, #{anumber,jdbcType=INTEGER})
+  </insert>
 </mapper>

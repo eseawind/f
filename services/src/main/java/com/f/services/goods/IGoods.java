@@ -13,7 +13,7 @@ public interface IGoods {
 	 * 现在商品及规格商品
 	 * 
 	 * */
-	public void insertOrUpdGoodsInfo(Goods goods,CGoods cg,GCategory gc,GStock gs);
+	public void insertGoodsInfo(Goods goods,CGoods cg,GCategory gc,GStock gs);
 	
-	
+	public void updateGoodsInfo(Goods goods,CGoods cg,GCategory gc,GStock gs);
 }

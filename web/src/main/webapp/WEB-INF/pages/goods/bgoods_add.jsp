@@ -10,77 +10,108 @@
 <script type="text/javascript" src="${staUrl }/res/ajaxupload/jquery.ajaxupload.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container" id="body">
 <%@ include file="../commons/bhead.jsp" %>
 <div style="padding-bottom:100px;">
-	<div id="goodsInfoDiv">
-		<div class="form">
-			<div class="form-group">
-				<label>商品名称：</label>
-				<input class="form-control" name="gname" f-type="text" f-options="required:true,maxLength:254"/>
+	<div id="goodsDiv">
+		<input name="id" type="hidden" id="gId"/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				商品信息（必填）
+			</div>
+			<div class="panel-body">
+				<div class="form">
+					<div class="form-group">
+						<label>商品名称：</label>
+						<input class="form-control" name="gname" f-type="text" f-options="required:true,maxLength:254"/>
+					</div>
+				</div>
+				<table class="table">
+					<tr>
+						<td style="width:20%">
+							<label>sku:</label>
+							<input class="form-control" name="sku" f-type="text" f-options="maxLength:32"/>
+						</td>
+						<td>
+							<label>描述:</label>
+							<input class="form-control" name="remark" f-type="text" f-options="required:true,maxLength:254"/>
+						</td>
+						<td style="width:15%">
+							<label>品牌:</label>
+							<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
+						</td>
+					</tr>
+				</table>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						商品详情（必填）
+					</div>
+					<div class="panel-body">
+						<textarea id="descript" style="width:100%"></textarea>
+					</div>
+				</div>
+				<button id="goodsBtn" class="btn btn-primary btn-block" style="display:none">保存</button>
+			</div>	
+		</div>
+	</div>
+	<div id="gcDiv">
+		<input name="id" type="hidden" id="gcId"/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				品类（必填）
+			</div>
+			<div class="panel-body">
+				<table class="table">
+					<tr>
+						<td>
+							<label>一级品类:</label>
+							<select class="form-control" id="category1" f-type="combobox" f-options="url:'${dynUrl }/category/combobox.htm?fid=0',errMsg:'必填',errDir:'bottom',required:true,
+							filter:function(d){
+								if(d.success){
+									return d.result;
+								}else{
+									return [];
+								}
+							}
+							,select:function(d){
+								if(d.id){
+									$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
+										if(d.success){
+											$('#category2').f_combobox('loadData',d.result);
+										}
+									});
+								}else{
+									$('#category2').f_combobox('loadData',[]);
+									$('#category3').f_combobox('loadData',[]);
+								}
+							}"></select>
+						</td>
+						<td>
+							<label>二级品类:</label>
+							<select class="form-control" id="category2" f-type="combobox" f-options="select:function(d){
+								if(d.id){
+									$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
+										if(d.success){
+											$('#category3').f_combobox('loadData',d.result);
+										}
+									});
+								}else{
+									$('#category3').f_combobox('loadData',[]);
+								}
+							}"></select>
+						</td>
+						<td>
+							<label>三级品类:</label>
+							<select class="form-control" id="category3" f-type="combobox" f-options=""></select>
+						</td>
+					</tr>
+				</table>
+				<button id="gcBtn" class="btn btn-primary btn-block" style="display:none">保存</button>
 			</div>
 		</div>
-		<table class="table">
-			<tr>
-				<td>
-					<label>一级品类:</label>
-					<select class="form-control" id="category1" f-type="combobox" f-options="url:'${dynUrl }/category/combobox.htm?fid=0',errMsg:'必填',errDir:'bottom',required:true,
-					filter:function(d){
-						if(d.success){
-							return d.result;
-						}else{
-							return [];
-						}
-					}
-					,select:function(d){
-						if(d.id){
-							$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
-								if(d.success){
-									$('#category2').f_combobox('loadData',d.result);
-								}
-							});
-						}else{
-							$('#category2').f_combobox('loadData',[]);
-							$('#category3').f_combobox('loadData',[]);
-						}
-					}"></select>
-				</td>
-				<td>
-					<label>二级品类:</label>
-					<select class="form-control" id="category2" f-type="combobox" f-options="select:function(d){
-						if(d.id){
-							$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+d.id,function(d){
-								if(d.success){
-									$('#category3').f_combobox('loadData',d.result);
-								}
-							});
-						}else{
-							$('#category3').f_combobox('loadData',[]);
-						}
-					}"></select>
-				</td>
-				<td>
-					<label>三级品类:</label>
-					<select class="form-control" id="category3" f-type="combobox" f-options=""></select>
-				</td>
-			</tr>
-		</table>
-		<table class="table">
-			<tr>
-				<td style="width:20%">
-					<label>sku:</label>
-					<input class="form-control" name="sku" f-type="text" f-options="maxLength:32"/>
-				</td>
-				<td>
-					<label>描述:</label>
-					<input class="form-control" name="remark" f-type="text" f-options="required:true,maxLength:254"/>
-				</td>
-				<td style="width:15%">
-					<label>品牌:</label>
-					<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
-				</td>
-			</tr>
-		</table>
+	</div>
+	<div id="cgDiv">
+		<input name="cgid" type="hidden" id="cgId"/>
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	规格（必填）
@@ -150,18 +181,12 @@
 					</td>
 				</tr>
 			</table>
+			<button class="btn btn-primary btn-block" id="cgBtn" style="display:none">保存</button>
 		  </div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				商品详情（必填）
-			</div>
-			<div class="panel-body">
-				<textarea id="descript" style="width:100%"></textarea>
-			</div>
-			<button class="btn btn-primary btn-block" id="saveGoodsBtn">保存</button>
-		</div>
 	</div>
+	<button class="btn btn-primary btn-block" id="saveGoodsBtn">保存</button>
+	<hr/>
 	<div id="add_standard">
 		<script type="text/tmpl" id="standard_tmpl">
 			<div class="panel panel-default">
@@ -253,21 +278,26 @@
 $(function(){
 	var gid = undefined;
 	var formIndex = 0;
-	var goodsDiv = $("#goodsInfoDiv");
+	var goodsDiv = $("#goodsDiv");
+	var gcDiv = $("#gcDiv");
+	var cgDiv = $("#cgDiv");
 	$("#saveGoodsBtn").click(function(){
-		if(goodsDiv.f_isValid()){
-			var param = goodsDiv.f_serialized();
-			if(gid)param.id = gid;
-			param.descript = editor.html();
-			var c1 = $("#category1").f_combobox('getValue');
-			var c2 = $("#category2").f_combobox('getValue');
-			var c3 = $("#category3").f_combobox('getValue');
-			param.code = c3||c2||c1;
-			goodsDiv.startMask();
-			$.post(f.dynUrl+'/goods/addOrUpd.htm',param,function(d){
-				goodsDiv.closeMask();
+		if(goodsDiv.f_isValid()&&gcDiv.f_isValid()&&cgDiv.f_isValid()){
+			var param = {};
+			$.extend(param,goodsDiv.f_serialized());
+			$.extend(param,gcDiv.f_serialized());
+			$.extend(param,cgDiv.f_serialized());
+			$("#body").startMask();
+			$.post(f.dynUrl+'/goods/add.htm',param,function(d){
+				$("#body").closeMask();
 				if(d.success){
-					gid = d.result;
+					$("#gid").val(d.result[0]);
+					$("#gcid").val(d.result[1]);
+					$("#cgid").val(d.result[2]);
+					$("#saveGoodsBtn").hide();
+					$("#goodsBtn").show();
+					$("#gcBtn").show();
+					$("#cgBtn").show();
 				}else{
 					f.alertError(d.errMsg);
 				}
@@ -360,7 +390,7 @@ $(function(){
 	        }
 		});
 	});
-})
+});
 </script>
 </body>
 </html>
