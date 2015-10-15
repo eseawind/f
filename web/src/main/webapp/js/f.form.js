@@ -105,7 +105,10 @@
 			if(obj.data('f-name')){
 				obj[obj.data('f-name')].call(obj,'reset');
 			}else{
-				obj.val('');
+				var type = obj.prop('type');
+				if(!type||(type&&(type.toLowerCase() == 'text'||type.toLowerCase() == 'hidden'||type.toLowerCase() == 'password'))){
+					obj.val('');
+				}
 			}
 		});
 	}
@@ -118,6 +121,11 @@
 			var obj = $(this);
 			if(obj.data('f-name')){
 				obj[obj.data('f-name')].call(obj,'clear');
+			}else{
+				var type = obj.prop('type');
+				if(!type||(type&&(type.toLowerCase() == 'text'||type.toLowerCase() == 'hidden'||type.toLowerCase() == 'password'))){
+					obj.val('');
+				}
 			}
 		});
 	}

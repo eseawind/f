@@ -34,7 +34,7 @@
         </ul>
       </li>
     </ul>
-<div style="position:absolute;bottom:0px;left:0px;width:100%;z-index:99999" class="text-center" id="hhead_errorAlert"></div>
+<div style="position:fixed;bottom:0px;left:0px;width:100%;z-index:99999" class="text-center" id="hhead_errorAlert"></div>
 </div>
 
 <hr style="margin-top:10px;margin-bottom:10px"/>

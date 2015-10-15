@@ -19,24 +19,20 @@
             <property name="forceBigDecimals" value="true"/>  
         </javaTypeResolver>  
         <!-- 生成模型的包名和位置-->  
-        <javaModelGenerator targetPackage="com.f.dto.goods" targetProject="src/main/java">  
+        <javaModelGenerator targetPackage="com.f.dto.orders" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>  
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="com.f.dao.goods" targetProject="src/main/java">  
+        <sqlMapGenerator targetPackage="com.f.dao.orders" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.goods" targetProject="src/main/java">  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.orders" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         
-         <table tableName="goods" domainObjectName="Goods" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
-       		<property name="useActualColumnNames" value="true"/>
-       	 </table>
-       	 
-       	 <table tableName="gdetail" domainObjectName="GDetail" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
+         <table tableName="orders" domainObjectName="Orders" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>
        	 </table>
        	 
@@ -87,10 +83,6 @@
        		<property name="useActualColumnNames" value="true"/>
        	 </table>
        	 
-       	 <table tableName="gdetail" domainObjectName="GDetail" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
-       		<property name="useActualColumnNames" value="true"/>
-       	 </table>
-       	 
        	 <table tableName="goods" domainObjectName="Goods" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>
        	 </table>
@@ -109,10 +101,6 @@
        	 </table>
        	 
        	 <table tableName="opaytype" domainObjectName="OPayType" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
-       		<property name="useActualColumnNames" value="true"/>
-       	 </table>
-       	 
-       	 <table tableName="oaddress" domainObjectName="OAddress" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>
        	 </table> -->
     </context>  

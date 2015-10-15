@@ -275,6 +275,10 @@ $(function(){
 		}
 	});
 	$("#add_standard_btn").click(function(){
+		if(!gid){
+			f.dialogAlert("保存成功商品信息后才能添加新规格");
+			return;
+		}
 		formIndex++;
 		$("#add_standard").append($("#standard_tmpl").tmpl({gid:gid,index:formIndex})).f_create();
 		$("#standard_submit_"+formIndex).click(function(){

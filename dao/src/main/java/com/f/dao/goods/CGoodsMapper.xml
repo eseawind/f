@@ -7,10 +7,14 @@
     <result column="cgname" property="cgname" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="mprice" property="mprice" jdbcType="DECIMAL" />
-    <result column="aprice" property="aprice" jdbcType="DECIMAL" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="isDef" property="isDef" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="photo1" property="photo1" jdbcType="VARCHAR" />
+    <result column="photo2" property="photo2" jdbcType="VARCHAR" />
+    <result column="photo3" property="photo3" jdbcType="VARCHAR" />
+    <result column="photo4" property="photo4" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gid, cgname, price, mprice, aprice, state, isDef, createtime
+    id, gid, cgname, price, mprice, state, isDef, createtime, photo, photo1, photo2, 
+    photo3, photo4
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.goods.CGoodsExample" >
     select
@@ -95,13 +100,15 @@
   </select>
   <insert id="insert" parameterType="com.f.dto.goods.CGoods" >
     insert into cgoods (id, gid, cgname, 
-      price, mprice, aprice, 
-      state, isDef, createtime
-      )
+      price, mprice, state, 
+      isDef, createtime, photo, 
+      photo1, photo2, photo3, 
+      photo4)
     values (#{id,jdbcType=BIGINT}, #{gid,jdbcType=BIGINT}, #{cgname,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{aprice,jdbcType=DECIMAL}, 
-      #{state,jdbcType=INTEGER}, #{isDef,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}
-      )
+      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, 
+      #{isDef,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{photo,jdbcType=VARCHAR}, 
+      #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
+      #{photo4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.goods.CGoods" >
     insert into cgoods
@@ -121,9 +128,6 @@
       <if test="mprice != null" >
         mprice,
       </if>
-      <if test="aprice != null" >
-        aprice,
-      </if>
       <if test="state != null" >
         state,
       </if>
@@ -132,6 +136,21 @@
       </if>
       <if test="createtime != null" >
         createtime,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="photo1 != null" >
+        photo1,
+      </if>
+      <if test="photo2 != null" >
+        photo2,
+      </if>
+      <if test="photo3 != null" >
+        photo3,
+      </if>
+      <if test="photo4 != null" >
+        photo4,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -150,9 +169,6 @@
       <if test="mprice != null" >
         #{mprice,jdbcType=DECIMAL},
       </if>
-      <if test="aprice != null" >
-        #{aprice,jdbcType=DECIMAL},
-      </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
       </if>
@@ -161,6 +177,21 @@
       </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="photo1 != null" >
+        #{photo1,jdbcType=VARCHAR},
+      </if>
+      <if test="photo2 != null" >
+        #{photo2,jdbcType=VARCHAR},
+      </if>
+      <if test="photo3 != null" >
+        #{photo3,jdbcType=VARCHAR},
+      </if>
+      <if test="photo4 != null" >
+        #{photo4,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,9 +219,6 @@
       <if test="record.mprice != null" >
         mprice = #{record.mprice,jdbcType=DECIMAL},
       </if>
-      <if test="record.aprice != null" >
-        aprice = #{record.aprice,jdbcType=DECIMAL},
-      </if>
       <if test="record.state != null" >
         state = #{record.state,jdbcType=INTEGER},
       </if>
@@ -199,6 +227,21 @@
       </if>
       <if test="record.createtime != null" >
         createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.photo != null" >
+        photo = #{record.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo1 != null" >
+        photo1 = #{record.photo1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo2 != null" >
+        photo2 = #{record.photo2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo3 != null" >
+        photo3 = #{record.photo3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo4 != null" >
+        photo4 = #{record.photo4,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -212,10 +255,14 @@
       cgname = #{record.cgname,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=DECIMAL},
       mprice = #{record.mprice,jdbcType=DECIMAL},
-      aprice = #{record.aprice,jdbcType=DECIMAL},
       state = #{record.state,jdbcType=INTEGER},
       isDef = #{record.isDef,jdbcType=INTEGER},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      photo = #{record.photo,jdbcType=VARCHAR},
+      photo1 = #{record.photo1,jdbcType=VARCHAR},
+      photo2 = #{record.photo2,jdbcType=VARCHAR},
+      photo3 = #{record.photo3,jdbcType=VARCHAR},
+      photo4 = #{record.photo4,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,9 +282,6 @@
       <if test="mprice != null" >
         mprice = #{mprice,jdbcType=DECIMAL},
       </if>
-      <if test="aprice != null" >
-        aprice = #{aprice,jdbcType=DECIMAL},
-      </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
@@ -246,6 +290,21 @@
       </if>
       <if test="createtime != null" >
         createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="photo1 != null" >
+        photo1 = #{photo1,jdbcType=VARCHAR},
+      </if>
+      <if test="photo2 != null" >
+        photo2 = #{photo2,jdbcType=VARCHAR},
+      </if>
+      <if test="photo3 != null" >
+        photo3 = #{photo3,jdbcType=VARCHAR},
+      </if>
+      <if test="photo4 != null" >
+        photo4 = #{photo4,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -256,10 +315,14 @@
       cgname = #{cgname,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
       mprice = #{mprice,jdbcType=DECIMAL},
-      aprice = #{aprice,jdbcType=DECIMAL},
       state = #{state,jdbcType=INTEGER},
       isDef = #{isDef,jdbcType=INTEGER},
-      createtime = #{createtime,jdbcType=TIMESTAMP}
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      photo = #{photo,jdbcType=VARCHAR},
+      photo1 = #{photo1,jdbcType=VARCHAR},
+      photo2 = #{photo2,jdbcType=VARCHAR},
+      photo3 = #{photo3,jdbcType=VARCHAR},
+      photo4 = #{photo4,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

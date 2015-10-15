@@ -16,6 +16,15 @@
     <result column="userId" property="userId" jdbcType="BIGINT" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="merchantId" property="merchantId" jdbcType="BIGINT" />
+    <result column="provinceId" property="provinceId" jdbcType="INTEGER" />
+    <result column="cityId" property="cityId" jdbcType="INTEGER" />
+    <result column="areaId" property="areaId" jdbcType="INTEGER" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    <result column="areaName" property="areaName" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,7 +86,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, orderNum, state, status, orderPrice, paidPrice, payPrice, productPrice, discountPrice, 
-    balancePrice, isPaid, userId, createtime, merchantId
+    balancePrice, isPaid, userId, createtime, merchantId, provinceId, cityId, areaId, 
+    provinceName, cityName, areaName, remark, consignee, mobile
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.orders.OrdersExample" >
     select
@@ -104,12 +114,18 @@
       status, orderPrice, paidPrice, 
       payPrice, productPrice, discountPrice, 
       balancePrice, isPaid, userId, 
-      createtime, merchantId)
+      createtime, merchantId, provinceId, 
+      cityId, areaId, provinceName, 
+      cityName, areaName, remark, 
+      consignee, mobile)
     values (#{id,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{paidPrice,jdbcType=DECIMAL}, 
       #{payPrice,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, 
       #{balancePrice,jdbcType=DECIMAL}, #{isPaid,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT})
+      #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.orders.Orders" >
     insert into orders
@@ -156,6 +172,33 @@
       <if test="merchantId != null" >
         merchantId,
       </if>
+      <if test="provinceId != null" >
+        provinceId,
+      </if>
+      <if test="cityId != null" >
+        cityId,
+      </if>
+      <if test="areaId != null" >
+        areaId,
+      </if>
+      <if test="provinceName != null" >
+        provinceName,
+      </if>
+      <if test="cityName != null" >
+        cityName,
+      </if>
+      <if test="areaName != null" >
+        areaName,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="consignee != null" >
+        consignee,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -199,6 +242,33 @@
       </if>
       <if test="merchantId != null" >
         #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="provinceName != null" >
+        #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -253,6 +323,33 @@
       <if test="record.merchantId != null" >
         merchantId = #{record.merchantId,jdbcType=BIGINT},
       </if>
+      <if test="record.provinceId != null" >
+        provinceId = #{record.provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cityId != null" >
+        cityId = #{record.cityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaId != null" >
+        areaId = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.provinceName != null" >
+        provinceName = #{record.provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityName != null" >
+        cityName = #{record.cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaName != null" >
+        areaName = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.consignee != null" >
+        consignee = #{record.consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -273,7 +370,16 @@
       isPaid = #{record.isPaid,jdbcType=INTEGER},
       userId = #{record.userId,jdbcType=BIGINT},
       createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      merchantId = #{record.merchantId,jdbcType=BIGINT}
+      merchantId = #{record.merchantId,jdbcType=BIGINT},
+      provinceId = #{record.provinceId,jdbcType=INTEGER},
+      cityId = #{record.cityId,jdbcType=INTEGER},
+      areaId = #{record.areaId,jdbcType=INTEGER},
+      provinceName = #{record.provinceName,jdbcType=VARCHAR},
+      cityName = #{record.cityName,jdbcType=VARCHAR},
+      areaName = #{record.areaName,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      consignee = #{record.consignee,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -320,6 +426,33 @@
       <if test="merchantId != null" >
         merchantId = #{merchantId,jdbcType=BIGINT},
       </if>
+      <if test="provinceId != null" >
+        provinceId = #{provinceId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        cityId = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        areaId = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="provinceName != null" >
+        provinceName = #{provinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        cityName = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        areaName = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="consignee != null" >
+        consignee = #{consignee,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -337,7 +470,16 @@
       isPaid = #{isPaid,jdbcType=INTEGER},
       userId = #{userId,jdbcType=BIGINT},
       createtime = #{createtime,jdbcType=TIMESTAMP},
-      merchantId = #{merchantId,jdbcType=BIGINT}
+      merchantId = #{merchantId,jdbcType=BIGINT},
+      provinceId = #{provinceId,jdbcType=INTEGER},
+      cityId = #{cityId,jdbcType=INTEGER},
+      areaId = #{areaId,jdbcType=INTEGER},
+      provinceName = #{provinceName,jdbcType=VARCHAR},
+      cityName = #{cityName,jdbcType=VARCHAR},
+      areaName = #{areaName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      consignee = #{consignee,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -21,4 +21,8 @@
 			f.alertError(textStatus);
 		}
 	});
+	var f = window.f = window.f||{};
+	f.alertError = function(message){
+		$("#bhead_errorAlert").f_alertError(message);
+	}
 })(jQuery);
