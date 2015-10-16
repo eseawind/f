@@ -16,4 +16,6 @@ public interface IGoods {
 	public void insertGoodsInfo(Goods goods,CGoods cg,GCategory gc,GStock gs);
 	
 	public void updateGoodsInfo(Goods goods,CGoods cg,GCategory gc,GStock gs);
+	
+	public void insertCGoodsInfo(CGoods cg, GStock gs);
 }

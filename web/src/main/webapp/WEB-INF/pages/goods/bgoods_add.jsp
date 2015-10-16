@@ -111,6 +111,7 @@
 		</div>
 	</div>
 	<div id="cgDiv">
+		<input name="id" type="hidden" id="gsId"/>
 		<input name="cgid" type="hidden" id="cgId"/>
 		<div class="panel panel-default">
 		  <div class="panel-heading">
@@ -197,7 +198,8 @@
 			  	规格（必填）
 			  </div>
 			  <form id="standard_form_{{= index}}">
-			  <input type="hidden" name="gid" value="{{= gid}}"/>
+			  <input type="hidden" name="id" value=""/>
+              <input type="hidden" name="cgid" value=""/>
 			  <div class="panel-body">
 			  	<table class="table table-bordered">
 			  		<tr>
@@ -264,8 +266,8 @@
 					</tr>
 				</table>
 			  </div>
-			  </form>
               <button class="btn btn-primary btn-block" id="standard_submit_{{= index }}">保存</button>
+			  </form>
 			</div>
 		</script>
 	</div>
@@ -287,18 +289,58 @@ $(function(){
 			$.extend(param,goodsDiv.f_serialized());
 			$.extend(param,gcDiv.f_serialized());
 			$.extend(param,cgDiv.f_serialized());
+			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
 			$("#body").startMask();
 			$.post(f.dynUrl+'/goods/add.htm',param,function(d){
 				$("#body").closeMask();
 				if(d.success){
-					$("#gid").val(d.result[0]);
-					$("#gcid").val(d.result[1]);
-					$("#cgid").val(d.result[2]);
+					gid = d.result[0];
+					$("#gId").val(d.result[0]);
+					$("#gcId").val(d.result[1]);
+					$("#cgId").val(d.result[2]);
+					$("#gsId").val(d.result[3]);
 					$("#saveGoodsBtn").hide();
 					$("#goodsBtn").show();
 					$("#gcBtn").show();
 					$("#cgBtn").show();
 				}else{
+					f.alertError(d.errMsg);
+				}
+			},'json');
+		}
+	});
+	$("#goodsBtn").click(function(){
+		if(goodsDiv.f_isValid()){
+			var param = goodsDiv.f_serialized();
+			goodsDiv.startMask();
+			$.post(f.dynUrl+"/goods/updGoods.htm",param,function(d){
+				goodsDiv.closeMask();
+				if(!d.success){
+					f.alertError(d.errMsg);
+				}
+			},'json');
+		}
+	});
+	$("#gcBtn").click(function(){
+		if(gcDiv.f_isValid()){
+			var param = gcDiv.f_serialized();
+			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
+			gcDiv.startMask();
+			$.post(f.dynUrl+"/goods/updGC.htm",param,function(d){
+				gcDiv.closeMask();
+				if(!d.success){
+					f.alertError(d.errMsg);
+				}
+			},'json');
+		}	
+	});
+	$("#cgBtn").click(function(){
+		if(cgDiv.f_isValid()){
+			var param = cgDiv.f_serialized();
+			cgDiv.startMask();
+			$.post(f.dynUrl+"/goods/updCGandGS.htm",param,function(d){
+				cgDiv.closeMask();
+				if(!d.success){
 					f.alertError(d.errMsg);
 				}
 			},'json');
@@ -311,12 +353,36 @@ $(function(){
 		}
 		formIndex++;
 		$("#add_standard").append($("#standard_tmpl").tmpl({gid:gid,index:formIndex})).f_create();
-		$("#standard_submit_"+formIndex).click(function(){
+		$("#standard_submit_"+formIndex).click(function(e){
 			var form = $("#standard_form_"+formIndex);
 			if(form.f_isValid()){
 				var param = form.f_serialized();
 				console.log(param);
+				if(!param.id){
+					param.gid = gid;
+					form.startMask();
+					$.post(f.dynUrl+"/goods/addCG.htm",param,function(d){
+						form.closeMask();
+						if(d.success){
+							$("#standard_del_"+formIndex).hide();
+							form.find('input[name="id"]').val(d.result[1]);
+							form.find('input[name="cgid"]').val(d.result[0]);
+						}else{
+							f.alertError(d.errMsg);
+						}
+					},'json');
+				}else{
+					form.startMask();
+					$.post(f.dynUrl+"/goods/updCGandGS.htm",param,function(d){
+						form.closeMask();
+						if(!d.success){
+							f.alertError(d.errMsg);
+						}
+					},'json');
+				}
 			}
+			e.preventDefault();
+			e.stopPropagation();
 		});
 		$("#standard_del_"+formIndex).click(function(){
 			$(this).parent().parent().remove();

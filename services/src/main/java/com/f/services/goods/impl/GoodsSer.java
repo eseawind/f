@@ -59,6 +59,21 @@ public class GoodsSer implements IGoods{
 		}
 	}
 	
+	@Override
+	public void insertCGoodsInfo(CGoods cg, GStock gs) {
+		Date date = new Date();
+		cg.setCreatetime(date);
+		int i = gext.insertCGoods(cg);
+		if(i != 1){
+			throw new BusinessException(101L);
+		}
+		gs.setCgid(cg.getId());
+		i = gext.insertGStock(gs);
+		if(i != 1){
+			throw new BusinessException(103L);
+		}
+	}
+	
 	/**
 	 * 用于新增商品时修改商品信息
 	 * */

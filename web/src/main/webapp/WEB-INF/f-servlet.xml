@@ -16,7 +16,6 @@
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
 	    <property name="locations">  
 	        <list>  
-	            <value>classpath:jredis.properties</value>
 	            <value>classpath:commons.properties</value>  
 	        </list>  
 	    </property>  
@@ -61,6 +60,17 @@
 			</property>
 		</bean> -->
 		<bean class="framework.web.aop.DefaultHttpSessionListener"/>
+		<bean class="framework.web.aop.AuthHandlerListener">
+			<property name="isLoginH" >
+				<bean class="com.f.controller.intercepter.DefaultIsLoginHandler"/>
+			</property>
+			<property name="channelH">
+				<bean class="com.f.controller.intercepter.DefaultIChannelHandler"/>
+			</property>
+			<property name="roleH">
+				<bean class="com.f.controller.intercepter.DefaultIRoleHandler"/>
+			</property>
+		</bean>
 	</mvc:interceptors>
 	
 	<bean class="framework.web.session.HttpSessionAdapter"/>

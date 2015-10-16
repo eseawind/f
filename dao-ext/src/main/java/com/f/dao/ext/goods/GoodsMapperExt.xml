@@ -13,24 +13,22 @@
   
   <insert id="insertCGoods" parameterType="com.f.dto.goods.CGoods" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   	insert into cgoods (gid, cgname, 
-      price, mprice, state, 
-      isDef, createtime, photo, 
+      price, mprice, state, createtime, photo, 
       photo1, photo2, photo3, 
       photo4)
     values (#{gid,jdbcType=BIGINT}, #{cgname,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, 
-      #{isDef,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{photo,jdbcType=VARCHAR}, 
-      #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+      #{photo,jdbcType=VARCHAR}, #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
       #{photo4,jdbcType=VARCHAR})
   </insert>
   
   <insert id="insertGCategory" parameterType="com.f.dto.goods.GCategory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  	insert into gcategory (code, gid, isDel, createtime)
-    values (#{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT}, #{isDel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP})
+  	insert into gcategory (code, gid, createtime)
+    values (#{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   
   <insert id="insertGStock" parameterType="com.f.dto.goods.GStock" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  	insert into gstock (cgid, number, anumber)
-    values (#{cgid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER}, #{anumber,jdbcType=INTEGER})
+  	insert into gstock (cgid, number)
+    values (#{cgid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER})
   </insert>
 </mapper>

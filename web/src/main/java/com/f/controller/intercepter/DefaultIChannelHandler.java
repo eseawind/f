@@ -9,7 +9,7 @@ public class DefaultIChannelHandler implements IChannelHandler{
 
 	public boolean handler(HttpServletRequest req, HttpServletResponse res,
 			String[] values) {
-		return false;
+		return true;
 	}
 
 }

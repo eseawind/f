@@ -9,7 +9,7 @@ public class DefaultIRoleHandler implements IRoleHandler{
 
 	public boolean handler(HttpServletRequest req, HttpServletResponse res,
 			boolean value) {
-		return false;
+		return true;
 	}
 
 }

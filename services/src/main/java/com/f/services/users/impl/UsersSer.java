@@ -3,6 +3,7 @@ package com.f.services.users.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.f.dao.users.MerchantMapper;
 import com.f.dto.users.Merchant;
@@ -11,6 +12,7 @@ import com.f.services.users.IUsers;
 
 import framework.exception.BusinessException;
 
+@Service
 public class UsersSer implements IUsers{
 	
 	@Autowired

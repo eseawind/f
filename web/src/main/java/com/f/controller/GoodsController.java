@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.f.commons.Constants;
+import com.f.commons.User;
 import com.f.dto.goods.CGoods;
 import com.f.dto.goods.GCategory;
 import com.f.dto.goods.GStock;
@@ -18,10 +19,14 @@ import com.f.services.goods.IGoods;
 
 import framework.web.ResBo;
 import framework.web.auth.Channel;
+import framework.web.session.ISession;
 
 @Controller
 @RequestMapping("goods")
 public class GoodsController {
+	
+	@Autowired
+	private ISession session;
 	
 	@Autowired
 	private IGoods goodsSer;
@@ -30,11 +35,14 @@ public class GoodsController {
 	@RequestMapping("add.htm")
 	@ResponseBody
 	public ResBo<List<Long>> addGoods(@ModelAttribute Goods goods,@ModelAttribute CGoods cg,@ModelAttribute GCategory gc,@ModelAttribute GStock gs){
+		User user = (User) session.get(Constants.USERINFO);
+		goods.setMerchantId(user.getId());
 		goodsSer.insertGoodsInfo(goods, cg, gc, gs);
 		List<Long> list = new ArrayList<Long>();
 		list.add(goods.getId());
 		list.add(gc.getId());
 		list.add(cg.getId());
+		list.add(gs.getId());
 		return new ResBo<List<Long>>(list);
 	}
 	@Channel(Constants.B)
@@ -60,4 +68,14 @@ public class GoodsController {
 		return new ResBo<Object>();
 	}
 	
+	@Channel(Constants.B)
+	@RequestMapping("addCG.htm")
+	@ResponseBody
+	public ResBo<?> addCG(@ModelAttribute CGoods cg,@ModelAttribute GStock gs){
+		goodsSer.insertCGoodsInfo(cg, gs);
+		List<Long> list = new ArrayList<Long>();
+		list.add(cg.getId());
+		list.add(gs.getId());
+		return new ResBo<List<Long>>(list);
+	}
 }

@@ -10,7 +10,7 @@
 				var json = jQuery.parseJSON(data);
 				if(!json.success){
 					if(json.errCode == 7){
-						window.location.href = window.f.staUrl + "/page/login/login.htm";
+						window.location.href = window.f.staUrl + "/page/login/mlogin.htm";
 					}
 				}
 			}catch(e){
