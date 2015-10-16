@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.f.commons.Constants;
 import com.f.dto.users.Merchant;
 import com.f.services.merchant.IMerchant;
 
 import framework.web.Pager;
 import framework.web.ReqBo;
 import framework.web.ResBo;
+import framework.web.auth.Channel;
 
 @Controller
 @RequestMapping("merchant")
@@ -35,6 +37,7 @@ public class MerchantController {
 						reqBo.getParamInt("rows")));
 	}
 	
+	@Channel(Constants.H)
 	@RequestMapping("addOrUpd.htm")
 	@ResponseBody
 	public ResBo<?> addOrUpdMerchant(@ModelAttribute Merchant merchant) {

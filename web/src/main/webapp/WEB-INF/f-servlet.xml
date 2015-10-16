@@ -63,6 +63,8 @@
 		<bean class="framework.web.aop.DefaultHttpSessionListener"/>
 	</mvc:interceptors>
 	
+	<bean class="framework.web.session.HttpSessionAdapter"/>
+	
 	<bean id="exceptionResolver" class="framework.web.exception.DefaultExceptionResolver" >
 		<property name="errPage" value="error"/>
 		<property name="onlyAjax" value="true"/>

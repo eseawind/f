@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.f.commons.Combobox;
+import com.f.commons.Constants;
 import com.f.dto.goods.Category;
 import com.f.services.ICategory;
 
 import framework.web.ReqBo;
 import framework.web.ResBo;
+import framework.web.auth.Channel;
 
 @Controller
 @RequestMapping("/category")
@@ -30,6 +32,7 @@ public class CategoryController {
 		return categorySer.selectCategories(new ReqBo().setParam("fid",fid));
 	}
 	
+	@Channel(Constants.H)
 	@RequestMapping("/addOrUpd.htm")
 	@ResponseBody
 	public ResBo<?> addOrUpd(@ModelAttribute Category category){
