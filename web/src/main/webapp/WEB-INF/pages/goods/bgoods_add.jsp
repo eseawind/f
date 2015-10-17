@@ -20,50 +20,9 @@
 				商品信息（必填）
 			</div>
 			<div class="panel-body">
-				<div class="form">
-					<div class="form-group">
-						<label>商品名称：</label>
-						<input class="form-control" name="gname" f-type="text" f-options="required:true,maxLength:254"/>
-					</div>
-				</div>
-				<table class="table">
+				<table class="table" style="border-width:0">
 					<tr>
-						<td style="width:20%">
-							<label>sku:</label>
-							<input class="form-control" name="sku" f-type="text" f-options="maxLength:32"/>
-						</td>
-						<td>
-							<label>描述:</label>
-							<input class="form-control" name="remark" f-type="text" f-options="required:true,maxLength:254"/>
-						</td>
-						<td style="width:15%">
-							<label>品牌:</label>
-							<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
-						</td>
-					</tr>
-				</table>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						商品详情（必填）
-					</div>
-					<div class="panel-body">
-						<textarea id="descript" style="width:100%"></textarea>
-					</div>
-				</div>
-				<button id="goodsBtn" class="btn btn-primary btn-block" style="display:none">保存</button>
-			</div>	
-		</div>
-	</div>
-	<div id="gcDiv">
-		<input name="id" type="hidden" id="gcId"/>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				品类（必填）
-			</div>
-			<div class="panel-body">
-				<table class="table">
-					<tr>
-						<td>
+						<td style="width:33%">
 							<label>一级品类:</label>
 							<select class="form-control" id="category1" f-type="combobox" f-options="url:'${dynUrl }/category/combobox.htm?fid=0',errMsg:'必填',errDir:'bottom',required:true,
 							filter:function(d){
@@ -100,14 +59,38 @@
 								}
 							}"></select>
 						</td>
-						<td>
+						<td style="width:33%">
 							<label>三级品类:</label>
 							<select class="form-control" id="category3" f-type="combobox" f-options=""></select>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="2">
+							<label>商品名称：</label>
+							<input class="form-control" name="gname" f-type="text" f-options="required:true,maxLength:254"/>
+						</td>
+						<td>
+							<label>品牌:</label>
+							<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<label>描述:</label>
+							<input class="form-control" name="remark" f-type="text" f-options="required:false,maxLength:254"/>
+						</td>
+					</tr>
 				</table>
-				<button id="gcBtn" class="btn btn-primary btn-block" style="display:none">保存</button>
-			</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						商品详情（必填）
+					</div>
+					<div class="panel-body">
+						<textarea id="descript" style="width:100%"></textarea>
+					</div>
+				</div>
+				<button id="goodsBtn" class="btn btn-primary btn-block" style="display:none">保存</button>
+			</div>	
 		</div>
 	</div>
 	<div id="cgDiv">
@@ -120,6 +103,10 @@
 		  <div class="panel-body">
 		  	<table class="table table-bordered">
 		  		<tr>
+		  			<td>
+			  			<label>sku：</label>
+			  			<input class="form-control" name="sku" f-type="text" f-options="maxLength:32"/>
+		  			</td>
 		  			<td>
 		  				<label>规格：</label>
 		  				<input class="form-control" name="cgname" f-type="text" f-options="required:true,maxLength:254"/>
@@ -203,6 +190,10 @@
 			  <div class="panel-body">
 			  	<table class="table table-bordered">
 			  		<tr>
+						<td>
+			  				<label>sku：</label>
+			  				<input class="form-control" name="sku" f-type="text" f-options="maxLength:32"/>
+		  				</td>
 			  			<td>
 			  				<label>规格：</label>
 			  				<input class="form-control" name="cgname" f-type="text" f-options="required:true,maxLength:254"/>
@@ -281,24 +272,23 @@ $(function(){
 	var gid = undefined;
 	var formIndex = 0;
 	var goodsDiv = $("#goodsDiv");
-	var gcDiv = $("#gcDiv");
 	var cgDiv = $("#cgDiv");
 	$("#saveGoodsBtn").click(function(){
-		if(goodsDiv.f_isValid()&&gcDiv.f_isValid()&&cgDiv.f_isValid()){
+		if(goodsDiv.f_isValid()&&cgDiv.f_isValid()){
 			var param = {};
 			$.extend(param,goodsDiv.f_serialized());
-			$.extend(param,gcDiv.f_serialized());
 			$.extend(param,cgDiv.f_serialized());
 			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
+			param.descript = editor.html();
 			$("#body").startMask();
 			$.post(f.dynUrl+'/goods/add.htm',param,function(d){
 				$("#body").closeMask();
 				if(d.success){
+					console.log(d.result);
 					gid = d.result[0];
 					$("#gId").val(d.result[0]);
-					$("#gcId").val(d.result[1]);
-					$("#cgId").val(d.result[2]);
-					$("#gsId").val(d.result[3]);
+					$("#cgId").val(d.result[1]);
+					$("#gsId").val(d.result[2]);
 					$("#saveGoodsBtn").hide();
 					$("#goodsBtn").show();
 					$("#gcBtn").show();
@@ -312,6 +302,8 @@ $(function(){
 	$("#goodsBtn").click(function(){
 		if(goodsDiv.f_isValid()){
 			var param = goodsDiv.f_serialized();
+			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
+			param.descript = editor.html();
 			goodsDiv.startMask();
 			$.post(f.dynUrl+"/goods/updGoods.htm",param,function(d){
 				goodsDiv.closeMask();
@@ -320,19 +312,6 @@ $(function(){
 				}
 			},'json');
 		}
-	});
-	$("#gcBtn").click(function(){
-		if(gcDiv.f_isValid()){
-			var param = gcDiv.f_serialized();
-			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
-			gcDiv.startMask();
-			$.post(f.dynUrl+"/goods/updGC.htm",param,function(d){
-				gcDiv.closeMask();
-				if(!d.success){
-					f.alertError(d.errMsg);
-				}
-			},'json');
-		}	
 	});
 	$("#cgBtn").click(function(){
 		if(cgDiv.f_isValid()){
@@ -351,10 +330,12 @@ $(function(){
 			f.dialogAlert("保存成功商品信息后才能添加新规格");
 			return;
 		}
-		formIndex++;
-		$("#add_standard").append($("#standard_tmpl").tmpl({gid:gid,index:formIndex})).f_create();
-		$("#standard_submit_"+formIndex).click(function(e){
-			var form = $("#standard_form_"+formIndex);
+		var index = formIndex++;
+		var standard = $("#standard_tmpl").tmpl({gid:gid,index:index});
+		standard.f_create();
+		$("#add_standard").append(standard);
+		$("#standard_submit_"+index).click(function(e){
+			var form = $("#standard_form_"+index);
 			if(form.f_isValid()){
 				var param = form.f_serialized();
 				console.log(param);
@@ -364,7 +345,7 @@ $(function(){
 					$.post(f.dynUrl+"/goods/addCG.htm",param,function(d){
 						form.closeMask();
 						if(d.success){
-							$("#standard_del_"+formIndex).hide();
+							$("#standard_del_"+index).hide();
 							form.find('input[name="id"]').val(d.result[1]);
 							form.find('input[name="cgid"]').val(d.result[0]);
 						}else{
@@ -384,13 +365,13 @@ $(function(){
 			e.preventDefault();
 			e.stopPropagation();
 		});
-		$("#standard_del_"+formIndex).click(function(){
+		$("#standard_del_"+index).click(function(){
 			$(this).parent().parent().remove();
 		});
-		$("#standard_form_"+formIndex).find('img.imgupload').each(function(){
+		$("#standard_form_"+index).find('img.imgupload').each(function(){
 			imgupload($(this));
 		});
-		$("#standard_form_"+formIndex).find('.del_imgupload').each(function(){
+		$("#standard_form_"+index).find('.del_imgupload').each(function(){
 			$(this).click(function(e){
 				del_imgupload($(this));
 				e.preventDefault();

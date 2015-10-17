@@ -3,10 +3,10 @@
 <mapper namespace="com.f.dao.ext.goods.GoodsMapperExt" >
   
   <insert id="insertGoods" parameterType="com.f.dto.goods.Goods" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  	insert into goods (sku, gname, 
+  	insert into goods (code, gname, 
       remark, createtime, merchantId, 
       brandId, descript)
-    values (#{sku,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, 
+    values (#{code,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, 
       #{brandId,jdbcType=BIGINT}, #{descript,jdbcType=VARCHAR})
   </insert>
@@ -14,21 +14,73 @@
   <insert id="insertCGoods" parameterType="com.f.dto.goods.CGoods" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   	insert into cgoods (gid, cgname, 
       price, mprice, state, createtime, photo, 
-      photo1, photo2, photo3, 
-      photo4)
+      photo1, photo2, photo3, photo4, sku)
     values (#{gid,jdbcType=BIGINT}, #{cgname,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{photo,jdbcType=VARCHAR}, #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
-      #{photo4,jdbcType=VARCHAR})
-  </insert>
-  
-  <insert id="insertGCategory" parameterType="com.f.dto.goods.GCategory" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-  	insert into gcategory (code, gid, createtime)
-    values (#{code,jdbcType=VARCHAR}, #{gid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP})
+      #{photo4,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR})
   </insert>
   
   <insert id="insertGStock" parameterType="com.f.dto.goods.GStock" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   	insert into gstock (cgid, number)
     values (#{cgid,jdbcType=BIGINT}, #{number,jdbcType=INTEGER})
   </insert>
+  
+  <!--  商品查询  -->
+  <select id="selCGoods" parameterType="map" resultType="map">
+  	select cg.id,g.gname,cg.cgname,g.id as gid,gs.number,cg.createtime,
+  	c.name as categoryName,cg.sku,cg.price,cg.mprice,b.name as brandName,
+  	cg.state,g.remark
+  	from cgoods cg 
+  	left join gstock gs on gs.cgid = cg.id
+  	left join goods g on cg.gid = g.id
+  	left join merchant m on g.merchantId = m.id
+  	left join brand b on g.brandId = b.id
+  	left join category c on g.code = c.code
+  	<where>
+  		<if test="id != null">
+  			and cg.id = #{id,jdbcType=BIGINT}
+  		</if>
+  		<if test="gname != null">
+  			and g.gname like concat('%',#{gname,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="merchantId != null">
+  			and m.id = #{merchantId,jdbcType=BIGINT}
+  		</if>
+  		<if test="brandId != null">
+  			and b.id = #{brandId,jdbcType=BIGINT}
+  		</if>
+  		<if test="sku != null">
+  			and cg.sku = #{sku,jdbcType=VARCHAR}
+  		</if>
+  	</where> 
+  	order by cg.id desc
+  	limit #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="countCGoods" parameterType="map" resultType="long">
+  	select count(1)
+  	from cgoods cg 
+  	left join gstock gs on gs.cgid = cg.id
+  	left join goods g on cg.gid = g.id
+  	left join merchant m on g.merchantId = m.id
+  	left join brand b on g.brandId = b.id
+  	<where>
+  		<if test="id != null">
+  			and cg.id = #{id,jdbcType=BIGINT}
+  		</if>
+  		<if test="gname != null">
+  			and g.gname like concat('%',#{gname,jdbcType=VARCHAR},'%')
+  		</if>
+  		<if test="merchantId != null">
+  			and m.id = #{merchantId,jdbcType=BIGINT}
+  		</if>
+  		<if test="brandId != null">
+  			and b.id = #{brandId,jdbcType=BIGINT}
+  		</if>
+  		<if test="sku != null">
+  			and cg.sku = #{sku,jdbcType=VARCHAR}
+  		</if>
+  	</where> 
+  </select>
 </mapper>

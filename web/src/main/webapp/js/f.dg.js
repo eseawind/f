@@ -313,9 +313,7 @@
 				endEdit:function(index,rowData,changes){return true;},
 				celEdit:function(index,rowData){}
 			},config);
-			if(!config.lazy){
-				datagridBuilder(config);
-			}
+			datagridBuilder(config);
 			this.data('f_config',config);
 		}else{
 			var fun = config;
@@ -480,7 +478,7 @@
 		if($.isPlainObject(obj)){
 			$.extend(config,obj);
 		}
-		datagridBuilder(config);
+		dataBuilder(config);
 	}
 	function addRow(config,data,index){
 		index = parseInt(index);

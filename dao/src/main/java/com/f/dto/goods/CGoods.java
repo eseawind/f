@@ -30,6 +30,8 @@ public class CGoods {
 
     private String photo4;
 
+    private String sku;
+
     public Long getId() {
         return id;
     }
@@ -132,5 +134,13 @@ public class CGoods {
 
     public void setPhoto4(String photo4) {
         this.photo4 = photo4 == null ? null : photo4.trim();
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku == null ? null : sku.trim();
     }
 }

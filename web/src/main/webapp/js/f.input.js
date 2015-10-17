@@ -134,7 +134,7 @@
 			}
 			if($.isPlainObject(config)){
 				if(this.data('f-name')){
-					destory(config);
+					destory(this.data('f-config'));
 				}
 				config = $.extend({
 					required:false,
@@ -319,7 +319,7 @@
 			}
 			if($.isPlainObject(config)){
 				if(this.data('f-name')){
-					destory(config);
+					destory(this.data('f-config'));
 				}
 				config = $.extend({
 					required:false,
@@ -429,7 +429,7 @@
 			}
 			if($.isPlainObject(config)){
 				if(this.data('f-name')){
-					destory(config);
+					destory(this.data('f-config'));
 				}
 				config = $.extend({
 					required:false,
@@ -515,10 +515,6 @@
 		function getText(config){
 			return config.target.children('option:selected').text();
 		}
-		function loadData(config,data){
-			config.datas = data;
-			comboboxBuilder(config);
-		}
 		function setValue(config,value){
 			config.defValue = value;
 			config.target.children('option:selected').removeProp('selected');
@@ -532,13 +528,17 @@
 			}
 			return re;
 		}
+		function loadData(config,datas){
+			config.datas = datas;
+			comboboxBuilder(config);
+		}
 		$.fn.f_combobox = function(config){
 			if(this.get(0).tagName != 'SELECT'){
 				return undefined;
 			}
 			if($.isPlainObject(config)){
 				if(this.data('f-name')){
-					destory(config);
+					destory(this.data('f-config'));
 				}
 				config = $.extend({
 					required:false,
@@ -1108,7 +1108,7 @@
 			}
 			if($.isPlainObject(config)){
 				if(this.data('f-name')){
-					destory(config);
+					destory(this.data('f-config'));
 				}
 				config = $.extend({
 					required:false,

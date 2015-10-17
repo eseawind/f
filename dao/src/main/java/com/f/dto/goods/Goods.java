@@ -5,7 +5,7 @@ import java.util.Date;
 public class Goods {
     private Long id;
 
-    private String sku;
+    private String code;
 
     private String gname;
 
@@ -27,12 +27,12 @@ public class Goods {
         this.id = id;
     }
 
-    public String getSku() {
-        return sku;
+    public String getCode() {
+        return code;
     }
 
-    public void setSku(String sku) {
-        this.sku = sku == null ? null : sku.trim();
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     public String getGname() {
