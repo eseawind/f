@@ -2,7 +2,7 @@ package com.f.commons;
 
 public class Combobox {
 	
-	private int id;
+	private long id;
 	private String k;
 	private String v;
 	public String getK() {
@@ -17,10 +17,10 @@ public class Combobox {
 	public void setV(String v) {
 		this.v = v;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 }

@@ -71,7 +71,7 @@
 						</td>
 						<td>
 							<label>品牌:</label>
-							<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
+							<select class="form-control" name="brandId" f-type="combobox" f-options="required:false,url:'${dynUrl }/brand/combobox.htm',filter:function(d){return d.result}"></select>
 						</td>
 					</tr>
 					<tr>

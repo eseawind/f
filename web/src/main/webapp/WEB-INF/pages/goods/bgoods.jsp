@@ -29,7 +29,7 @@
 				</div>
 				<div class="form-group">
 					<label>品牌</label>
-					<select class="form-control" name="brandId" style="width:150px"></select>
+					<select class="form-control" name="brandId" style="width:150px" f-type="combobox" f-options="url:'${dynUrl }/brand/combobox.htm',filter:function(d){return d.result}"></select>
 				</div>
 				<button class="btn btn-primary" id="queryBtn">查询</button>
 			</div>
@@ -97,7 +97,7 @@
 					</td>
 					<td>
 						<label>品牌:</label>
-						<select class="form-control" name="brandId" f-type="combobox" f-options="required:false"></select>
+						<select class="form-control" name="brandId" f-type="combobox" f-options="required:false,url:'${dynUrl }/brand/combobox.htm',filter:function(d){return d.result}"></select>
 					</td>
 				</tr>
 				<tr>
@@ -303,6 +303,7 @@ $(function(){
 			map.brandId = data.brandId;
 			map.remark = data.remark;
 			editor.html(data.descript);
+			categoryBuilder(data.code);
 			goodsDiv.f_formReset();
 			goodsDiv.f_formLoad(map);
 			goodsDiv.f_modal("show");
@@ -369,6 +370,34 @@ $(function(){
 			e.stopPropagation();
 		});
 	});
+	function categoryBuilder(code){
+		var c1 = code.substring(0,3);
+		$("#category1").f_combobox("setValue",c1);
+		if(code.length >= 6){
+			var c2 = code.substring(0,6);
+			var id = $("#category1").f_combobox('getSelectedData').id;
+			$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+id,function(d){
+				if(d.success){
+					$('#category2').f_combobox('loadData',d.result);
+					$('#category2').f_combobox('setValue',c2);
+					if(code.length >= 9){
+						var id = $("#category2").f_combobox('getSelectedData').id;
+						$.getJSON(f.dynUrl+'/category/combobox.htm?fid='+id,function(d){
+							if(d.success){
+								$('#category3').f_combobox('loadData',d.result);
+								$('#category3').f_combobox('setValue',code);
+							}
+						});
+					}else{
+						$('#category3').f_combobox('loadData',[]);
+					}
+				}
+			});
+		}else{
+			$('#category2').f_combobox('loadData',[]);
+			$('#category3').f_combobox('loadData',[]);
+		}
+	}
 })
 </script>
 </body>

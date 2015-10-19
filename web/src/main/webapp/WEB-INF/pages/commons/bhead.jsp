@@ -9,6 +9,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
+          <li><a href="${staUrl }/page/brand/bbrand.htm">品牌维护</a></li>
           <li><a href="${staUrl }/page/goods/bgoods_add.htm">新增商品</a></li>
           <li><a href="${staUrl }/page/goods/bgoods.htm">商品维护</a></li>
         </ul>

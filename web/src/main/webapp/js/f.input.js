@@ -497,7 +497,7 @@
 				config.datas.unshift(emptyObj);
 			}
 			$.each(config.datas,function(i,d){
-				var options = $('<option value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
+				var options = $('<option f-id="'+i+'" value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
 				options.click(function(e){
 					config.select.call(config.target,d);
 					e.preventDefault();
@@ -533,6 +533,14 @@
 		function loadData(config,datas){
 			config.datas = datas;
 			comboboxBuilder(config);
+		}
+		function getSelectedData(config){
+			var i = getSelectedIndex(config);
+			return config.datas[i];
+		}
+		function getSelectedIndex(config){
+			var obj = config.target.children(':selected');
+			return obj.eq(0).attr('f-id');
 		}
 		$.fn.f_combobox = function(config){
 			if(this.get(0).tagName != 'SELECT'){
@@ -605,6 +613,8 @@
 				case 'reset':reset(config);break;
 				case 'clear':clear(config);break;
 				case 'destory':destory(config);break;
+				case 'getSelectedData':return getSelectedData(config);
+				case 'getSelectedIndex':return getSelectedIndex(config);
 				default:return undefined;
 				}
 			}
