@@ -32,6 +32,8 @@ public class CGoods {
 
     private String sku;
 
+    private Integer number;
+
     public Long getId() {
         return id;
     }
@@ -142,5 +144,13 @@ public class CGoods {
 
     public void setSku(String sku) {
         this.sku = sku == null ? null : sku.trim();
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

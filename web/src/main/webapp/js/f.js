@@ -101,7 +101,19 @@
 			fun&&fun.call(null,true);
 		}).show();
 		modal.modal("show");
-	};
+	}
+	
+	f.length = function(o){
+		if($.isArray(o)){
+			return o.length;
+		}else if($.isPlainObject(o)){
+			var n = 0;
+			for(var k in o){
+				n++;
+			}
+			return n;
+		}
+	}
 	
 	$.fn.f_showTip = function(message){
 		var obj = this;
@@ -134,6 +146,7 @@
 			var modal = $(f.tmpl.modalWin);
 			this.parent().append(modal);
 			modal.modal({show:false});
+			config.width&&modal.find('.modal-dialog').eq(0).width(config.width);
 			config.title&&modal.find('[f-div="title"]').eq(0).text(config.title);
 			modal.find('.modal-body').eq(0).append(this);
 			modal.data('f-config',config);

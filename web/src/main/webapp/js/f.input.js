@@ -58,6 +58,7 @@
 		config.target.val(value);
 	}
 	function reset(config){
+		config.target.data('f-change',false);
 		config.target.val(config.defValue);
 	}
 	function clear(config){
@@ -308,6 +309,7 @@
 			return value;
 		}
 		function reset(config){
+			config.target.data('f-change',false);
 			setValue(config, config.defValue);
 		}
 		function clear(config){
@@ -719,6 +721,7 @@
 			}
 		}
 		function reset(config){
+			config.target.data('f-change',false);
 			setValue(config,config.defValue);
 		}
 		function clear(config){

@@ -94,8 +94,7 @@
 		</div>
 	</div>
 	<div id="cgDiv">
-		<input name="id" type="hidden" id="gsId"/>
-		<input name="cgid" type="hidden" id="cgId"/>
+		<input name="id" type="hidden" id="cgId"/>
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	规格（必填）
@@ -186,7 +185,6 @@
 			  </div>
 			  <form id="standard_form_{{= index}}">
 			  <input type="hidden" name="id" value=""/>
-              <input type="hidden" name="cgid" value=""/>
 			  <div class="panel-body">
 			  	<table class="table table-bordered">
 			  		<tr>
@@ -288,10 +286,8 @@ $(function(){
 					gid = d.result[0];
 					$("#gId").val(d.result[0]);
 					$("#cgId").val(d.result[1]);
-					$("#gsId").val(d.result[2]);
 					$("#saveGoodsBtn").hide();
 					$("#goodsBtn").show();
-					$("#gcBtn").show();
 					$("#cgBtn").show();
 				}else{
 					f.alertError(d.errMsg);
@@ -338,7 +334,6 @@ $(function(){
 			var form = $("#standard_form_"+index);
 			if(form.f_isValid()){
 				var param = form.f_serialized();
-				console.log(param);
 				if(!param.id){
 					param.gid = gid;
 					form.startMask();
@@ -346,8 +341,7 @@ $(function(){
 						form.closeMask();
 						if(d.success){
 							$("#standard_del_"+index).hide();
-							form.find('input[name="id"]').val(d.result[1]);
-							form.find('input[name="cgid"]').val(d.result[0]);
+							form.find('input[name="id"]').val(d.result);
 						}else{
 							f.alertError(d.errMsg);
 						}

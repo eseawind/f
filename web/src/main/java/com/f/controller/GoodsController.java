@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.f.commons.Constants;
 import com.f.commons.User;
 import com.f.dto.goods.CGoods;
-import com.f.dto.goods.GStock;
 import com.f.dto.goods.Goods;
 import com.f.services.goods.IGoods;
 
@@ -38,42 +37,36 @@ public class GoodsController {
 	@Channel(Constants.B)
 	@RequestMapping("add.htm")
 	@ResponseBody
-	public ResBo<List<Long>> addGoods(@ModelAttribute Goods goods,@ModelAttribute CGoods cg,@ModelAttribute GStock gs){
+	public ResBo<List<Long>> addGoods(@ModelAttribute Goods goods,@ModelAttribute CGoods cg){
 		User user = (User) session.get(Constants.USERINFO);
 		goods.setMerchantId(user.getId());
-		goodsSer.insertGoodsInfo(goods, cg, gs);
+		goodsSer.insertGoodsInfo(goods, cg);
 		List<Long> list = new ArrayList<Long>();
 		list.add(goods.getId());
 		list.add(cg.getId());
-		list.add(gs.getId());
 		return new ResBo<List<Long>>(list);
 	}
 	@Channel(Constants.B)
 	@RequestMapping("updGoods.htm")
 	@ResponseBody
 	public ResBo<?> updGoods(@ModelAttribute Goods goods){
-		goodsSer.updateGoodsInfo(goods, null, null);
+		goodsSer.updateGoodsInfo(goods, null);
 		return new ResBo<Object>();
 	}
 	@Channel(Constants.B)
 	@RequestMapping("updCGandGS.htm")
 	@ResponseBody
-	public ResBo<?> updCG(@ModelAttribute CGoods cg,@ModelAttribute GStock gs){
-		cg.setId(gs.getCgid());
-		gs.setCgid(null);
-		goodsSer.updateGoodsInfo(null, cg, gs);
+	public ResBo<?> updCG(@ModelAttribute CGoods cg){
+		goodsSer.updateGoodsInfo(null, cg);
 		return new ResBo<Object>();
 	}
 	
 	@Channel(Constants.B)
 	@RequestMapping("addCG.htm")
 	@ResponseBody
-	public ResBo<?> addCG(@ModelAttribute CGoods cg,@ModelAttribute GStock gs){
-		goodsSer.insertCGoodsInfo(cg, gs);
-		List<Long> list = new ArrayList<Long>();
-		list.add(cg.getId());
-		list.add(gs.getId());
-		return new ResBo<List<Long>>(list);
+	public ResBo<?> addCG(@ModelAttribute CGoods cg){
+		goodsSer.insertCGoodsInfo(cg);
+		return new ResBo<Long>(cg.getId());
 	}
 	
 	@Channel(Constants.B)
