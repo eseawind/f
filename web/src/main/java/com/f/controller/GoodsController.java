@@ -120,17 +120,13 @@ public class GoodsController {
 	public String selGoodsDetail(@PathVariable("cgid")long cgid,Model model){
 		List<GoodsStaInfo> list = goodsSer.selectCGoodsStaInfoByCgId(cgid);
 		GoodsStaInfo def = null;
-		List<Long> cgids = new ArrayList<Long>();
 		for(GoodsStaInfo info:list){
 			if(info.getCgid().equals(cgid)){
 				def = info;
-				cgids.add(info.getCgid());
 			}
 		}
-		List<GoodsDynInfo> list2 = goodsSer.selectCGoodsDynInfo(cgids);
 		model.addAttribute("def", def);
 		model.addAttribute("cgs", list);
-		model.addAttribute("dyn", list2.get(0));
 		return "goods/mdetail";
 	}
 	

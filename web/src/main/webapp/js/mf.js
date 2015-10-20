@@ -18,7 +18,7 @@
 			return data;
 		},
 		error:function(XmlHttpReq, textStatus, errorThrow){
-			f.alertError(textStatus);
+			f.dialogAlert(textStatus);
 		}
 	});
 	//自定义

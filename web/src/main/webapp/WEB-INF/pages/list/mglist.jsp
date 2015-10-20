@@ -8,166 +8,26 @@
 <body>
 	<%@ include file="../commons/mhead.jsp" %>
 	<div class="container">
-		<ul class="nav nav-tabs row text-center">
+		<ul class="nav nav-tabs row text-center" id="tabs">
 		  <li role="presentation" class="active col-md-4 col-sm-4 col-xs-4"><a href="#">综合</a></li>
 		  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="#">销量</a></li>
 		  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="#">价格</a></li>
 		</ul>
 		<div id="godosContainer">
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="f-goods-container">
-				<div class="f-goods-block">
-					<div class="f-goods-img">
-						<img alt=""
-							src="http://img11.360buyimg.com/n7/jfs/t1747/94/1121132190/123619/d307e19b/55e00172N89c73848.jpg" />
-					</div>
-					<ul>
-						<li class="gprice"><font>￥</font>1</li>
-						<li class="gname">立即预约，19号1579超低价抢购！黑色919，红色乐迷节，点击查看更多优惠</li>
-						<li class="goper btn-group">
-							<button class="btn btn-default share">分享</button>
-							<button class="btn btn-default">收藏</button>
-							<button class="btn btn-default">加入购物车</button>
-						</li>
-					</ul>
-				</div>
-			</div>
+			
 		</div>
 	</div>
+<script type="text/javascript">
+$(function(){
+	var tabs = $("#tabs")
+	tabs.children("li").each(function(){
+		var li = $(this);
+		li.click(function(){
+			tabs.children("li").removeClass("active")
+			li.addClass("active");
+		});
+	});
+})
+</script>
 </body>
 </html>

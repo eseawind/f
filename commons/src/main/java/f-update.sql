@@ -32,7 +32,7 @@ ALTER TABLE cgoods ADD COLUMN sku VARCHAR(32) NULL COMMENT 'sku';
 DROP TABLE gstock;
 ALTER TABLE cgoods ADD COLUMN number INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'number';
 
-/* 20151020 未执行*/
+/* 20151020 已执行*/
 CREATE UNIQUE INDEX category_code ON category(code);
 UPDATE cgoods SET sku = NULL WHERE sku = '';
 CREATE UNIQUE INDEX cgoods_sku ON cgoods(sku);
