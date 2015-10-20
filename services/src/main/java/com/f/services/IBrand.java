@@ -9,7 +9,7 @@ import framework.web.Pager;
 
 public interface IBrand {
 
-	public Pager<List<Brand>> selectBrands(Long merchant,String name);
+	public Pager<List<Brand>> selectBrands(Long merchant,String name,int page,int rows);
 	
 	public List<Combobox> selectCombobox(Long merchant);
 	

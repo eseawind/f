@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.f.commons.Combobox;
+import com.f.dao.ext.BrandMapperExt;
 import com.f.dao.goods.BrandMapper;
 import com.f.dto.goods.Brand;
 import com.f.dto.goods.BrandExample;
@@ -22,14 +23,18 @@ public class BrandSer implements IBrand {
 
 	@Autowired
 	private BrandMapper brandMapper;
+	@Autowired
+	private BrandMapperExt brandMapperExt;
 	@Override
-	public Pager<List<Brand>> selectBrands(Long merchant, String name) {
+	public Pager<List<Brand>> selectBrands(Long merchant, String name, int page, int rows) {
 		BrandExample e = new BrandExample();
 		BrandExample.Criteria bc = e.createCriteria().andMerchantIdEqualTo(merchant);
 		if(StringUtils.isNotEmpty(name)){
 			bc.andNameLike("%"+name+"%");
+		}else{
+			name = null;
 		}
-		List<Brand> list = brandMapper.selectByExample(e);
+		List<Brand> list = brandMapperExt.selBrand(merchant, name, (page-1)*rows, rows);
 		long count = brandMapper.countByExample(e);
 		return new Pager<List<Brand>>(list,count);
 	}

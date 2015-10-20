@@ -31,3 +31,12 @@ ALTER TABLE cgoods ADD COLUMN sku VARCHAR(32) NULL COMMENT 'sku';
 /* 20151020 已执行*/
 DROP TABLE gstock;
 ALTER TABLE cgoods ADD COLUMN number INT(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'number';
+
+/* 20151020 未执行*/
+CREATE UNIQUE INDEX category_code ON category(code);
+UPDATE cgoods SET sku = NULL WHERE sku = '';
+CREATE UNIQUE INDEX cgoods_sku ON cgoods(sku);
+CREATE UNIQUE INDEX favorite_userId_cgoodsId on favorite(userId,cgoodsId);
+CREATE UNIQUE INDEX husers_username ON husers(username);
+CREATE UNIQUE INDEX merchant_username ON merchant(username);
+CREATE UNIQUE INDEX users_username ON users(username); 

@@ -32,9 +32,9 @@ public class BrandController {
 	@Channel(Constants.B)
 	@RequestMapping("list.htm")
 	@ResponseBody
-	public ResBo<Pager<List<Brand>>> list(@RequestParam(value="name",required=false)String name){
+	public ResBo<Pager<List<Brand>>> list(@RequestParam(value="name",required=false)String name,@RequestParam("page")int page,@RequestParam("rows")int rows){
 		User user = (User)session.get(Constants.USERINFO);
-		return new ResBo<Pager<List<Brand>>>(brandSer.selectBrands(user.getId(), name));
+		return new ResBo<Pager<List<Brand>>>(brandSer.selectBrands(user.getId(), name, page, rows));
 	}
 	
 	@Channel(Constants.B)

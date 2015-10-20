@@ -164,16 +164,12 @@
 			</div>
 		</div>
 
-
-
 	</div>
 	<script type="text/javascript">
 		$(function() {
 			var arr = [];
-			arr
-					.push($('<img alt="" src="http://img.365020.com/product/2015/09/06/85b57c01bffc4c748e1b5ddf65af114f.jpg"/>'));
-			arr
-					.push($('<img alt="" src="http://img.365020.com/product/2015/09/14/4ce98cc48f02419ba105b70b223cba70.jpg"/>'));
+			arr.push($('<img alt="" src="http://img.365020.com/product/2015/08/28/cc1174023a804a8bada71f6ddfa7afc4.jpg"/>'));
+			arr.push($('<img alt="" src="http://img.365020.com/product/2015/08/28/cc1174023a804a8bada71f6ddfa7afc4.jpg"/>'));
 			$("#carousel").carouselBuilder(arr);
 		})
 	</script>

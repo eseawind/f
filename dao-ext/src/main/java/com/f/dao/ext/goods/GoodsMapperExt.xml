@@ -76,4 +76,111 @@
   		</if>
   	</where> 
   </select>
+  
+  <!-- 详情页商品信息   -->
+  <select id="selGIdByCgId" parameterType="long" resultType="long">
+  	select gid
+  	from cgoods
+  	where id = #{value,jdbcType=BIGINT} 
+  	limit 1
+  </select> 
+  
+  <select id="selectCGoodsStaInfoByCgIds" parameterType="list" resultType="com.f.commons.GoodsStaInfo">
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
+  	from cgoods cg 
+  	left join goods g on cg.gid = g.id
+  	left join category c on c.code = g.code
+  	left join merchant m on m.id = g.merchantId
+  	left join brand b on b.id = g.brandId
+  	where cg.id in
+  	<foreach collection="list" item="id" open="(" close=")" separator=",">
+  		#{id,jdbcType=BIGINT}
+  	</foreach>
+  </select>
+  
+  <select id="selectCGoodsDynInfo" parameterType="list" resultType="com.f.commons.GoodsDynInfo">
+  	select cg.id as cgid,cg.price,cg.mprice,cg.number,g.id as gid
+  	from cgoods cg
+  	left join goods g on cg.gid = g.id
+  	where cg.id in
+  	<foreach collection="list" item="id" open="(" close=")" separator=",">
+  		#{id,jdbcType=BIGINT}
+  	</foreach>
+  </select>
+  
+  <select id="selectCGoodsStaInfo" parameterType="map" resultType="com.f.commons.GoodsStaInfo">
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
+  	from cgoods cg 
+  	left join goods g on cg.gid = g.id
+  	left join category c on c.code = g.code
+  	left join merchant m on m.id = g.merchantId
+  	left join brand b on b.id = g.brandId
+  	<where>
+  		<choose>
+  			<when test="filter == 3">
+  				and cg.state != 127
+  			</when>
+  			<otherwise>
+  				and cg.state = 1
+  			</otherwise>
+  		</choose>
+		<if test="merchantId != null">
+			and g.merchartId = #{merchantId,jdbcType=BIGINT}
+		</if>
+		<if test="code != null">
+			and g.code like concat(#{code,jdbcType=VARCHAR},'%')
+		</if>
+	</where>
+  	<if test="sort != null">
+  		<choose>
+  			<when test="sort == 1">
+  				order by cg.price asc
+  			</when>
+  			<when test="sort == 2">
+  				order by cg.price desc
+  			</when>
+  			<when test="sort == 3">
+  				order by cg.number asc
+  			</when>
+  			<when test="sort == 4">
+  				order by cg.number desc
+  			</when>
+  		</choose>
+  	</if>
+  	limit #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="countCGoodsStaInfo" parameterType="map" resultType="long">
+  	select count(1)
+  	from cgoods cg 
+  	left join goods g on cg.gid = g.id
+  	<where>
+  		<choose>
+  			<when test="filter == 3">
+  				and cg.state != 127
+  			</when>
+  			<otherwise>
+  				and cg.state = 1
+  			</otherwise>
+  		</choose>
+		<if test="merchantId != null">
+			and g.merchartId = #{merchantId,jdbcType=BIGINT}
+		</if>
+		<if test="code != null">
+			and g.code like concat(#{code,jdbcType=VARCHAR},'%')
+		</if>
+	</where>
+  </select>
+  
+  <select id="selectCGoodsStaInfoByGId" parameterType="long" resultType="com.f.commons.GoodsStaInfo">
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
+  	from cgoods cg 
+  	left join goods g on cg.gid = g.id
+  	left join merchant m on m.id = g.merchantId
+  	left join brand b on b.id = g.brandId
+  	where cg.gid = #{value,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -41,7 +41,10 @@
 		<artifactId>javax.servlet-api</artifactId>
 		<scope>provided</scope>
 	</dependency>
-	
+	<dependency>
+		<groupId>taglibs</groupId>
+		<artifactId>standard</artifactId>
+	</dependency>
   </dependencies>
   <build>
     <finalName>web</finalName>

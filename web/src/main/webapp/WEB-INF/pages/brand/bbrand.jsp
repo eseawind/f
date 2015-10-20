@@ -83,7 +83,7 @@ $(function(){
 		url:f.dynUrl+"/brand/list.htm",
 		method:"post",
 		before:function(param){param.name = $.trim($("#query").val())},
-		pagation:true,
+		pagination:true,
 		filter:function(data){
 			if(data.success){
 				return {rows:data.result.entry,count:data.result.total};
