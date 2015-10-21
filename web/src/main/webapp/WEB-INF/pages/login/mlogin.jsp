@@ -20,7 +20,7 @@
 				<input type="password" class="form-control" name="password" data-validation-help="必填" data-validation="length,required" data-validation-length="6,16"/>
 			</div>
 		</form>
-		<button class="btn btn-block btn-success" type="button" id="login_submit">登陆</button>
+		<button class="btn btn-block btn-primary" type="button" id="login_submit">登陆</button>
 	</div>
 <script type="text/javascript">
 $(function(){

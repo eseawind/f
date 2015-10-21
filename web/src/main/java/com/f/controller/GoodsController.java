@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.f.commons.Constants;
-import com.f.commons.EFilter;
-import com.f.commons.ESort;
 import com.f.commons.GoodsDynInfo;
 import com.f.commons.GoodsStaInfo;
 import com.f.commons.User;
@@ -84,17 +82,6 @@ public class GoodsController {
 		ReqBo reqBo = new ReqBo(req);
 		User user = (User) session.get(Constants.USERINFO);
 		return new ResBo<Pager<List<Map<String,Object>>>>(goodsSer.selectCGoods(reqBo.getParamLong("id"), reqBo.getParamStr("sku"), reqBo.getParamStr("gname"), user.getId(), reqBo.getParamLong("brandId"),reqBo.getParamInt("page"),reqBo.getParamInt("rows")));
-	}
-	
-	@IsLogin(false)
-	@Channel(Constants.M)
-	@RequestMapping("mlist.htm")
-	@ResponseBody
-	public ResBo<Pager<List<GoodsStaInfo>>> selGoodsStaInfo(HttpServletRequest req){
-		ReqBo reqBo = new ReqBo(req);
-		EFilter filter = EFilter.getEFilter(reqBo.getParamInt("filter",0));
-		ESort sort = ESort.getESort(reqBo.getParamInt("sort",0));
-		return new ResBo<Pager<List<GoodsStaInfo>>>(goodsSer.selectCGoodsStaInfo(reqBo.getParamLong("merchantId"), reqBo.getParamStr("code"), filter, sort, reqBo.getParamInt("page"), reqBo.getParamInt("rows")));
 	}
 	
 	@IsLogin(false)

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@ include file="../commons/bcommons.jsp" %>
+<%@ include file="../commons/hcommons.jsp" %>
 <script type="text/javascript" src="${staUrl }/js/md5.js"></script>
 </head>
 <body>
@@ -36,10 +36,10 @@ $(function(){
 			var param = form.f_serialized();
 			param.password = hex_md5(param.password);
 			form.startMask();
-			$.post(f.dynUrl+"/login/blogin.htm",param,function(d){
+			$.post(f.dynUrl+"/login/hlogin.htm",param,function(d){
 				form.closeMask();
 				if(d.success){
-					window.location.href = f.staUrl + "/page/goods/bgoods.htm";
+					window.location.href = f.staUrl + "/page/index/hindex.htm";
 				}else{
 					$("#error").f_alertError(d.errMsg);
 				}

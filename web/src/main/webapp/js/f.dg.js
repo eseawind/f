@@ -30,9 +30,9 @@
 			cbox.change(function(){
 				var cbox = $(this);
 				if(cbox.is(':checked')){
-					config.body.find('input[type="checkbox"][f-id]').prop('checked',true);
+					config.body.find('input[type="checkbox"][f-id]').prop('checked','checked');
 				}else{
-					config.body.find('input[type="checkbox"][f-id]').removeProp('checked',false);
+					config.body.find('input[type="checkbox"][f-id]').removeProp('checked');
 				}
 			});
 			td.append(cbox);

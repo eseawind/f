@@ -4,11 +4,16 @@
 <html>
 <head>
 <%@ include file="../commons/mcommons.jsp" %>
-<script src="${staUrl }/js/f.dg.js" type="text/javascript"></script>
 </head>
-<body>
-<div class="container">
-<%@ include file="../commons/hhead.jsp" %>
+<body class="container">
+<%@include file="../commons/mhead.jsp" %>
+<div>
+
 </div>
+<script type="text/javascript">
+$(function(){
+	f.setTitle("我的购物车");
+})
+</script>
 </body>
 </html>
