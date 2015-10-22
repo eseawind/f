@@ -2,6 +2,8 @@ package com.f.cart;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import framework.exception.BusinessException;
@@ -26,14 +28,42 @@ public class Cart implements Serializable{
 			this.cgidList.add(Long.parseLong(cgid));
 		}
 		this.number = Integer.parseInt(arr[1]);
+		sort();
 	}
 	
 	public Cart(int number, Long ... cgids){
-		this.number = number;
+		this.number = number <= 0?1:number;
+		if(cgids == null||cgids.length == 0){
+			throw new BusinessException(112L);
+		}
 		for(Long l:cgids){
 			if(l != null){
 				this.cgidList.add(l);
 			}
+		}
+		sort();
+	}
+	
+	public Cart(int number, String ... cgids){
+		this.number = number <= 0?1:number;
+		if(cgids == null||cgids.length == 0){
+			throw new BusinessException(112L);
+		}
+		for(String cgid:cgids){
+			if(cgid != null){
+				this.cgidList.add(Long.valueOf(cgid));
+			}
+		}
+		sort();
+	}
+	
+	private void sort(){
+		if(this.cgidList.size() > 1){
+			Collections.sort(this.cgidList, new Comparator<Long>(){
+				public int compare(Long o1, Long o2) {
+					return o1.compareTo(o2);
+				}
+			});
 		}
 	}
 	

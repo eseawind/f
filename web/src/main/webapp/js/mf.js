@@ -39,7 +39,6 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
-	
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
 	};
@@ -59,6 +58,61 @@
 			}
 		});
 	};
+	f.addCart = function(cgids,num,fun,errFun){
+		$.post(f.dynUrl+"/cart/add.htm",{cgids:cgids,number:num},function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
+				}else{
+					f.dialogAlert(d.errMsg);
+				}
+			}
+		},"json");
+	}
+	
+	f.updCart = function(cgids,num,fun,errFun){
+		$.post(f.dynUrl+"/cart/upd.htm",{cgids:cgids,number:num},function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
+				}else{
+					f.dialogAlert(d.errMsg);
+				}
+			}
+		},"json");
+	}
+	
+	f.sizeCart = function(fun,errFun){
+		$.getJSON(f.dynUrl+"/cart/size.htm",function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
+				}else{
+					f.dialogAlert(d.errMsg);
+				}
+			}
+		});
+	}
+	
+	f.delCart = function(cgids,fun,errFun){
+		$.post(f.dynUrl+"/cart/upd.htm",{cgids:cgids},function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
+				}else{
+					f.dialogAlert(d.errMsg);
+				}
+			}
+		},"json");
+	}
 	
 	$.fn.carouselBuilder = function(arr){
 		if($.isArray(arr) && arr.length > 0){
@@ -88,18 +142,22 @@
 	$.fn.goodsContainerBuilder = function(obj){
 		if($.isPlainObject(obj)){
 			obj.imgUrl = f.imgUrl
-			$.tmpl(f.tmpl.goodsContainer,obj).appendTo(this);
+			var goodsCon = $.tmpl(f.tmpl.goodsContainer,obj);
+			goodsCon.appendTo(this);
+			goodsCon.find(".f-addcart").click(function(){
+				var th = $(this);
+				var cgids = $.trim(th.attr("f-id"));
+				f.addCart(cgids,1,function(){
+					f.transientAlert("成功加入购物车");
+				});
+				
+			});
 		}
 	};
 	
 	//自定义页面加载完成事件
 	$(function(){
-		$(".f-label-fluid").each(function(){
-			var obj = $(this);
-			var length = obj.text().length;
-			var width = obj.innerWidth();
-			obj.width(width + width/2);
-			obj.css("color",f.colors[(length%f.colors.length)]);
-		});
+		
+		
 	});
 })(jQuery);

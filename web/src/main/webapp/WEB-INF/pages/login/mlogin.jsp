@@ -6,41 +6,41 @@
 <%@ include file="../commons/mcommons.jsp" %>
 <title>登陆</title>
 </head>
-<body>
-	<%@ include file="../commons/mhead.jsp" %>
-	<div class="container" style="padding-top:10px" id="container">
+<body class="container">
+<%@ include file="../commons/mhead.jsp" %>
+<div class="panel panel-default" style="padding-top:10px">
+	<div class="panel-body" id="form">
 		<div id="alertError"></div>
-		<form class="form" id="login_form">
+		<form class="form">
 			<div class="form-group">
 				<label>用户名：</label>
-				<input type="text" class="form-control" name="username" data-validation-help="必填" data-validation="length,required" data-validation-length="6,16"/>
+				<input type="text" class="form-control" name="username" f-type="text" f-options="required:true,hint:'用户名',maxLength:20,minLength:6,errMsg:'用户名长度6到20位'"/>
 			</div>
 			<div class="form-group">
 				<label>密码：</label>
-				<input type="password" class="form-control" name="password" data-validation-help="必填" data-validation="length,required" data-validation-length="6,16"/>
+				<input type="password" class="form-control" name="password" f-type="text" f-options="required:true,hint:'密码',maxLength:20,minLength:6,errMsg:'密码长度6到20位'"/>
 			</div>
 		</form>
 		<button class="btn btn-block btn-primary" type="button" id="login_submit">登陆</button>
 	</div>
+</div>
 <script type="text/javascript">
 $(function(){
+	var form = $("#form");
+	var alert = $("#alertError");
 	$("#login_submit").click(function(){
-		var container = $("#container");
-		var form = $("#login_form");
-		if(form.isValid()){
-			var param = $("#login_form").serializeObj();
-			container.showLoading();
+		if(form.f_isValid()){
+			var param = form.f_serialized();
+			form.startMask();
 			$.post(f.dynUrl+"/login/mlogin.htm",param,function(d){
-				container.hideLoading();
 				if(d.success){
-					window.location.href = f.staUrl+f.result;
+					window.location.href = f.staUrl + "/page/index/mindex.htm";
 				}else{
-					$("#alertError").f_alertError(d.errMsg);
+					
 				}
 			},"json");
 		}
 	});
-	$.validate();
 })
 </script>
 </body>

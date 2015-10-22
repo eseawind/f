@@ -102,7 +102,11 @@
 		}).show();
 		modal.modal("show");
 	}
-	
+	f.transientAlert = function(message,timeout){
+		var alert = $('<div class="text-center" style="z-index:999999999;position:absolute;bottom:50px;left:0;width:100%"><button class="btn btn-default">'+message+'</button></div>')
+		$(document.body).append(alert);
+		setTimeout(function(){alert.remove()},timeout||1000);
+	}
 	f.length = function(o){
 		if($.isArray(o)){
 			return o.length;

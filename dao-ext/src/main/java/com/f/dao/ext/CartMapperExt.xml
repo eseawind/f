@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f.dao.ext.CartMapperExt" >
+  
+  <insert id="insertCartStr" parameterType="com.f.cart.CartStr">
+  	insert carts (userId,cartStr,modifytime) values (#{userId,jdbcType=BIGINT},#{cartStr,jdbcType=VARCHAR},now())
+  </insert>
+  
+  <update id="updateCartStr" parameterType="com.f.cart.CartStr">
+  	update carts set cartStr = #{cartStr,jdbcType=VARCHAR}, modifytime = now()
+  	where userId = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="isExist" parameterType="long" resultType="com.f.cart.CartStr">
+  	select userId,cartStr from carts where userId = #{userId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

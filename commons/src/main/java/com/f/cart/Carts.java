@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.exception.BusinessException;
-
 //分隔符@
 public class Carts implements Serializable{
 
@@ -14,13 +12,21 @@ public class Carts implements Serializable{
 	
 	private List<Cart> cartList = new ArrayList<Cart>();
 	
+	public Carts(){
+		
+	}
+	
 	public Carts(String carts){
 		if(carts == null||carts.length() == 0){
-			throw new BusinessException(112L);
+			return;
 		}
-		String[] arr = carts.split(SEPARATOR_1);
-		for(String cart:arr){
-			cartList.add(new Cart(cart));
+		try{
+			String[] arr = carts.split(SEPARATOR_1);
+			for(String cart:arr){
+				cartList.add(new Cart(cart));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -45,6 +51,50 @@ public class Carts implements Serializable{
 		return null;
 	}
 	
+	public void deleteCart(Cart cart){
+		this.cartList.remove(cart);
+	}
+	
+	public void addCart(Cart cart){
+		Cart c = getEqualsCart(cart);
+		if(c == null){
+			this.cartList.add(cart);
+		}else{
+			c.setNumber(c.getNumber() + cart.getNumber());
+		}
+	}
+	
+	public void updCart(Cart cart){
+		Cart c = getEqualsCart(cart);
+		if(c == null){
+			this.cartList.add(cart);
+		}else{
+			c.setNumber(cart.getNumber());
+		}
+	}
+	
+	public void merge(Carts carts){
+		if(carts.getCartsSize() == 0)return;
+		if(this.getCartsSize() == 0){
+			this.cartList.addAll(carts.getCartList());
+			return;
+		}
+		boolean isExist = false;
+		for(Cart cart:carts.getCartList()){
+			isExist = false;
+			for(Cart c:this.cartList){
+				if(cart.equals(c)){
+					isExist = true;
+					c.setNumber(c.getNumber() + cart.getNumber());
+					break;
+				}
+			}
+			if(!isExist){
+				this.cartList.add(cart);
+			}
+		}
+	}
+	
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
@@ -56,5 +106,4 @@ public class Carts implements Serializable{
 		}
 		return sb.toString();
 	}
-	
 }

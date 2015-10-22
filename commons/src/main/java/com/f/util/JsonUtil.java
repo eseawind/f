@@ -24,4 +24,5 @@ public class JsonUtil {
 			throw new ApplicationException("json unmarshal error",e);
 		}
 	}
+	
 }
