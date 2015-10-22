@@ -2,6 +2,7 @@ package com.f.services.users;
 
 import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
+import com.f.dto.users.Users;
 
 public interface IUsers {
 	
@@ -11,5 +12,9 @@ public interface IUsers {
 	public Merchant selectMerchantUser(String name,String password);
 	
 	public HUsers selectHUser(String name,String password);
+	
+	public Users insertUser(String username,String password);
+	
+	public Users selectMUsers(String username,String password);
 
 }

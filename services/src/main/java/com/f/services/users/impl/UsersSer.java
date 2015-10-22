@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.f.dao.users.HUsersMapper;
 import com.f.dao.users.MerchantMapper;
+import com.f.dao.users.UsersMapper;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.HUsersExample;
 import com.f.dto.users.Merchant;
 import com.f.dto.users.MerchantExample;
+import com.f.dto.users.Users;
 import com.f.services.users.IUsers;
 
 import framework.exception.BusinessException;
@@ -23,6 +25,9 @@ public class UsersSer implements IUsers{
 	
 	@Autowired
 	private HUsersMapper huMapper;
+	
+	@Autowired
+	private UsersMapper uMapper;
 
 	@Override
 	public Merchant selectMerchantUser(String name, String password) {
@@ -48,6 +53,18 @@ public class UsersSer implements IUsers{
 			throw new BusinessException(108L);
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public Users insertUser(String username, String password) {
+		Users users = new Users();
+		
+		return null;
+	}
+
+	@Override
+	public Users selectMUsers(String username, String password) {
+		return null;
 	}
 	
 	

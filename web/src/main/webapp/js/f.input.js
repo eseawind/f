@@ -26,7 +26,7 @@
 		if(config.required){
 			var hint = '必填';
 			if(typeof config.hint == 'string'){
-				hint = hint +' '+ config.hint;
+				hint = config.hint;
 			}
 			config.target.attr('placeholder',hint);
 		}else if(typeof config.hint == 'string'){

@@ -17,11 +17,11 @@
 		<form class="form" id="mobile_form">
 			<div class="form-group">
 				<label>手机号</label>
-				<input type="text" class="form-control" name="mobile"/>
+				<input type="text" class="form-control" name="mobile" f-type="text" f-options="required:true,regex:'^1[3|4|5|6|7|8|9]\\d{9}$',errDir:'auto bottom',errMsg:'请正确填写手机号'"/>
 			</div>
 			<div class="form-group">
 				<label>密码</label>
-				<input type="password" class="form-control" name="password"/>
+				<input type="password" class="form-control" name="password" f-type="text" f-options="required:true,minLength:6,maxLength:20,errDir:'auto bottom',errMsg:'密码长度6到20位'"/>
 			</div>
 		</form>
 		<button class="btn btn-block btn-success" id="mobile_submit">注册</button>
@@ -30,18 +30,18 @@
 		<form class="form" id="email_form">
 			<div class="form-group">
 				<label>邮箱</label>
-				<input type="text" class="form-control" name="email"/>
+				<input type="text" class="form-control" name="email" f-type="text" f-options="required:true,regex:'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9_-])+',errDir:'auto bottom',errMsg:'请正确填写邮箱地址'"/>
 			</div>
 			<div class="form-group">
 				<label>密码</label>
-				<input type="password" class="form-control" name="password"/>
+				<input type="password" class="form-control" name="password" f-type="text" f-options="required:true,minLength:6,maxLength:20,errDir:'auto bottom',errMsg:'密码长度6到20位'"/>
 			</div>
 		</form>
 		<button class="btn btn-block btn-success" type="button" id="email_submit">注册</button>
 	</div>
 <script type="text/javascript">
 $(function(){
-	var alertError = $("#alertError");
+	var alert = $("#alertError");
 	var mrt = $("#mobile_register_tab");
 	var mc = $("#mobile_container");
 	mrt.click(function(){
@@ -61,16 +61,34 @@ $(function(){
 	var mform = $("#mobile_form");
 	var eform = $("#email_form")
 	$("#mobile_submit").click(function(){
-		if(mform.isValid()){
-			var param = mform.serializeObj();
-			mc.showLoading();
-			$.post(f.dynUrl+"",param,function(d){
-				mc.hideLoading();
-			},"json");
+		if(mform.f_isValid()){
+			var param = mform.f_serialized();
+			mc.startMask();
+			$.post(f.dynUrl+"/user/register.htm",param,function(d){
+				mc.closeMask();
+				if(d.success){
+					window.location.href= f.staUrl + '/page/index/mindex.htm';
+				}else{
+					alert.empty();
+					alert.f_alertError(d.errMsg);
+				}
+			},'json');
 		}
 	});
 	$("#email_submit").click(function(){
-		
+		if(eform.f_isValid()){
+			var param = eform.f_serialized();
+			ec.startMask();
+			$.post(f.dynUrl+"/user/register.htm",param,function(d){
+				ec.closeMask();
+				if(d.success){
+					window.location.href= f.staUrl + '/page/index/mindex.htm';
+				}else{
+					alert.empty();
+					alert.f_alertError(d.errMsg);
+				}
+			},'json');
+		}
 	});
 })
 </script>
