@@ -1,10 +1,13 @@
 package com.f.services.users.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.f.dao.ext.users.UsersMapperExt;
 import com.f.dao.users.HUsersMapper;
 import com.f.dao.users.MerchantMapper;
 import com.f.dao.users.UsersMapper;
@@ -16,6 +19,7 @@ import com.f.dto.users.Users;
 import com.f.services.users.IUsers;
 
 import framework.exception.BusinessException;
+import framework.web.ResBo;
 
 @Service
 public class UsersSer implements IUsers{
@@ -28,6 +32,9 @@ public class UsersSer implements IUsers{
 	
 	@Autowired
 	private UsersMapper uMapper;
+	
+	@Autowired
+	private UsersMapperExt uext;
 
 	@Override
 	public Merchant selectMerchantUser(String name, String password) {
@@ -56,15 +63,50 @@ public class UsersSer implements IUsers{
 	}
 
 	@Override
-	public Users insertUser(String username, String password) {
+	public ResBo<Users> insertUser(String username, String password) {
 		Users users = new Users();
-		
-		return null;
+		if(Pattern.matches("^1[3|4|5|6|7|8|9]\\d{9}$", username)){
+			if(uext.isExistMobile(username)){
+				 return new ResBo<Users>(114L);
+			}
+			String mobile = username;
+			username = "f" + username;
+			for(int i=0;i<10;i++){
+				if(uext.isExistUsername(username + i)){
+					continue;
+				}
+				break;
+			}
+			users.setUsername(username);
+			users.setPassword(password);
+			users.setMobile(mobile);
+			users.setCreatetime(new Date());
+			int i = uMapper.insertSelective(users);
+			if(i != 1){
+				throw new BusinessException(115L);
+			}
+			return new ResBo<Users>(uext.selectMUsers(null, mobile, password));
+		}else{
+			if(uext.isExistUsername(username)){
+				return new ResBo<Users>(116L);
+			}
+			users.setUsername(username);
+			users.setPassword(password);
+			users.setCreatetime(new Date());
+			int i = uMapper.insertSelective(users);
+			if(i != 1){
+				throw new BusinessException(115L);
+			}
+			return new ResBo<Users>(uext.selectMUsers(username, null, password));
+		}
 	}
 
 	@Override
 	public Users selectMUsers(String username, String password) {
-		return null;
+		if(Pattern.matches("^1[3|4|5|6|7|8|9]\\d{9}$", username)){
+			return uext.selectMUsers(null, username, password);
+		}
+		return uext.selectMUsers(username, null, password);
 	}
 	
 	

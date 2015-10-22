@@ -4,6 +4,8 @@ import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
 import com.f.dto.users.Users;
 
+import framework.web.ResBo;
+
 public interface IUsers {
 	
 	/**
@@ -13,7 +15,7 @@ public interface IUsers {
 	
 	public HUsers selectHUser(String name,String password);
 	
-	public Users insertUser(String username,String password);
+	public ResBo<Users> insertUser(String username,String password);
 	
 	public Users selectMUsers(String username,String password);
 

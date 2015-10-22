@@ -41,10 +41,13 @@ CREATE UNIQUE INDEX husers_username ON husers(username);
 CREATE UNIQUE INDEX merchant_username ON merchant(username);
 CREATE UNIQUE INDEX users_username ON users(username); 
 
-/* 20151022 未执行*/
+/* 20151022 已执行*/
 CREATE TABLE `carts` (
   `userId` bigint(20) NOT NULL COMMENT '用户id',
   `cartStr` varchar(1000) NOT NULL COMMENT '购物车',
   `modifytime` datetime NOT NULL COMMENT '最后操作时间',
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* 20151022 未执行 */
+alter table users modify column mobile varchar(20) comment '手机号';
