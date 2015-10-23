@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="../commons/mcommons.jsp" %>
+<script type="text/javascript" src="${staUrl }/js/md5.js"></script>
 <title>登陆</title>
 </head>
 <body class="container">
@@ -14,7 +15,7 @@
 		<form class="form">
 			<div class="form-group">
 				<label>用户名：</label>
-				<input type="text" class="form-control" name="username" f-type="text" f-options="required:true,hint:'用户名',maxLength:20,minLength:6,errMsg:'用户名长度6到20位',errDir:'auto bottom'"/>
+				<input type="text" class="form-control" name="username" f-type="text" f-options="required:true,hint:'用户名',maxLength:50,minLength:6,errMsg:'用户名长度6到50位',errDir:'auto bottom'"/>
 			</div>
 			<div class="form-group">
 				<label>密码：</label>
@@ -31,6 +32,7 @@ $(function(){
 	$("#login_submit").click(function(){
 		if(form.f_isValid()){
 			var param = form.f_serialized();
+			param.password = hex_md5(param.password);
 			form.startMask();
 			$.post(f.dynUrl+"/login/mlogin.htm",param,function(d){
 				form.closeMask();

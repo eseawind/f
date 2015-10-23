@@ -72,7 +72,8 @@ public class UsersSer implements IUsers{
 			String mobile = username;
 			username = "f" + username;
 			for(int i=0;i<10;i++){
-				if(uext.isExistUsername(username + i)){
+				if(uext.isExistUsername(username)){
+					username = username + i;
 					continue;
 				}
 				break;

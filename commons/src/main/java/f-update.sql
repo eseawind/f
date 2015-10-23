@@ -49,5 +49,5 @@ CREATE TABLE `carts` (
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/* 20151022 未执行 */
+/* 20151022 已执行 */
 alter table users modify column mobile varchar(20) comment '手机号';

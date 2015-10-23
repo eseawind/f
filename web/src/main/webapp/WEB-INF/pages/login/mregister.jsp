@@ -4,9 +4,10 @@
 <html>
 <head>
 <%@ include file="../commons/mcommons.jsp" %>
+<script type="text/javascript" src="${staUrl }/js/md5.js"></script>
 <title>注册</title>
 </head>
-<body>
+<body class="container">
 	<%@ include file="../commons/mhead.jsp" %>
 	<ul class="nav nav-tabs">
 	  <li role="presentation" class="active f-width50 text-center" id="mobile_register_tab"><a href="#">手机注册</a></li>
@@ -17,7 +18,7 @@
 		<form class="form" id="mobile_form">
 			<div class="form-group">
 				<label>手机号</label>
-				<input type="text" class="form-control" name="mobile" f-type="text" f-options="required:true,regex:'^1[3|4|5|6|7|8|9]\\d{9}$',errDir:'auto bottom',errMsg:'请正确填写手机号'"/>
+				<input type="text" class="form-control" name="username" f-type="text" f-options="required:true,regex:'^1[3|4|5|6|7|8|9]\\d{9}$',errDir:'auto bottom',errMsg:'请正确填写手机号'"/>
 			</div>
 			<div class="form-group">
 				<label>密码</label>
@@ -30,7 +31,7 @@
 		<form class="form" id="email_form">
 			<div class="form-group">
 				<label>邮箱</label>
-				<input type="text" class="form-control" name="email" f-type="text" f-options="required:true,regex:'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9_-])+',errDir:'auto bottom',errMsg:'请正确填写邮箱地址'"/>
+				<input type="text" class="form-control" name="username" f-type="text" f-options="required:true,regex:'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9_-])+',errDir:'auto bottom',errMsg:'请正确填写邮箱地址',maxLength:50"/>
 			</div>
 			<div class="form-group">
 				<label>密码</label>
@@ -63,8 +64,9 @@ $(function(){
 	$("#mobile_submit").click(function(){
 		if(mform.f_isValid()){
 			var param = mform.f_serialized();
+			param.password = hex_md5(param.password);
 			mc.startMask();
-			$.post(f.dynUrl+"/user/register.htm",param,function(d){
+			$.post(f.dynUrl+"/users/mregister.htm",param,function(d){
 				mc.closeMask();
 				if(d.success){
 					window.location.href= f.staUrl + '/page/index/mindex.htm';
@@ -78,8 +80,9 @@ $(function(){
 	$("#email_submit").click(function(){
 		if(eform.f_isValid()){
 			var param = eform.f_serialized();
+			param.password = hex_md5(param.password);
 			ec.startMask();
-			$.post(f.dynUrl+"/user/register.htm",param,function(d){
+			$.post(f.dynUrl+"/users/mregister.htm",param,function(d){
 				ec.closeMask();
 				if(d.success){
 					window.location.href= f.staUrl + '/page/index/mindex.htm';

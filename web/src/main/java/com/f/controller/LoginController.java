@@ -11,9 +11,11 @@ import com.f.commons.UType;
 import com.f.commons.User;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
+import com.f.dto.users.Users;
 import com.f.services.users.IUsers;
 
 import framework.web.ResBo;
+import framework.web.auth.Channel;
 import framework.web.auth.IsLogin;
 import framework.web.session.ISession;
 
@@ -50,5 +52,27 @@ public class LoginController {
 		User user = new User(hu.getId(),UType.husers);
 		session.set(Constants.USERINFO, user);
 		return new ResBo<Object>();
+	}
+	
+	@IsLogin(false)
+	@Channel(Constants.M)
+	@RequestMapping("mlogin.htm")
+	@ResponseBody
+	public ResBo<Boolean> mlogin(@RequestParam("username")String username,@RequestParam("password")String password){
+		Users users = userSer.selectMUsers(username, password);
+		if(users == null){
+			return new ResBo<Boolean>(109L);
+		}
+		User user = new User(users.getId(),UType.users);
+		session.replace(Constants.USERINFO, user);
+		return new ResBo<Boolean>(true);
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("munlogin.htm")
+	@ResponseBody
+	public ResBo<Boolean> munlogin(){
+		session.flush();
+		return new ResBo<Boolean>(true);
 	}
 }

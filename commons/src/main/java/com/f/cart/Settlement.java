@@ -43,4 +43,16 @@ public class Settlement implements Serializable{
 		this.orderPrice = orderPrice;
 	}
 	
+	@Override
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0,j=this.settleCarts.size();i<j;i++){
+			sb.append(this.settleCarts.get(i).toString());
+			if(i<j-1){
+				sb.append(Carts.SEPARATOR_1);
+			}
+		}
+		return sb.toString();
+	}
+	
 }
