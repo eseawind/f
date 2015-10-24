@@ -10,19 +10,24 @@ import java.util.List;
 public class SettleCart implements Serializable{
 
 	private static final long serialVersionUID = -1599236470983369139L;
+	public static final int NORMAL = 1;
+	public static final int PACKAGE = 2;
+	public static final int OTHERS = 3;
 
-	private List<SettleGoods> cartGoodsList = new ArrayList<SettleGoods>();
+	private List<SettleGoods> settleGoodsList = new ArrayList<SettleGoods>();
 	private String settleCartStr;
 	private int number = 1;
+	private int type = NORMAL;
+	private boolean checked;
 	private BigDecimal totalPrice = BigDecimal.ZERO;
 	private BigDecimal discountPrice = BigDecimal.ZERO;
 	private BigDecimal orderPrice = BigDecimal.ZERO;
 	
-	public List<SettleGoods> getCartGoodsList() {
-		return cartGoodsList;
+	public List<SettleGoods> getSettleGoodsList() {
+		return settleGoodsList;
 	}
-	public void setCartGoodsList(List<SettleGoods> cartGoodsList) {
-		this.cartGoodsList = cartGoodsList;
+	public void setSettleGoodsList(List<SettleGoods> settleGoodsList) {
+		this.settleGoodsList = settleGoodsList;
 	}
 	public int getNumber() {
 		return number;
@@ -42,14 +47,21 @@ public class SettleCart implements Serializable{
 	}
 	
 	public void builder(){
-		Collections.sort(this.cartGoodsList, new Comparator<SettleGoods>(){
+		if(this.type == OTHERS){
+			this.settleCartStr = "";
+			return;
+		}
+		Collections.sort(this.settleGoodsList, new Comparator<SettleGoods>(){
 			public int compare(SettleGoods o1, SettleGoods o2) {
 				return o1.getCgid().compareTo(o2.getCgid());
 			}
 		});
-		StringBuilder sb = new StringBuilder();
-		for(int i=0,j=this.cartGoodsList.size();i<j;i++){
-			sb.append(this.cartGoodsList.get(i).getCgid());
+		StringBuilder sb = new StringBuilder(this.checked?Cart.SEPARTOR_Y:Cart.SEPARTOR_N);
+		sb.append(Cart.SEPARATOR_1);
+		SettleGoods sg = null;
+		for(int i=0,j=this.settleGoodsList.size();i<j;i++){
+			sg = this.settleGoodsList.get(i);
+			sb.append(sg.getCgid());
 			if(i < j-1){
 				sb.append(Cart.SEPARATOR_2);
 			}
@@ -66,6 +78,9 @@ public class SettleCart implements Serializable{
 	
 	@Override
 	public String toString(){
+		if(this.type == OTHERS){
+			return "";
+		}
 		StringBuilder sb = new StringBuilder(toCartString());
 		sb.append(Cart.SEPARATOR_1);
 		sb.append(this.number);
@@ -86,5 +101,17 @@ public class SettleCart implements Serializable{
 	
 	public void setOrderPrice(BigDecimal orderPrice) {
 		this.orderPrice = orderPrice;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public boolean isChecked() {
+		return checked;
+	}
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 }

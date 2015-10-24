@@ -2,22 +2,29 @@ package com.f.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.f.cart.Buyer;
 import com.f.cart.Cart;
 import com.f.cart.CartStr;
 import com.f.cart.Carts;
+import com.f.cart.Settlement;
 import com.f.commons.Constants;
 import com.f.commons.User;
 import com.f.services.ICarts;
+import com.f.services.settle.ISettle;
 
 import framework.web.ResBo;
 import framework.web.auth.Channel;
 import framework.web.auth.IsLogin;
 import framework.web.session.ISession;
 
+/**
+ * @author fengmingming
+ * */
 @Controller
 @RequestMapping("cart")
 public class CartController {
@@ -26,6 +33,9 @@ public class CartController {
 	
 	@Autowired
 	private ICarts cartsSer;
+	
+	@Autowired
+	private ISettle settleSer;
 
 	@IsLogin(false)
 	@Channel(Constants.M)
@@ -129,6 +139,28 @@ public class CartController {
 			carts = new Carts(cs.getCartStr());
 		}
 		return new ResBo<Integer>((Integer)carts.getCartsSize());
+	}
+	
+	@IsLogin(false)
+	@Channel(Constants.M)
+	@RequestMapping("settle.htm")
+	@ResponseBody
+	public ResBo<Settlement> settle(@ModelAttribute Buyer buyer){
+		Object uObj  = session.get(Constants.USERINFO);
+		Carts carts = null;
+		if(uObj == null){
+			Object cartsObj = session.get(Constants.CARTINFO);
+			if(cartsObj == null){
+				carts = new Carts();
+			}else{
+				carts = (Carts) cartsObj;
+			}
+		}else{
+			User user = (User)uObj;
+			CartStr cs = cartsSer.selectCartStr(user.getId());
+			carts = new Carts(cs.getCartStr());
+		}
+		return new ResBo<Settlement>(settleSer.selectSettlement(buyer, carts));
 	}
 	
 }

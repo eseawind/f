@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import framework.exception.BusinessException;
+
 public class Settlement implements Serializable{
 
 	private static final long serialVersionUID = -9097201469029330538L;
@@ -13,10 +15,14 @@ public class Settlement implements Serializable{
 	private List<SettleCart> settleCarts = new ArrayList<SettleCart>();
 	//商品总金额
 	private BigDecimal totalPrice = BigDecimal.ZERO;
-	//现金折扣金额
+	//现金折扣金额 (主要用于满减活动)
 	private BigDecimal discountPrice = BigDecimal.ZERO;
 	//订单金额
 	private BigDecimal orderPrice = BigDecimal.ZERO;
+	//是否可以结算
+	private boolean isSettle = true;
+	
+	private String reason;
 	
 	public List<SettleCart> getSettleCarts() {
 		return settleCarts;
@@ -42,7 +48,27 @@ public class Settlement implements Serializable{
 	public void setOrderPrice(BigDecimal orderPrice) {
 		this.orderPrice = orderPrice;
 	}
-	
+	public void builder(){
+		for(SettleCart sc:this.settleCarts){
+			if(sc.getType() == SettleCart.OTHERS){
+				this.discountPrice = this.discountPrice.add(sc.getDiscountPrice());
+			}else if(sc.isChecked()){
+				this.totalPrice = this.totalPrice.add(sc.getTotalPrice());
+				this.orderPrice = this.orderPrice.add(sc.getOrderPrice());
+			}
+			
+			for(SettleGoods sg:sc.getSettleGoodsList()){
+				if(sg.getStockNum() < sc.getNumber()){
+					this.isSettle = false;
+					((SSettleGoods) sg).setRemark(BusinessException.getMessage(118L, sg.getGname(),sg.getCgname(),sg.getStockNum()));
+				}
+			}
+			if(!this.isSettle){
+				this.reason = BusinessException.getMessage(119L);
+			}
+			
+		}
+	}
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
@@ -53,6 +79,18 @@ public class Settlement implements Serializable{
 			}
 		}
 		return sb.toString();
+	}
+	public boolean isSettle() {
+		return isSettle;
+	}
+	public void setSettle(boolean isSettle) {
+		this.isSettle = isSettle;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 	
 }
