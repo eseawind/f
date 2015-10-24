@@ -24,6 +24,10 @@ public class Settlement implements Serializable{
 	
 	private String reason;
 	
+	private Long merchantId;
+	
+	private String merchantName;
+	
 	public List<SettleCart> getSettleCarts() {
 		return settleCarts;
 	}
@@ -58,15 +62,26 @@ public class Settlement implements Serializable{
 			}
 			
 			for(SettleGoods sg:sc.getSettleGoodsList()){
+				SSettleGoods ssg = ((SSettleGoods) sg);
+				if(!ssg.isChecked()){
+					break;
+				}
 				if(sg.getStockNum() < sc.getNumber()){
 					this.isSettle = false;
-					((SSettleGoods) sg).setRemark(BusinessException.getMessage(118L, sg.getGname(),sg.getCgname(),sg.getStockNum()));
+					ssg.setRemark(BusinessException.getMessage(118L, sg.getGname(),sg.getCgname(),sg.getStockNum()));
+				}
+				if(sg.getState().intValue() != 1){
+					this.isSettle = false;
+					ssg.setRemark(BusinessException.getMessage(120L));
 				}
 			}
-			if(!this.isSettle){
-				this.reason = BusinessException.getMessage(119L);
-			}
-			
+		}
+		if(!this.isSettle){
+			this.reason = BusinessException.getMessage(119L);
+		}
+		if(this.settleCarts.size() > 0 && this.settleCarts.get(0).getSettleGoodsList().size() > 0){
+			this.merchantId = this.settleCarts.get(0).getSettleGoodsList().get(0).getMerchantId();
+			this.merchantName = this.settleCarts.get(0).getSettleGoodsList().get(0).getMerchantName();
 		}
 	}
 	@Override
@@ -91,6 +106,18 @@ public class Settlement implements Serializable{
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public Long getMerchantId() {
+		return merchantId;
+	}
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+	public String getMerchantName() {
+		return merchantName;
+	}
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
 	}
 	
 }

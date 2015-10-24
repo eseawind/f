@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.f.dao.ext.settle.SettleMapperExt" >
 
-<select id="selectSSettleGoods" parameterType="list" resultType="com.f.cart.SSettleGoods">
+<select id="selectSSettleGoods" parameterType="map" resultType="com.f.cart.SSettleGoods">
 	select cg.id as cgid,g.id as gid,cg.number as stockNum,cg.price,cg.photo,g.gname,cg.cgname,g.merchantId,
-		   m.name as merchantName,g.brandId,g.code
+		   m.name as merchantName,g.brandId,g.code,cg.state
 	from cgoods cg left join goods g on cg.gid = g.id
 	left join merchant m on g.merchantId = m.id
-	where cg.id in 
-	<foreach collection="list" item="id" open="(" separator="," close=")">
+	where g.merchantId = #{merchantId,jdbcType=BIGINT}
+	and cg.id in 
+	<foreach collection="cgids" item="id" open="(" separator="," close=")">
 		#{id,jdbcType=BIGINT}
 	</foreach>
 </select>

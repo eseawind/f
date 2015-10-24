@@ -11,6 +11,7 @@ public class GoodsStaInfo implements Serializable{
 	private String cgname;
 	private String descript;
 	private String remark;
+	private Long merchantId;
 	private String merchantName;
 	private String brandName;
 	private String code;
@@ -116,6 +117,12 @@ public class GoodsStaInfo implements Serializable{
 	}
 	public void setPhoto4(String photo4) {
 		this.photo4 = photo4;
+	}
+	public Long getMerchantId() {
+		return merchantId;
+	}
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
 	}
 	
 }

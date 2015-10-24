@@ -46,7 +46,7 @@ public class SettleSer implements ISettle{
 				cgids.add(cgid);
 			}
 		}
-		List<SSettleGoods> ssgs = settleExt.selectSSettleGoods(cgids);
+		List<SSettleGoods> ssgs = settleExt.selectSSettleGoods(cgids,buyer.getCurMerchantId());
 		if(ssgs.size() == 0){
 			settlement.setSettle(false);
 			settlement.setReason(BusinessException.getMessage(117L));

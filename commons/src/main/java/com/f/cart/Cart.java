@@ -9,7 +9,7 @@ import java.util.List;
 import framework.exception.BusinessException;
 
 
-//字符串表示 Y|N_cgid#cgid#cgId_number_type1#type2@ 
+//字符串表示 Y|N_cgid#cgid#cgId_number_merchantId@ 
 public class Cart implements Serializable{
 
 	private static final long serialVersionUID = -1599236470983369139L;
@@ -21,6 +21,7 @@ public class Cart implements Serializable{
 	private List<Long> cgidList = new ArrayList<Long>(3);
 	private int number = 1;
 	private boolean checked = true;
+	private Long merchantId;
 	
 	public Cart(String cart){
 		if(cart == null||cart.length() == 0){
@@ -36,11 +37,13 @@ public class Cart implements Serializable{
 			this.cgidList.add(Long.parseLong(cgid));
 		}
 		this.number = Integer.parseInt(arr[2]);
+		this.merchantId = Long.parseLong(arr[3]);
 		sort();
 	}
 	
-	public Cart(int number, Long ... cgids){
+	public Cart(long merchantId,int number, Long ... cgids){
 		this.number = number <= 0?1:number;
+		this.merchantId = merchantId;
 		if(cgids == null||cgids.length == 0){
 			throw new BusinessException(112L);
 		}
@@ -52,8 +55,9 @@ public class Cart implements Serializable{
 		sort();
 	}
 	
-	public Cart(int number, String ... cgids){
+	public Cart(long merchantId,int number, String ... cgids){
 		this.number = number <= 0?1:number;
+		this.merchantId = merchantId;
 		if(cgids == null||cgids.length == 0){
 			throw new BusinessException(112L);
 		}
@@ -98,6 +102,8 @@ public class Cart implements Serializable{
 		StringBuilder sb = new StringBuilder(toCartString());
 		sb.append(SEPARATOR_1);
 		sb.append(this.number);
+		sb.append(SEPARATOR_1);
+		sb.append(this.merchantId);
 		return sb.toString();
 	}
 	
@@ -129,5 +135,9 @@ public class Cart implements Serializable{
 	
 	public boolean isChecked(){
 		return this.checked;
+	}
+	
+	public long getMerchantId(){
+		return this.merchantId;
 	}
 }

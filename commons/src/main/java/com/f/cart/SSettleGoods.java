@@ -48,7 +48,7 @@ public class SSettleGoods extends SettleGoods{
 		ssg.setGname(this.getGname());
 		ssg.setCgname(this.getCgname());
 		ssg.setMerchantId(this.getMerchantId());
-		ssg.setMerhantName(this.getMerhantName());
+		ssg.setMerchantName(this.getMerchantName());
 		ssg.setBrandId(this.getBrandId());
 		ssg.setCode(this.getCode());
 		ssg.setReferenced(this.isReferenced());

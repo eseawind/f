@@ -34,7 +34,7 @@
 										'<li class="goper btn-group">' + 
 											'<button class="btn btn-default f-share" f-id="${cgid}">分享</button>' + 
 											'<button class="btn btn-default f-collect" f-id="${cgid}">收藏</button>' + 
-											'<button class="btn btn-default f-addcart" f-id="${cgid}">加入购物车</button>' + 
+											'<button class="btn btn-default f-addcart" f-id="${cgid}" f-merchant="${merchantId}">加入购物车</button>' + 
 										'</li>' + 
 									'</ul>' + 
 								'</div>' + 
@@ -58,8 +58,9 @@
 			}
 		});
 	};
-	f.addCart = function(cgids,num,fun,errFun){
-		$.post(f.dynUrl+"/cart/add.htm",{cgids:cgids,number:num},function(d){
+	f.addCart = function(merchantId,cgids,num,fun,errFun){
+		console.log(arguments)
+		$.post(f.dynUrl+"/cart/add.htm",{merchantId:merchantId,cgids:cgids,number:num},function(d){
 			if(d.success){
 				fun&&fun.call(null,d.result);
 			}else{
@@ -72,8 +73,8 @@
 		},"json");
 	}
 	
-	f.updCart = function(cgids,num,fun,errFun){
-		$.post(f.dynUrl+"/cart/upd.htm",{cgids:cgids,number:num},function(d){
+	f.updCart = function(cartStr,num,fun,errFun){
+		$.post(f.dynUrl+"/cart/upd.htm",{cartStr:cartStr,number:num},function(d){
 			if(d.success){
 				fun&&fun.call(null,d.result);
 			}else{
@@ -100,8 +101,8 @@
 		});
 	}
 	
-	f.delCart = function(cgids,fun,errFun){
-		$.post(f.dynUrl+"/cart/upd.htm",{cgids:cgids},function(d){
+	f.delCart = function(cartStr,fun,errFun){
+		$.post(f.dynUrl+"/cart/upd.htm",{cartStr:cartStr},function(d){
 			if(d.success){
 				fun&&fun.call(null,d.result);
 			}else{
@@ -147,7 +148,8 @@
 			goodsCon.find(".f-addcart").click(function(){
 				var th = $(this);
 				var cgids = $.trim(th.attr("f-id"));
-				f.addCart(cgids,1,function(){
+				var merchantId = $.trim(th.attr("f-merchant"));
+				f.addCart(merchantId,cgids,1,function(){
 					f.transientAlert("成功加入购物车");
 				});
 				
