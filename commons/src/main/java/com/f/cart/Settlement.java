@@ -54,34 +54,34 @@ public class Settlement implements Serializable{
 	}
 	public void builder(){
 		for(SettleCart sc:this.settleCarts){
-			if(sc.getType() == SettleCart.OTHERS){
-				this.discountPrice = this.discountPrice.add(sc.getDiscountPrice());
-			}else if(sc.isChecked()){
-				this.totalPrice = this.totalPrice.add(sc.getTotalPrice());
-				this.orderPrice = this.orderPrice.add(sc.getOrderPrice());
-			}
-			
-			for(SettleGoods sg:sc.getSettleGoodsList()){
-				SSettleGoods ssg = ((SSettleGoods) sg);
-				if(!ssg.isChecked()){
-					break;
+			if(sc.isChecked()){
+				if(sc.getType() == SettleCart.OTHERS){
+					this.discountPrice = this.discountPrice.add(sc.getDiscountPrice());
+				}else{
+					this.totalPrice = this.totalPrice.add(sc.getTotalPrice());
+					this.orderPrice = this.orderPrice.add(sc.getOrderPrice());
 				}
-				if(sg.getStockNum() < sc.getNumber()){
-					this.isSettle = false;
-					ssg.setRemark(BusinessException.getMessage(118L, sg.getGname(),sg.getCgname(),sg.getStockNum()));
-				}
-				if(sg.getState().intValue() != 1){
-					this.isSettle = false;
-					ssg.setRemark(BusinessException.getMessage(120L));
+				
+				for(SettleGoods sg:sc.getSettleGoodsList()){
+					SSettleGoods ssg = ((SSettleGoods) sg);
+					if(sg.getStockNum() < sc.getNumber()){
+						this.isSettle = false;
+						ssg.setRemark(BusinessException.getMessage(118L, sg.getGname(),sg.getCgname(),sg.getStockNum()));
+					}
+					if(sg.getState().intValue() != 1){
+						this.isSettle = false;
+						ssg.setRemark(BusinessException.getMessage(120L));
+					}
 				}
 			}
 		}
 		if(!this.isSettle){
 			this.reason = BusinessException.getMessage(119L);
 		}
-		if(this.settleCarts.size() > 0 && this.settleCarts.get(0).getSettleGoodsList().size() > 0){
-			this.merchantId = this.settleCarts.get(0).getSettleGoodsList().get(0).getMerchantId();
-			this.merchantName = this.settleCarts.get(0).getSettleGoodsList().get(0).getMerchantName();
+		if(this.settleCarts.size() > 0){
+			SettleCart sc = this.settleCarts.get(this.settleCarts.size() - 1);
+			this.merchantId = sc.getSettleGoodsList().get(0).getMerchantId();
+			this.merchantName = sc.getSettleGoodsList().get(0).getMerchantName();
 		}
 	}
 	@Override

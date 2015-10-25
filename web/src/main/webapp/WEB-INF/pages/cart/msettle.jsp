@@ -9,7 +9,14 @@
 <body class="container">
 <%@include file="../commons/mhead.jsp" %>
 <div id="container">
-
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			商家
+		</div>
+		<div class="panel-body">
+			
+		</div>
+	</div>
 <script type="text/tmpl" id="tmpl">
 
 </script>
