@@ -9,25 +9,22 @@
 <body class="container">
 <%@include file="../commons/mhead.jsp" %>
 <div id="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			商家
-		</div>
-		<div class="panel-body">
-			
-		</div>
-	</div>
-<script type="text/tmpl" id="tmpl">
-
-</script>
+	
 </div>
 <script type="text/javascript">
 $(function(){
 	f.setTitle("我的购物车");
 	var container = $("#container");
-	container.startMak({message:"数据加载中"});
+	container.startMask({message:"数据加载中"});
 	$.getJSON(f.dynUrl+"/cart/settle.htm",function(d){
-		
+		container.closeMask();
+		if(d.success){
+			$.each(d.result.settlements,function(i,obj){
+				container.append(f.cartBuilder(obj));
+			});
+		}else{
+			f.dialogAlert(d.errMsg);
+		}
 	});
 })
 </script>
