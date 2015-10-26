@@ -16,7 +16,7 @@
 		  <ul class="dropdown-menu pull-right" aria-labelledby="f_global_mhead_dropdown">
 		    <li><a href="${staUrl }/page/index/mindex.htm"><i class="icon-home"></i>&nbsp;首页</a></li>
 		    <li><a href="${staUrl }/page/list/msearch.htm"><i class="icon-search"></i>&nbsp;分类搜索</a></li>
-		    <li><a href="#"><i class="icon-shopping-cart"></i>&nbsp;我的购物车</a></li>
+		    <li><a href="${staUrl }/page/cart/msettle.htm"><i class="icon-shopping-cart"></i>&nbsp;我的购物车</a></li>
 		    <li><a href="#"><i class="icon-user"></i>&nbsp;个人中心</a></li>
 		  </ul>
 		</div>

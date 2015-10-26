@@ -9,6 +9,7 @@ public class GoodsDynInfo implements Serializable{
 
 	private Long cgid;
 	private Long gid;
+	private Long merchantId;
 	private BigDecimal price;
 	private BigDecimal mprice;
 	private int number;
@@ -41,5 +42,11 @@ public class GoodsDynInfo implements Serializable{
 	}
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	public Long getMerchantId() {
+		return merchantId;
+	}
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
 	}
 }

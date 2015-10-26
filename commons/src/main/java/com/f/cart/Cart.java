@@ -9,30 +9,41 @@ import java.util.List;
 import framework.exception.BusinessException;
 
 
-//字符串表示 cgid#cgid#cgId_number_type1#type2@ 
+//字符串表示 Y|N_cgid#cgid#cgId_number_merchantId@ 
 public class Cart implements Serializable{
 
 	private static final long serialVersionUID = -1599236470983369139L;
 	public static final String SEPARATOR_1 = "_";
 	public static final String SEPARATOR_2 = "#";
+	public static final String SEPARTOR_Y = "Y";
+	public static final String SEPARTOR_N = "N";
 	
 	private List<Long> cgidList = new ArrayList<Long>(3);
 	private int number = 1;
+	private boolean checked = true;
+	private Long merchantId;
 	
 	public Cart(String cart){
 		if(cart == null||cart.length() == 0){
 			throw new BusinessException(112L);
 		}
 		String[] arr = cart.split(SEPARATOR_1);
-		for(String cgid:arr[0].split(SEPARATOR_2)){
+		if(SEPARTOR_Y.equals(arr[0])){
+			this.checked = true;
+		}else{
+			this.checked = false;
+		}
+		for(String cgid:arr[1].split(SEPARATOR_2)){
 			this.cgidList.add(Long.parseLong(cgid));
 		}
-		this.number = Integer.parseInt(arr[1]);
+		this.number = Integer.parseInt(arr[2]);
+		this.merchantId = Long.parseLong(arr[3]);
 		sort();
 	}
 	
-	public Cart(int number, Long ... cgids){
+	public Cart(long merchantId,int number, Long ... cgids){
 		this.number = number <= 0?1:number;
+		this.merchantId = merchantId;
 		if(cgids == null||cgids.length == 0){
 			throw new BusinessException(112L);
 		}
@@ -44,8 +55,9 @@ public class Cart implements Serializable{
 		sort();
 	}
 	
-	public Cart(int number, String ... cgids){
+	public Cart(long merchantId,int number, String ... cgids){
 		this.number = number <= 0?1:number;
+		this.merchantId = merchantId;
 		if(cgids == null||cgids.length == 0){
 			throw new BusinessException(112L);
 		}
@@ -90,11 +102,14 @@ public class Cart implements Serializable{
 		StringBuilder sb = new StringBuilder(toCartString());
 		sb.append(SEPARATOR_1);
 		sb.append(this.number);
+		sb.append(SEPARATOR_1);
+		sb.append(this.merchantId);
 		return sb.toString();
 	}
 	
 	public String toCartString(){
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(this.checked?SEPARTOR_Y:SEPARTOR_N);
+		sb.append(SEPARATOR_1);
 		for(int i = 0,j=this.cgidList.size();i<j;i++){
 			sb.append(this.cgidList.get(i));
 			if(i<j-1){
@@ -118,4 +133,11 @@ public class Cart implements Serializable{
 		return false;
 	}
 	
+	public boolean isChecked(){
+		return this.checked;
+	}
+	
+	public long getMerchantId(){
+		return this.merchantId;
+	}
 }

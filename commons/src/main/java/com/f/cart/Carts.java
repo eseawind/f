@@ -2,7 +2,9 @@ package com.f.cart;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //分隔符@
 public class Carts implements Serializable{
@@ -51,6 +53,28 @@ public class Carts implements Serializable{
 		return null;
 	}
 	
+	public Cart getEqualsCart(String cartStr){
+		for(Cart c:this.cartList){
+			if(c.toCartString().equals(cartStr)){
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public void deleteCart(String cartStr){
+		int index = -1;
+		for(int i=0,j=this.cartList.size();i<j;i++){
+			if(this.cartList.get(i).toCartString().equals(cartStr)){
+				index = i;
+				break;
+			}
+		}
+		if(index > -1){
+			this.cartList.remove(index);
+		}
+	}
+	
 	public void deleteCart(Cart cart){
 		this.cartList.remove(cart);
 	}
@@ -70,6 +94,13 @@ public class Carts implements Serializable{
 			this.cartList.add(cart);
 		}else{
 			c.setNumber(cart.getNumber());
+		}
+	}
+	
+	public void updCart(String cartStr,int number){
+		Cart c = getEqualsCart(cartStr);
+		if(c != null){
+			c.setNumber(number > 1?number:1);
 		}
 	}
 	
@@ -105,5 +136,19 @@ public class Carts implements Serializable{
 			}
 		}
 		return sb.toString();
+	}
+	
+	public Map<Long, Carts> groupByMerchant(){
+		Map<Long, Carts> map = new HashMap<Long, Carts>();
+		Carts carts = null;
+		for(Cart cart:this.cartList){
+			carts = map.get(cart.getMerchantId());
+			if(carts == null){
+				carts = new Carts();
+				map.put(cart.getMerchantId(), carts);
+			}
+			carts.getCartList().add(cart);
+		}
+		return map;
 	}
 }

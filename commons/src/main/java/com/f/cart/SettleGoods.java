@@ -3,7 +3,7 @@ package com.f.cart;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SettleGoods implements Serializable{
+public class SettleGoods implements Serializable, Cloneable{
 
 	private static final long serialVersionUID = 2647396984778724747L;
 	
@@ -14,6 +14,12 @@ public class SettleGoods implements Serializable{
 	private String photo;
 	private String gname;
 	private String cgname;
+	private Long merchantId;
+	private String merchantName;
+	private Long brandId;
+	private String code;
+	private Integer state;
+	
 	public Long getGid() {
 		return gid;
 	}
@@ -56,5 +62,34 @@ public class SettleGoods implements Serializable{
 	public void setCgname(String cgname) {
 		this.cgname = cgname;
 	}
-	
+	public Long getMerchantId() {
+		return merchantId;
+	}
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+	public Long getBrandId() {
+		return brandId;
+	}
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public String getMerchantName() {
+		return merchantName;
+	}
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
+	}
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
 }

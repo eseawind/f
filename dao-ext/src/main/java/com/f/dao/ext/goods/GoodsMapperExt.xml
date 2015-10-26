@@ -86,7 +86,7 @@
   </select> 
   
   <select id="selectCGoodsStaInfoByCgIds" parameterType="list" resultType="com.f.commons.GoodsStaInfo">
-  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,g.merchantId,m.name as merchantName,b.name as brandName,
   	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
   	from cgoods cg 
   	left join goods g on cg.gid = g.id
@@ -100,7 +100,7 @@
   </select>
   
   <select id="selectCGoodsDynInfo" parameterType="list" resultType="com.f.commons.GoodsDynInfo">
-  	select cg.id as cgid,cg.price,cg.mprice,cg.number,g.id as gid
+  	select cg.id as cgid,cg.price,cg.mprice,cg.number,g.id as gid,g.merchantId
   	from cgoods cg
   	left join goods g on cg.gid = g.id
   	where cg.id in
@@ -110,7 +110,7 @@
   </select>
   
   <select id="selectCGoodsStaInfo" parameterType="map" resultType="com.f.commons.GoodsStaInfo">
-  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,g.merchantId,m.name as merchantName,b.name as brandName,
   	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
   	from cgoods cg 
   	left join goods g on cg.gid = g.id
@@ -175,7 +175,7 @@
   </select>
   
   <select id="selectCGoodsStaInfoByGId" parameterType="long" resultType="com.f.commons.GoodsStaInfo">
-  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,m.name as merchantName,b.name as brandName,
+  	select cg.id as cgid,g.id as gid,g.gname,cg.cgname,g.descript,g.remark,g.merchantId,m.name as merchantName,b.name as brandName,
   	g.code,cg.state,cg.sku,cg.photo,cg.photo1,cg.photo2,cg.photo3,cg.photo4
   	from cgoods cg 
   	left join goods g on cg.gid = g.id
