@@ -1,5 +1,7 @@
 package com.f.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.f.commons.Constants;
 import com.f.commons.UType;
 import com.f.commons.User;
+import com.f.dto.users.UAddress;
 import com.f.dto.users.Users;
 import com.f.services.users.IUsers;
 
@@ -41,4 +44,22 @@ public class UsersController {
 		return new ResBo<Boolean>(true);
 	}
 	
+	
+	@Channel(Constants.M)
+	@RequestMapping("minfo.htm")
+	@ResponseBody
+	public ResBo<Users> minfo(){
+		User user = (User) session.get(Constants.USERINFO);
+		Users users = usersSer.selectMUsers(user.getId());
+		users.setPassword(null);
+		return new ResBo<Users>(users);
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("maddress.htm")
+	@ResponseBody
+	public ResBo<List<UAddress>> maddress(){
+		User user = (User) session.get(Constants.USERINFO);
+		return new ResBo<List<UAddress>>(usersSer.selectMUsersAddress(user.getId()));
+	}
 }

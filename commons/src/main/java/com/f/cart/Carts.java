@@ -97,6 +97,20 @@ public class Carts implements Serializable{
 		}
 	}
 	
+	public void checkCart(Cart cart,boolean checked){
+		Cart c = getEqualsCart(cart);
+		if(c != null){
+			c.setChecked(checked);
+		}
+	}
+	
+	public void checkCart(String cartStr,boolean checked){
+		Cart c = getEqualsCart(cartStr);
+		if(c != null){
+			c.setChecked(checked);
+		}
+	}
+	
 	public void updCart(String cartStr,int number){
 		Cart c = getEqualsCart(cartStr);
 		if(c != null){

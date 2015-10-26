@@ -18,7 +18,7 @@
 			return data;
 		},
 		error:function(XmlHttpReq, textStatus, errorThrow){
-			f.dialogAlert(textStatus);
+			f.dialogAlert("网络异常请稍后在试");
 		}
 	});
 	//自定义
@@ -39,36 +39,6 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
-	f.tmpl.cart = '<div class="panel panel-default">'+
-					    '<div class="panel-heading">商家：${merchantName}</div>'+
-					    '<div class="panel-body">'+
-							'<table class="table table-bordered">'+
-								'<tr>'+
-									'<th><input type="checkbox" /></th>'+
-									'<th colspan="2">商品</th>'+
-									'<th class="text-center">价格</th>'+
-									'<th>删除</th>'+
-								'</tr>{{each settleCarts}}'+
-								'<tr style="">'+
-									'<td style="vertical-align: middle;width:30px"><input type="checkbox" {{if $value.checked}} checked="checked" {{/if}}/></td>'+
-									'<td style="vertical-align: middle;width:100px">{{each settleGoodsList}}<img src="${imgUrl}${$value.photo}" style="width:80px;height:80px"/>{{/each}}</td>'+
-									'<td style="vertical-align: middle;">'+
-										'<div style="min-height:50px">{{each settleGoodsList}}${$value.gname}-${$value.cgname}<br/>{{/each}}</div>'+
-										'<div>'+
-											'<button class="btn btn-default" style="float:left;height:30px;max-height:30px"><i class="icon-minus"></i></button>'+
-											'<input class="form-control" value="${$value.number}" style="float:left;width:40px;height:30px;max-height:30px"/>'+
-											'<button class="btn btn-default" style="float:left;height:30px;max-height:30px"><i class="icon-plus"></i></button>'+
-										'</div>'+
-									'</td>'+
-									'<td style="vertical-align: middle;width:80px;text-align:center"><b>${$value.orderPrice}</b></td>'+
-									'<td style="vertical-align: middle;width:45px"><i class="icon-trash icon-2x" style="cursor:pointer"></i></td>'+
-								'</tr>{{/each}}'+
-							'</table>'+
-						'</div>'+
-						'<div class="panel-footer">'+
-							'<div class="text-right" style="color:red">总金额：￥${orderPrice}</div>'+
-						'</div>'+
-					'</div>';
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
 	};
@@ -89,7 +59,6 @@
 		});
 	};
 	f.addCart = function(merchantId,cgids,num,fun,errFun){
-		console.log(arguments)
 		$.post(f.dynUrl+"/cart/add.htm",{merchantId:merchantId,cgids:cgids,number:num},function(d){
 			if(d.success){
 				fun&&fun.call(null,d.result);
@@ -132,7 +101,7 @@
 	}
 	
 	f.delCart = function(cartStr,fun,errFun){
-		$.post(f.dynUrl+"/cart/upd.htm",{cartStr:cartStr},function(d){
+		$.post(f.dynUrl+"/cart/delete.htm",{cartStr:cartStr},function(d){
 			if(d.success){
 				fun&&fun.call(null,d.result);
 			}else{
@@ -145,47 +114,18 @@
 		},"json");
 	}
 	
-	f.cartBuilder = function(obj){
-		obj.imgUrl = f.imgUrl();
-		var cart = $.tmpl(f.tmpl.cart,obj);
-		cart.find(".icon-minus").click(function(){
-			container.startMask();
-			//f.updCart(obj., num, fun, errFun)
-		});
-		cart.find(".icon-plus").click(function(){
-			container.startMask();
-			f.post(f.dynUrl,{},function(d){
-				container.closeMask();
-				if(d.success){
-					
+	f.checkCart = function(cartStrs,checked,fun,errFun){
+		$.post(f.dynUrl+"/cart/check.htm",{cartStrs:cartStrs,checked:checked},function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
 				}else{
 					f.dialogAlert(d.errMsg);
 				}
-			},'json');
-		})
-		var input = cart.find("input").blur(function(){
-			var num = parseInt(input.val());
-			if(num > 99){
-				input.val(99);
-			}else if(num < 1){
-				input.val(1);
 			}
-			container.startMask();
-			f.post(f.dynUrl,{},function(d){
-				container.closeMask();
-				if(d.success){
-					
-				}else{
-					f.dialogAlert(d.errMsg);
-				}
-			},'json');
-		}).keypress(function(e){
-			if(e.which == 8)return;
-			if(e.which<48||e.which>57){
-				e.preventDefault();
-			}
-		});
-		return cart;
+		},"json");
 	}
 	
 	$.fn.carouselBuilder = function(arr){

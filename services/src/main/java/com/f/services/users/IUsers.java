@@ -1,7 +1,10 @@
 package com.f.services.users;
 
+import java.util.List;
+
 import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
+import com.f.dto.users.UAddress;
 import com.f.dto.users.Users;
 
 import framework.web.ResBo;
@@ -18,5 +21,9 @@ public interface IUsers {
 	public ResBo<Users> insertUser(String username,String password);
 	
 	public Users selectMUsers(String username,String password);
+	
+	public Users selectMUsers(long userId);
+	
+	public List<UAddress> selectMUsersAddress(long userId);
 
 }

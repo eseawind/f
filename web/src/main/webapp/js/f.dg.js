@@ -184,11 +184,11 @@
 		}
 	}
 	function pagiBuilder(config){
-		var sel = $('<select class="form-control" style="width:70px;margin-right:1px;display:inline-block;float:left"></select>');
+		var sel = $('<select class="form-control" style="height:35px;max-height:35px;width:70px;margin-right:1px;display:inline-block;float:left"></select>');
 		$.each(config.pages,function(i,num){
 			sel.append('<option value="'+num+'">'+num+'</option>');
 		});
-		var txt = $('<input value="1" class="form-control" style="width:60px;margin-right:1px;display:inline-block;float:left"/>');
+		var txt = $('<input value="1" class="form-control" style="height:35px;max-height:35px;width:60px;margin-right:1px;display:inline-block;float:left"/>');
 		txt.blur(function(){
 			try{
 				var page = parseInt(txt.val());
@@ -211,7 +211,7 @@
 				e.preventDefault();
 			}
 		});
-		var flush = $('<li><span class="btn"><i class="icon-refresh"></i></span></li>');
+		var flush = $('<li><span class="btn" style="height:35px;max-height:35px"><i class="icon-refresh"></i></span></li>');
 		flush.css('cursor','pointer');
 		flush.click(function(){
 			dataBuilder(config);
@@ -222,7 +222,7 @@
 			txt.val(config.page);
 			flush.click();
 		});
-		var pre = $('<li><span class="btn"><i class="icon-caret-left"></i></span></li>');
+		var pre = $('<li><span class="btn" style="height:35px;max-height:35px"><i class="icon-caret-left"></i></span></li>');
 		pre.css('cursor','pointer');
 		pre.click(function(){
 			if(config.page > 1){
@@ -231,7 +231,7 @@
 				flush.click();
 			}
 		});
-		var next = $('<li><span class="btn"><i class="icon-caret-right"></i></span></li>');
+		var next = $('<li><span class="btn" style="height:35px;max-height:35px"><i class="icon-caret-right"></i></span></li>');
 		next.css('cursor','pointer');
 		next.click(function(){
 			if(config.page < pageCount(config)){

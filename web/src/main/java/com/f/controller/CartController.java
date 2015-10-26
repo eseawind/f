@@ -94,6 +94,7 @@ public class CartController {
 		return new ResBo<Integer>((Integer)carts.getCartsSize());
 	}
 	
+	@IsLogin(false)
 	@Channel(Constants.M)
 	@RequestMapping("delete.htm")
 	@ResponseBody
@@ -140,6 +141,37 @@ public class CartController {
 		}
 		return new ResBo<Integer>((Integer)carts.getCartsSize());
 	}
+	
+	@IsLogin(false)
+	@Channel(Constants.M)
+	@RequestMapping("check.htm")
+	@ResponseBody
+	public ResBo<Integer> checkCart(@RequestParam("cartStrs")String cartStrs,@RequestParam("checked") boolean checked){
+		Object uObj  = session.get(Constants.USERINFO);
+		Carts carts = null;
+		if(uObj == null){
+			Object cartsObj = session.get(Constants.CARTINFO);
+			if(cartsObj == null){
+				carts = new Carts();
+			}else{
+				carts = (Carts) cartsObj;
+			}
+			for(String cartStr:cartStrs.split(",")){
+				carts.checkCart(cartStr, checked);
+			}
+			session.replace(Constants.CARTINFO, carts);
+		}else{
+			User user = (User)uObj;
+			CartStr cs = cartsSer.selectCartStr(user.getId());
+			carts = new Carts(cs.getCartStr());
+			for(String cartStr:cartStrs.split(",")){
+				carts.checkCart(cartStr, checked);
+			}
+			cs.setCartStr(carts.toString());
+			cartsSer.saveCartStr(cs);
+		}
+		return new ResBo<Integer>((Integer)carts.getCartsSize());
+	}  
 	
 	@IsLogin(false)
 	@Channel(Constants.M)

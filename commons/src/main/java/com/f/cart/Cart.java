@@ -137,6 +137,10 @@ public class Cart implements Serializable{
 		return this.checked;
 	}
 	
+	public void setChecked(boolean checked){
+		this.checked = checked;
+	}
+	
 	public long getMerchantId(){
 		return this.merchantId;
 	}

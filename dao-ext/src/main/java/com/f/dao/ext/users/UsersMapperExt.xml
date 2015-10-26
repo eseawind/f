@@ -27,5 +27,4 @@
 			and mobile = #{mobile,jdbcType=VARCHAR}
 		</if>
 	</select>
-
 </mapper>

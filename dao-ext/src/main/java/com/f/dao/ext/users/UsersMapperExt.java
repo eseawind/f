@@ -13,5 +13,5 @@ public interface UsersMapperExt {
 	public int insertUsers(Users users);
 	
 	public Users selectMUsers(@Param("username")String username,@Param("mobile")String mobile,@Param("password")String password);
-
+	
 }

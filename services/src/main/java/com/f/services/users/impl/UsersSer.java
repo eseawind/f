@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import com.f.dao.ext.users.UsersMapperExt;
 import com.f.dao.users.HUsersMapper;
 import com.f.dao.users.MerchantMapper;
+import com.f.dao.users.UAddressMapper;
 import com.f.dao.users.UsersMapper;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.HUsersExample;
 import com.f.dto.users.Merchant;
 import com.f.dto.users.MerchantExample;
+import com.f.dto.users.UAddress;
+import com.f.dto.users.UAddressExample;
 import com.f.dto.users.Users;
 import com.f.services.users.IUsers;
 
@@ -35,6 +38,9 @@ public class UsersSer implements IUsers{
 	
 	@Autowired
 	private UsersMapperExt uext;
+	
+	@Autowired
+	private UAddressMapper uaMapper;
 
 	@Override
 	public Merchant selectMerchantUser(String name, String password) {
@@ -109,7 +115,17 @@ public class UsersSer implements IUsers{
 		}
 		return uext.selectMUsers(username, null, password);
 	}
-	
-	
+
+	@Override
+	public Users selectMUsers(long userId) {
+		return uMapper.selectByPrimaryKey(userId);
+	}
+
+	@Override
+	public List<UAddress> selectMUsersAddress(long userId) {
+		UAddressExample e = new UAddressExample();
+		e.createCriteria().andUserIdEqualTo(userId);
+		return uaMapper.selectByExample(e);
+	}
 
 }
