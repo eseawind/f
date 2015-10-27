@@ -4,4 +4,9 @@
   <select id="selAreasByPID" parameterType="int" resultType="com.f.dto.Area">
   	select id, name, fid from area where fid = #{value,jdbcType=INTEGER} and isUse = 1
   </select>
+  
+  <select id="selAreasComboboxByPID" parameterType="int" resultType="com.f.commons.Combobox">
+  	select id,id as v,name as k from area
+  	where fid = #{value,jdbcType=INTEGER} and isUse = 1
+  </select>
 </mapper>

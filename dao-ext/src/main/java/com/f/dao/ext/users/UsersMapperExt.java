@@ -2,6 +2,7 @@ package com.f.dao.ext.users;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.f.dto.users.UAddress;
 import com.f.dto.users.Users;
 
 public interface UsersMapperExt {
@@ -13,5 +14,9 @@ public interface UsersMapperExt {
 	public int insertUsers(Users users);
 	
 	public Users selectMUsers(@Param("username")String username,@Param("mobile")String mobile,@Param("password")String password);
+	
+	public int insertUAddress(UAddress ua);
+	
+	public int updateUAddress(UAddress ua);
 	
 }

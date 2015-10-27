@@ -128,4 +128,17 @@ public class UsersSer implements IUsers{
 		return uaMapper.selectByExample(e);
 	}
 
+	@Override
+	public void insertOrUpdateMUsersAddress(UAddress uaddress) {
+		int i = 0;
+		if(uaddress.getId() == null){
+			i = uext.insertUAddress(uaddress);
+		}else{
+			i = uext.updateUAddress(uaddress);
+		}
+		if(i != 1){
+			throw new BusinessException(121L);
+		}
+	}
+
 }

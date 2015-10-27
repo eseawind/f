@@ -11,7 +11,7 @@ public class UAddress {
 
     private Integer areaId;
 
-    private Integer remark;
+    private String remark;
 
     private String mobile;
 
@@ -57,12 +57,12 @@ public class UAddress {
         this.areaId = areaId;
     }
 
-    public Integer getRemark() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemark(Integer remark) {
-        this.remark = remark;
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public String getMobile() {

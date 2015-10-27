@@ -19,22 +19,23 @@
             <property name="forceBigDecimals" value="true"/>  
         </javaTypeResolver>  
         <!-- 生成模型的包名和位置-->  
-        <javaModelGenerator targetPackage="com.f.dto.goods" targetProject="src/main/java">  
+        <javaModelGenerator targetPackage="com.f.dto.users" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>  
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="com.f.dao.goods" targetProject="src/main/java">  
+        <sqlMapGenerator targetPackage="com.f.dao.users" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.goods" targetProject="src/main/java">  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.f.dao.users" targetProject="src/main/java">  
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         
-		 <table tableName="cgoods" domainObjectName="CGoods" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
+		 <table tableName="uaddress" domainObjectName="UAddress" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>
-       	 </table>       	 
+       	 </table>
+       	      	 
        	 <!-- commons -->
        	 <!-- <table tableName="area" domainObjectName="Area" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,5 +62,20 @@ public class UsersController {
 	public ResBo<List<UAddress>> maddress(){
 		User user = (User) session.get(Constants.USERINFO);
 		return new ResBo<List<UAddress>>(usersSer.selectMUsersAddress(user.getId()));
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("maddOrUpdAddress.htm")
+	@ResponseBody
+	public ResBo<?> maddOrUpdAddress(@ModelAttribute UAddress ua){
+		User user = (User) session.get(Constants.USERINFO);
+		ua.setUserId(user.getId());
+		if(ua.getId() == null){
+			if(usersSer.selectMUsersAddress(user.getId()).size() >= 5){
+				return new ResBo<Object>(5L);
+			}
+		}
+		usersSer.insertOrUpdateMUsersAddress(ua);
+		return new ResBo<Object>();
 	}
 }

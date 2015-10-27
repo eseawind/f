@@ -27,4 +27,37 @@
 			and mobile = #{mobile,jdbcType=VARCHAR}
 		</if>
 	</select>
+	
+	<insert id="insertUAddress" parameterType="com.f.dto.users.UAddress">
+		insert into uaddress 
+		(userId, provinceId, cityId, areaId, remark, mobile, consignee)
+        values 
+        (#{userId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+         #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+         #{mobile,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateUAddress" parameterType="com.f.dto.users.UAddress">
+	  update uaddress
+       <set>
+	      <if test="provinceId != null" >
+	        provinceId = #{provinceId,jdbcType=INTEGER},
+	      </if>
+	      <if test="cityId != null" >
+	        cityId = #{cityId,jdbcType=INTEGER},
+	      </if>
+	      <if test="areaId != null" >
+	        areaId = #{areaId,jdbcType=INTEGER},
+	      </if>
+	      <if test="remark != null" >
+	        remark = #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mobile != null" >
+	        mobile = #{mobile,jdbcType=VARCHAR},
+	      </if>
+	      <if test="consignee != null" >
+	        consignee = #{consignee,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+      where id=#{id,jdbcType=BIGINT} and userId = #{userId,jdbcType=BIGINT}
+	</update>
 </mapper>

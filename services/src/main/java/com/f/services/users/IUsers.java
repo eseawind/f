@@ -25,5 +25,7 @@ public interface IUsers {
 	public Users selectMUsers(long userId);
 	
 	public List<UAddress> selectMUsersAddress(long userId);
+	//m用户修改收货地址
+	public void insertOrUpdateMUsersAddress(UAddress uaddress);
 
 }

@@ -37,7 +37,7 @@ public class LoginController {
 			return new ResBo<Object>(109L);
 		}
 		User user = new User(merchant.getId(),UType.merchant);
-		session.set(Constants.USERINFO, user);
+		session.replace(Constants.USERINFO, user);
 		return new ResBo<Object>();
 	}
 	
@@ -50,7 +50,7 @@ public class LoginController {
 			return new ResBo<Object>(109L);
 		}
 		User user = new User(hu.getId(),UType.husers);
-		session.set(Constants.USERINFO, user);
+		session.replace(Constants.USERINFO, user);
 		return new ResBo<Object>();
 	}
 	
