@@ -183,4 +183,73 @@
   	left join brand b on b.id = g.brandId
   	where cg.gid = #{value,jdbcType=BIGINT}
   </select>
+  
+  <update id="updGoods" parameterType="com.f.dto.goods.Goods">
+    update goods
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brandId != null" >
+        brandId = #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="descript != null" >
+        descript = #{descript,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT} and merchantId = #{merchantId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updCGoods" parameterType="map" >
+    update cgoods
+    <set >
+      <if test="cg.cgname != null" >
+        cgname = #{cg.cgname,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.price != null" >
+        price = #{cg.price,jdbcType=DECIMAL},
+      </if>
+      <if test="cg.mprice != null" >
+        mprice = #{cg.mprice,jdbcType=DECIMAL},
+      </if>
+      <if test="cg.state != null" >
+        state = #{cg.state,jdbcType=INTEGER},
+      </if>
+      <if test="cg.isDef != null" >
+        isDef = #{cg.isDef,jdbcType=INTEGER},
+      </if>
+      <if test="cg.photo != null" >
+        photo = #{cg.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.photo1 != null" >
+        photo1 = #{cg.photo1,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.photo2 != null" >
+        photo2 = #{cg.photo2,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.photo3 != null" >
+        photo3 = #{cg.photo3,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.photo4 != null" >
+        photo4 = #{cg.photo4,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.sku != null" >
+        sku = #{cg.sku,jdbcType=VARCHAR},
+      </if>
+      <if test="cg.number != null" >
+        number = #{cg.number,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{cg.id,jdbcType=BIGINT} and gid = #{cg.gid,jdbcType=BIGINT}
+    and exists (select id from goods where merchantId = #{merchantId,jdbcType=BIGINT} and id = #{cg.gid,jdbcType=BIGINT}) 
+  </update>
 </mapper>

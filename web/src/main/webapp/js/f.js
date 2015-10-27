@@ -119,6 +119,21 @@
 		}
 	}
 	
+	f.filterEmpty = function(o){
+		var arr = [];
+		if($.isPlainObject(o)){
+			for(var k in o){
+				if($.trim(o[k]) == ''){
+					arr.push(k);
+				}
+			}
+		}
+		$.each(arr,function(i,k){
+			delete o[k];
+		});
+		return o;
+	}
+	
 	$.fn.f_showTip = function(message){
 		var obj = this;
 		obj.popover({

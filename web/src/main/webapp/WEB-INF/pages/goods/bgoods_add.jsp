@@ -95,6 +95,7 @@
 	</div>
 	<div id="cgDiv">
 		<input name="id" type="hidden" id="cgId"/>
+		<input name="gid" type="hidden" id="gId2"/>
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	规格（必填）
@@ -185,6 +186,7 @@
 			  </div>
 			  <form id="standard_form_{{= index}}">
 			  <input type="hidden" name="id" value=""/>
+			  <input type="hidden" name="gid" value="{{= gid}}"/>
 			  <div class="panel-body">
 			  	<table class="table table-bordered">
 			  		<tr>
@@ -279,12 +281,13 @@ $(function(){
 			param.code = $("#category3").f_combobox("getValue")||$("#category2").f_combobox("getValue")||$("#category1").f_combobox("getValue");
 			param.descript = editor.html();
 			$("#body").startMask();
-			$.post(f.dynUrl+'/goods/add.htm',param,function(d){
+			$.post(f.dynUrl+'/goods/add.htm',f.filterEmpty(param),function(d){
 				$("#body").closeMask();
 				if(d.success){
 					console.log(d.result);
 					gid = d.result[0];
 					$("#gId").val(d.result[0]);
+					$("#gId2").val(d.result[0]);
 					$("#cgId").val(d.result[1]);
 					$("#saveGoodsBtn").hide();
 					$("#goodsBtn").show();
@@ -311,9 +314,9 @@ $(function(){
 	});
 	$("#cgBtn").click(function(){
 		if(cgDiv.f_isValid()){
-			var param = cgDiv.f_serialized();
+			var param = f.filterEmpty(cgDiv.f_serialized());
 			cgDiv.startMask();
-			$.post(f.dynUrl+"/goods/updCGandGS.htm",param,function(d){
+			$.post(f.dynUrl+"/goods/updCGandGS.htm",f.filterEmpty(param),function(d){
 				cgDiv.closeMask();
 				if(!d.success){
 					f.alertError(d.errMsg);
@@ -335,9 +338,8 @@ $(function(){
 			if(form.f_isValid()){
 				var param = form.f_serialized();
 				if(!param.id){
-					param.gid = gid;
 					form.startMask();
-					$.post(f.dynUrl+"/goods/addCG.htm",param,function(d){
+					$.post(f.dynUrl+"/goods/addCG.htm",f.filterEmpty(param),function(d){
 						form.closeMask();
 						if(d.success){
 							$("#standard_del_"+index).hide();
@@ -348,7 +350,7 @@ $(function(){
 					},'json');
 				}else{
 					form.startMask();
-					$.post(f.dynUrl+"/goods/updCGandGS.htm",param,function(d){
+					$.post(f.dynUrl+"/goods/updCGandGS.htm",f.filterEmpty(param),function(d){
 						form.closeMask();
 						if(!d.success){
 							f.alertError(d.errMsg);

@@ -22,7 +22,7 @@ public interface IGoods {
 	 * */
 	public void insertGoodsInfo(Goods goods,CGoods cg);
 	
-	public void updateGoodsInfo(Goods goods,CGoods cg);
+	public void updateGoodsInfo(long merchantId, Goods goods,CGoods cg);
 	
 	public void insertCGoodsInfo(CGoods cg);
 	

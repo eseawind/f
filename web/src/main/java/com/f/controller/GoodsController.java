@@ -56,14 +56,17 @@ public class GoodsController {
 	@RequestMapping("updGoods.htm")
 	@ResponseBody
 	public ResBo<?> updGoods(@ModelAttribute Goods goods){
-		goodsSer.updateGoodsInfo(goods, null);
+		User user = (User) session.get(Constants.USERINFO);
+		goods.setMerchantId(user.getId());
+		goodsSer.updateGoodsInfo(user.getId(), goods, null);
 		return new ResBo<Object>();
 	}
 	@Channel(Constants.B)
 	@RequestMapping("updCGandGS.htm")
 	@ResponseBody
 	public ResBo<?> updCG(@ModelAttribute CGoods cg){
-		goodsSer.updateGoodsInfo(null, cg);
+		User user = (User) session.get(Constants.USERINFO);
+		goodsSer.updateGoodsInfo(user.getId(), null, cg);
 		return new ResBo<Object>();
 	}
 	

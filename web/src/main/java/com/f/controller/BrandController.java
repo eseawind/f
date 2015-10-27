@@ -59,7 +59,8 @@ public class BrandController {
 	@RequestMapping("upd.htm")
 	@ResponseBody
 	public ResBo<?> updBrand(@ModelAttribute Brand brand){
-		brand.setMerchantId(null);
+		User user = (User)session.get(Constants.USERINFO);
+		brand.setMerchantId(user.getId());
 		brandSer.updateBrand(brand);
 		return new ResBo<Object>();
 	}

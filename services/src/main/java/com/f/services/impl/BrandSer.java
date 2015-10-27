@@ -67,7 +67,7 @@ public class BrandSer implements IBrand {
 
 	@Override
 	public void updateBrand(Brand brand) {
-		int i = brandMapper.updateByPrimaryKeySelective(brand);
+		int i = brandMapperExt.updBrand(brand);
 		if(i != 1){
 			throw new BusinessException(111L);
 		}

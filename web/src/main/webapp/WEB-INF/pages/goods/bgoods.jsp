@@ -120,7 +120,8 @@
 	</div>
 </div>
 <div id="cgDiv" style="display:none">
-	<input name="id" type="hidden"/><!-- 库存id -->
+	<input name="id" type="hidden"/>
+	<input name="gid" type="hidden"/>
 	<div class="panel panel-default">
 	  <div class="panel-heading">
 	  	规格（必填）
@@ -226,7 +227,7 @@ $(function(){
 			var param = cgDiv.f_serialized();
 			if(f.length(param) > 0){
 				cgDiv.startMask();
-				$.post(f.dynUrl+'/goods/updCGandGS.htm',param,function(d){
+				$.post(f.dynUrl+'/goods/updCGandGS.htm',f.filterEmpty(param),function(d){
 					cgDiv.closeMask();
 					if(d.success){
 						cgDiv.f_modal('hide');
@@ -287,6 +288,7 @@ $(function(){
 		rightclick:[{text:"维护商品规格信息",handler:function(i,data){
 			var map = {};
 			map.id = data.id;
+			map.gid = data.gid;
 			map.cgname = data.cgname;
 			map.sku = data.sku;
 			map.price = data.price;

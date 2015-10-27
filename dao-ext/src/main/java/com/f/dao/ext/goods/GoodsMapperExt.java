@@ -31,4 +31,8 @@ public interface GoodsMapperExt {
 	public long countCGoodsStaInfo(@Param("merchantId")Long merchantId,@Param("code")String code,@Param("filter") Integer filter);
 	
 	public List<GoodsStaInfo> selectCGoodsStaInfoByGId(long gid);
+	
+	public int updGoods(Goods g);
+	
+	public int updCGoods(@Param("cg")CGoods cg,@Param("merchantId")long merchantId);
 }

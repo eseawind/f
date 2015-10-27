@@ -9,4 +9,6 @@ import com.f.dto.goods.Brand;
 public interface BrandMapperExt {
 
 	public List<Brand> selBrand(@Param("merchantId")long merchantId,@Param("name")String name,@Param("start")int start,@Param("rows")int rows);
+	
+	public int updBrand(Brand brand);
 }

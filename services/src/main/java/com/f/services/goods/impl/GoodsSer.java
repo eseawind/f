@@ -62,16 +62,16 @@ public class GoodsSer implements IGoods{
 	 * 用于新增商品时修改商品信息
 	 * */
 	@Override
-	public void updateGoodsInfo(Goods goods, CGoods cg) {
+	public void updateGoodsInfo(long merchantId, Goods goods, CGoods cg) {
 		int i = 0;
 		if(goods != null){
-			i = gmapper.updateByPrimaryKeySelective(goods);
+			i = gext.updGoods(goods);
 			if(i != 1){
 				throw new BusinessException(104L);
 			}
 		}
 		if(cg != null){
-			i = cgmapper.updateByPrimaryKeySelective(cg);
+			i = gext.updCGoods(cg, merchantId);
 			if(i != 1){
 				throw new BusinessException(105L);
 			}
