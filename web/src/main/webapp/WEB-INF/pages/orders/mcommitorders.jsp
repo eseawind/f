@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@include file="../commons/mcommons.jsp" %>
+<script type="text/javascript" src="${staUrl }/js/md5.js"></script>
 </head>
 <body class="container">
 <%@include file="../commons/mhead.jsp" %>
@@ -17,18 +18,27 @@
 </div>
 <div class="panel panel-default">
 	<div class="panel-heading">支付方式</div>
-	<div class="panel-body form-inline">
-		<div class="form-group btn">
-			<input type="radio" name="payType" id="ye" value="1" checked="checked"/>
-			<label for="ye">余额</label>
+	<div class="panel-body">
+		<div class="form-inline">
+			<div class="form-group btn">
+				<input type="radio" name="payType" id="ye" value="1" checked="checked"/>
+				<label for="ye">余额</label>
+			</div>
+			<div class="form-group btn">
+				<input type="radio" name="payType" id="zfb" value="2"/>
+				<label for="zfb">支付宝</label>
+			</div>
+			<div class="form-group btn">
+				<input type="radio" name="payType" id="wx" value="3"/>
+				<label for="wx">微信</label>
+			</div>
 		</div>
-		<div class="form-group btn">
-			<input type="radio" name="payType" id="zfb" value="2"/>
-			<label for="zfb">支付宝</label>
-		</div>
-		<div class="form-group btn">
-			<input type="radio" name="payType" id="wx" value="3"/>
-			<label for="wx">微信</label>
+		<div class="form-inline">
+			<div class="form-group">
+				<label>支付密码：</label>
+				<input class="form-control" type="password" id="payPass"/>
+				<span style="color:red">&nbsp;余额支付必填</span>
+			</div>
 		</div>
 	</div>
 </div>
@@ -95,9 +105,7 @@
 		<div class="panel-body">
 			<p><span>收货人：{{= consignee}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>手机号：{{= mobile}}</span></p>
 			<p>{{= remark}}</p>
-		</div>
-		<div class="panel-footer">
-			<button class="btn btn-default btn-block" f-id="{{= index}}"><i class="icon-edit"></i>编辑收货地址</button>
+			<div class="text-right"><i class="icon-edit" style="cursor:pointer">编辑</i></div>
 		</div>
 	</div>
 </script>
@@ -117,6 +125,7 @@
 					</td>
 					<td style="vertical-align: middle;width:80px;text-align:center"><b>{{= $value.orderPrice}}</b></td>
 				</tr>{{/if}}{{/each}}
+				{{if !settle}}<tr><td colspan="3" style="color:red">{{= reason}}</td><tr>{{/if}}
 			</table>
 		</div>
 		<div class="panel-footer">
@@ -198,11 +207,42 @@ $(function(){
 	loadAddress();
 	var list = $("#list");
 	var commitBtn = $("#commitOrders");
+	commitBtn.click(function(){
+		var param = {};
+		param.provinceId = address.provinceId;
+		param.cityId = address.cityId;
+		param.areaId = address.areaId;
+		param.remark = address.remark;
+		param.mobile = address.mobile;
+		param.consignee = address.consignee;
+		if($("#ye").prop('checked')){
+			param.payType = 1;
+		}else if($("#zfb").prop('checked')){
+			param.payType = 2;
+		}else if($("#wx").prop('checked')){
+			param.payType = 3;
+		}
+		if(param.payType == undefined){
+			f.dialogAlert("请选择支付方式");
+			return;
+		}
+		if(param.payType == 1){
+			param.password = $.trim($("#payPass").val());
+			if(param.password == ''){
+				f.dialogAlert("请输入支付密码");
+				return;
+			}
+			param.password = hex_md5(param.password);
+		}
+		console.log(param);
+	});
 	$.getJSON(f.dynUrl+"/cart/settle.htm",function(d){
 		if(d.success){
-			if(d.result.settlements.settle){
+			if(!d.result.settlements.settle){
 				commitBtn.removeProp('disabled');
 			}
+			$("#discountPrice").text(d.result.discountPrice);
+			$("#orderPrice").text(d.result.orderPrice);
 			$.each(d.result.settlements,function(i,obj){
 				if(obj.hasChecked){
 					list.append($("#settleTmpl").tmpl(obj));

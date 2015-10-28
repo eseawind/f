@@ -23,6 +23,7 @@
 			</div>
 		</form>
 		<button class="btn btn-block btn-success" type="button" id="login_submit">登陆</button>
+		<div class="text-right"><a href="${staUrl }/page/login/mregister.htm" class="btn">去注册&gt;&gt;</a></div>
 	</div>
 </div>
 <script type="text/javascript">

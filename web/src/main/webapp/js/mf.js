@@ -26,11 +26,11 @@
 	f.tmpl.goodsContainer = '<div class="f-goods-container">' +
 								'<div class="f-goods-block" f-id="${cgid}">' + 
 									'<div class="f-goods-img">' + 
-										'<img alt="" src="${imgUrl}${photo}" />' + 
+										'<a href="${dynUrl}/goods/detail/${cgid}.htm"><img alt="${gname}" {{if photo}}src="${imgUrl}${photo}"{{/if}}/></a>' + 
 									'</div>' + 
 									'<ul>' + 
 										'<li class="gprice"><font style="font-size:80%">￥&nbsp;</font><span f-id="${cgid}"></span></li>' + 
-										'<li class="gname">${gname}</li>' + 
+										'<li class="gname"><a href="${dynUrl}/goods/detail/${cgid}.htm">${gname}</a></li>' + 
 										'<li class="goper btn-group">' + 
 											'<button class="btn btn-default f-share" f-id="${cgid}">分享</button>' + 
 											'<button class="btn btn-default f-collect" f-id="${cgid}">收藏</button>' + 

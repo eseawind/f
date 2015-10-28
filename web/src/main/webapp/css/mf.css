@@ -49,6 +49,8 @@ body {
 }
 .f-goods-container .f-goods-block .f-goods-img{
 	text-align: center;	
+	min-width:220px;
+	min-height:220px;
 }
 
 .f-goods-container .f-goods-block img {
@@ -117,6 +119,8 @@ body {
 		padding-right: 10px;
 		text-align: left;	
 		float: left;
+		min-width:110px;
+		min-height:110px;
 	}
 	
 	.f-goods-container .f-goods-block img {

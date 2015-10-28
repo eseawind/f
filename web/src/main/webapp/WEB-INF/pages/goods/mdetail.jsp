@@ -103,7 +103,7 @@
 	<button class="btn btn-default btn-lg" style="width:30%" id="buyBtn" disabled="disabled">
 		立刻购买
 	</button>
-	<button class="btn btn-danger btn-lg" style="width:40%" id="addCartBtn" disabled="disabled">加入购物车</button>
+	<button class="btn btn-danger btn-lg" onclick="addCartFun(${def.merchantId},${def.cgid })" style="width:40%" id="addCartBtn" disabled="disabled">加入购物车</button>
 </div>
 <script type="text/javascript">
 $(function(){
@@ -165,6 +165,11 @@ $(function(){
 	buyNum.focus(function(){
 		buyNum.select();
 	});
+	addCartFun = function(merchantId,cgids){
+		f.addCart(merchantId, cgids, buyNum.val(),function(){
+			f.transientAlert("成功加入购物车");
+		})
+	}
 })
 </script>
 </body>

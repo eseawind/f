@@ -54,5 +54,5 @@ CREATE TABLE `carts` (
 /* 20151022 已执行 */
 alter table users modify column mobile varchar(20) comment '手机号';
 
-/**20151028 未执行*/
+/**20151028 已执行*/
 ALTER TABLE uaddress ADD COLUMN isDef INT NOT NULL DEFAULT 0 COMMENT '默认收货地址';

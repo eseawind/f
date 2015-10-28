@@ -35,6 +35,7 @@
 					<td style="vertical-align: middle;width:80px;text-align:center"><b>{{= $value.orderPrice}}</b></td>
 					<td style="vertical-align: middle;width:45px"><span class="icon-trash icon-2x" f-id="{{= $value.settleCartStr}}" style="cursor:pointer"></span></td>
 				</tr>{{/each}}
+				{{if !settle}}<tr><td colspan="5" style="color:red">{{= reason}}</td><tr>{{/if}}
 			</table>
 		</div>
 		<div class="panel-footer">
@@ -43,7 +44,7 @@
 	</div>
 </script>
 <script type="text/tmpl" id="settleTmpl">
-	<div class="text-right"><span>优惠：￥&nbsp;{{= discountPrice}}</span>&nbsp;&nbsp;<span style="color:red">总价：￥&nbsp;{{= orderPrice}}</span>&nbsp;&nbsp;<button onclick="settle()" {{if settle}} disabled="disabled" {{/if}} class="btn btn-danger">结算</button></div>
+	<div class="text-right"><span>优惠：￥&nbsp;{{= discountPrice}}</span>&nbsp;&nbsp;<span style="color:red">总价：￥&nbsp;{{= orderPrice}}</span>&nbsp;&nbsp;<button onclick="settle()" {{if !settle}} disabled="disabled" {{/if}} class="btn btn-danger">结算</button></div>
 </script>
 <script type="text/javascript">
 $(function(){
