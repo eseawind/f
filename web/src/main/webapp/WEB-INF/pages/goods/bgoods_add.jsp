@@ -125,6 +125,11 @@
 		  				</select>
 		  			</td>
 		  			<td>
+		  				<label>默认规格：</label>
+		  				<select style="width:80px" class="form-control" name="isDef" f-type="combobox" f-options="required:true,datas:[{k:'否',v:0},{k:'是',v:1}]">
+		  				</select>
+		  			</td>
+		  			<td>
 		  				<label>库存：</label>
 		  				<input class="form-control" name="number" f-type="number" f-options="required:true,precision:0,min:0" value="0"/>
 		  			</td>
@@ -211,6 +216,11 @@
 			  				<select class="form-control" name="state" f-type="combobox" f-options="required:true,datas:[{k:'不可见',v:127},{k:'上架',v:1},{k:'下架',v:2}]">
 			  				</select>
 			  			</td>
+						<td>
+		  					<label>默认规格：</label>
+		  					<select style="width:80px" class="form-control" name="isDef" f-type="combobox" f-options="required:true,datas:[{k:'否',v:0},{k:'是',v:1}]">
+		  					</select>
+		  			    </td>
 			  			<td>
 			  				<label>库存：</label>
 			  				<input class="form-control" name="number" f-type="number" f-options="required:true,precision:0,min:0" value="0"/>

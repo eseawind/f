@@ -14,18 +14,18 @@
   <insert id="insertCGoods" parameterType="com.f.dto.goods.CGoods" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
   	insert into cgoods (gid, cgname, 
       price, mprice, state, createtime, photo, 
-      photo1, photo2, photo3, photo4, sku, number)
+      photo1, photo2, photo3, photo4, sku, number, isDef)
     values (#{gid,jdbcType=BIGINT}, #{cgname,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{photo,jdbcType=VARCHAR}, #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
-      #{photo4,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER})
+      #{photo4,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{isDef,jdbcType=INTEGER})
   </insert>
   
   <!--  商品查询  -->
   <select id="selCGoods" parameterType="map" resultType="map">
   	select cg.id,g.gname,cg.cgname,g.id as gid,g.code,cg.number,cg.createtime,
   	c.name as categoryName,cg.sku,cg.price,cg.mprice,b.name as brandName,b.id as brandId,
-  	cg.state,g.remark,g.descript
+  	cg.state,g.remark,g.descript,cg.isDef
   	from cgoods cg 
   	left join goods g on cg.gid = g.id
   	left join merchant m on g.merchantId = m.id
@@ -251,5 +251,9 @@
     </set>
     where id = #{cg.id,jdbcType=BIGINT} and gid = #{cg.gid,jdbcType=BIGINT}
     and exists (select id from goods where merchantId = #{merchantId,jdbcType=BIGINT} and id = #{cg.gid,jdbcType=BIGINT}) 
+  </update>
+  
+  <update id="clearCGoodsIsDef" parameterType="long">
+  	update cgoods set isDef = 0 where gid = #{value,jdbcType=BIGINT}
   </update>
 </mapper>

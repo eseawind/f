@@ -71,7 +71,7 @@ $(function(){
 	}
 	loadCart();
 	settle = function(){
-		window.localtion.href = f.staUrl + '/page/orders/collate.htm';
+		window.location.href = f.staUrl + '/page/orders/mcommitorders.htm';
 	}
 	function cartBuilder(obj){
 		obj.imgUrl = f.imgUrl();

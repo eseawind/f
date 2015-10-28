@@ -11,7 +11,11 @@
   	where userId = #{userId,jdbcType=BIGINT}
   </update>
   
-  <select id="isExist" parameterType="long" resultType="com.f.cart.CartStr">
+  <select id="isExist" parameterType="long" resultType="boolean">
+  	select count(1) from carts where userId = #{userId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selCartStr" parameterType="long" resultType="com.f.cart.CartStr">
   	select userId,cartStr from carts where userId = #{userId,jdbcType=BIGINT}
   </select>
   

@@ -19,11 +19,18 @@ public class Settlements implements Serializable{
 	private boolean isSettle = true;
 	
 	public void builder(){
+		int i = 0;
 		for(Settlement s:this.settlements){
 			this.totalPrice = this.totalPrice.add(s.getTotalPrice());
 			this.discountPrice = this.discountPrice.add(s.getDiscountPrice());
 			this.orderPrice = this.orderPrice.add(s.getOrderPrice());
 			this.isSettle = this.isSettle&&s.isSettle();
+			if(s.isHasChecked()){
+				i++;
+			}
+		}
+		if(isSettle&&i==0){
+			isSettle = false;
 		}
 	}
 

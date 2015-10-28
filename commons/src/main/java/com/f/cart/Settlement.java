@@ -22,6 +22,9 @@ public class Settlement implements Serializable{
 	//是否可以结算
 	private boolean isSettle = true;
 	
+	//该商户下边是否存在勾选的商品
+	private boolean hasChecked = false;
+	
 	private String reason;
 	
 	private Long merchantId;
@@ -60,6 +63,9 @@ public class Settlement implements Serializable{
 				}else{
 					this.totalPrice = this.totalPrice.add(sc.getTotalPrice());
 					this.orderPrice = this.orderPrice.add(sc.getOrderPrice());
+					if(!this.hasChecked){
+						this.hasChecked = true;
+					}
 				}
 				
 				for(SettleGoods sg:sc.getSettleGoodsList()){
@@ -118,6 +124,12 @@ public class Settlement implements Serializable{
 	}
 	public void setMerchantName(String merchantName) {
 		this.merchantName = merchantName;
+	}
+	public boolean isHasChecked() {
+		return hasChecked;
+	}
+	public void setHasChecked(boolean hasChecked) {
+		this.hasChecked = hasChecked;
 	}
 	
 }

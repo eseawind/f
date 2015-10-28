@@ -131,6 +131,9 @@ public class UsersSer implements IUsers{
 	@Override
 	public void insertOrUpdateMUsersAddress(UAddress uaddress) {
 		int i = 0;
+		if(uaddress.getIsDef() != null&&uaddress.getIsDef() == 1){
+			uext.clearUAddressIsDef(uaddress.getUserId());
+		}
 		if(uaddress.getId() == null){
 			i = uext.insertUAddress(uaddress);
 		}else{

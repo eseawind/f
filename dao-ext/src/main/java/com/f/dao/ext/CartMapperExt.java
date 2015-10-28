@@ -4,7 +4,9 @@ import com.f.cart.CartStr;
 
 public interface CartMapperExt {
 
-	public CartStr isExist(long userId);
+	public boolean isExist(long userId);
+	
+	public CartStr selCartStr(long userId);
 	
 	public int insertCartStr(CartStr cs);
 	

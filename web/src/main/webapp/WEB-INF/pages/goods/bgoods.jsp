@@ -151,6 +151,11 @@
 	  				</select>
 	  			</td>
 	  			<td>
+	  				<label>默认规格：</label>
+	  				<select style="width:80px" class="form-control" name="isDef" f-type="combobox" f-options="required:true,datas:[{k:'否',v:0},{k:'是',v:1}]">
+	  				</select>
+	  			</td>
+	  			<td>
 	  				<label>库存：</label>
 	  				<input class="form-control" name="number" f-type="number" f-options="required:true,precision:0,min:0" value="0"/>
 	  			</td>
@@ -259,6 +264,13 @@ $(function(){
 		},{
 			field:"cgname",title:"规格"
 		},{
+			field:"isDef",title:"是否默认规格",formatter(v){
+				switch(parseInt(v)){
+				case 1:return "是";
+				case 0:return "否";
+				}
+			}
+		},{
 			field:"sku",title:"sku"
 		},{
 			field:"price",title:"价格"
@@ -295,6 +307,7 @@ $(function(){
 			map.mprice = data.mprice;
 			map.state = data.state;
 			map.number = data.number;
+			map.isDef = data.isDef;
 			cgDiv.f_formReset();
 			cgDiv.f_formLoad(map);
 			cgDiv.f_modal("show");

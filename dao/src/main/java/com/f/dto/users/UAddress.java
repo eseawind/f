@@ -17,6 +17,8 @@ public class UAddress {
 
     private String consignee;
 
+    private Integer isDef;
+
     public Long getId() {
         return id;
     }
@@ -79,5 +81,13 @@ public class UAddress {
 
     public void setConsignee(String consignee) {
         this.consignee = consignee == null ? null : consignee.trim();
+    }
+
+    public Integer getIsDef() {
+        return isDef;
+    }
+
+    public void setIsDef(Integer isDef) {
+        this.isDef = isDef;
     }
 }

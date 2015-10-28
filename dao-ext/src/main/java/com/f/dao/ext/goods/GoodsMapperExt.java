@@ -35,4 +35,6 @@ public interface GoodsMapperExt {
 	public int updGoods(Goods g);
 	
 	public int updCGoods(@Param("cg")CGoods cg,@Param("merchantId")long merchantId);
+	
+	public int clearCGoodsIsDef(long gid);
 }

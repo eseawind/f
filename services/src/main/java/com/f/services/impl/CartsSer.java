@@ -17,16 +17,21 @@ public class CartsSer implements ICarts{
 
 	@Override
 	public CartStr selectCartStr(long userId) {
-		return ext.isExist(userId);
+		CartStr cs = ext.selCartStr(userId);
+		if(cs == null){
+			cs = new CartStr();
+			cs.setUserId(userId);
+		}
+		return cs;
 	}
 
 	@Override
 	public void saveCartStr(CartStr cs) {
 		int i = 0;
-		if(ext.isExist(cs.getUserId()) == null){
-			i = ext.insertCartStr(cs);
-		}else{
+		if(ext.isExist(cs.getUserId())){
 			i = ext.updateCartStr(cs);
+		}else{
+			i = ext.insertCartStr(cs);
 		}
 		if(i != 1){
 			throw new BusinessException(113L);

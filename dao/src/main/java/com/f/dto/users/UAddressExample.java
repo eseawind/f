@@ -613,6 +613,66 @@ public class UAddressExample {
             addCriterion("consignee not between", value1, value2, "consignee");
             return (Criteria) this;
         }
+
+        public Criteria andIsDefIsNull() {
+            addCriterion("isDef is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefIsNotNull() {
+            addCriterion("isDef is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefEqualTo(Integer value) {
+            addCriterion("isDef =", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefNotEqualTo(Integer value) {
+            addCriterion("isDef <>", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefGreaterThan(Integer value) {
+            addCriterion("isDef >", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isDef >=", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefLessThan(Integer value) {
+            addCriterion("isDef <", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefLessThanOrEqualTo(Integer value) {
+            addCriterion("isDef <=", value, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefIn(List<Integer> values) {
+            addCriterion("isDef in", values, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefNotIn(List<Integer> values) {
+            addCriterion("isDef not in", values, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefBetween(Integer value1, Integer value2) {
+            addCriterion("isDef between", value1, value2, "isDef");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDefNotBetween(Integer value1, Integer value2) {
+            addCriterion("isDef not between", value1, value2, "isDef");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

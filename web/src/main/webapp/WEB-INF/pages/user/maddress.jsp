@@ -66,6 +66,10 @@
 			<label>详细地址：</label>
 			<input class="form-control" f-type="text" name="remark" f-options="required:true,maxLength:254"/>
 		</div>
+		<div class="form-group">
+			&nbsp;&nbsp;&nbsp;&nbsp;<input name="isDef" id="isDef" value="1" type="checkbox"/>
+			<label for="isDef">&nbsp;设置为默认收货地址</label>
+		</div>
 		<button class="btn btn-default btn-block" id="submit">保存</button>
 	</div>
 </div>

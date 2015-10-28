@@ -30,11 +30,11 @@
 	
 	<insert id="insertUAddress" parameterType="com.f.dto.users.UAddress">
 		insert into uaddress 
-		(userId, provinceId, cityId, areaId, remark, mobile, consignee)
+		(userId, provinceId, cityId, areaId, remark, mobile, consignee, isDef)
         values 
         (#{userId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
          #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
-         #{mobile,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR})
+         #{mobile,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, #{isDef,jdbcType=INTEGER})
 	</insert>
 	<update id="updateUAddress" parameterType="com.f.dto.users.UAddress">
 	  update uaddress
@@ -54,10 +54,17 @@
 	      <if test="mobile != null" >
 	        mobile = #{mobile,jdbcType=VARCHAR},
 	      </if>
+	      <if test="isDef != null" >
+	        isDef = #{isDef,jdbcType=INTEGER},
+	      </if>
 	      <if test="consignee != null" >
 	        consignee = #{consignee,jdbcType=VARCHAR},
 	      </if>
 	    </set>
       where id=#{id,jdbcType=BIGINT} and userId = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="clearUAddressIsDef" parameterType="long">
+		update uaddress set isDef = 0 where userId = #{value,jdbcType=BIGINT}
 	</update>
 </mapper>

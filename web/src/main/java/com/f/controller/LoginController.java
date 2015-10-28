@@ -68,6 +68,18 @@ public class LoginController {
 		return new ResBo<Boolean>(true);
 	}
 	
+	@IsLogin(false)
+	@Channel(Constants.M)
+	@RequestMapping("mIslogin.htm")
+	@ResponseBody
+	public ResBo<Boolean> mislogin(){
+		Object user = session.get(Constants.USERINFO);
+		if(user == null){
+			return new ResBo<Boolean>(false);
+		}
+		return new ResBo<Boolean>(true);
+	}
+	
 	@Channel(Constants.M)
 	@RequestMapping("munlogin.htm")
 	@ResponseBody

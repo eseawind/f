@@ -52,6 +52,9 @@ public class GoodsSer implements IGoods{
 	public void insertCGoodsInfo(CGoods cg) {
 		Date date = new Date();
 		cg.setCreatetime(date);
+		if(cg.getIsDef() == 1){
+			gext.clearCGoodsIsDef(cg.getGid());
+		}
 		int i = gext.insertCGoods(cg);
 		if(i != 1){
 			throw new BusinessException(101L);
@@ -71,6 +74,9 @@ public class GoodsSer implements IGoods{
 			}
 		}
 		if(cg != null){
+			if(cg.getIsDef() == 1){
+				gext.clearCGoodsIsDef(cg.getGid());
+			}
 			i = gext.updCGoods(cg, merchantId);
 			if(i != 1){
 				throw new BusinessException(105L);

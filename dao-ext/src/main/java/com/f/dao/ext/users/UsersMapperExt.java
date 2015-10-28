@@ -19,4 +19,6 @@ public interface UsersMapperExt {
 	
 	public int updateUAddress(UAddress ua);
 	
+	public int clearUAddressIsDef(long userId);
+	
 }
