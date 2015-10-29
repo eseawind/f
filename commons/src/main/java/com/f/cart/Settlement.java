@@ -67,7 +67,6 @@ public class Settlement implements Serializable{
 						this.hasChecked = true;
 					}
 				}
-				
 				for(SettleGoods sg:sc.getSettleGoodsList()){
 					SSettleGoods ssg = ((SSettleGoods) sg);
 					if(sg.getStockNum() < sc.getNumber()){

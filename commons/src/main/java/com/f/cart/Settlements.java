@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import framework.exception.BusinessException;
+
 public class Settlements implements Serializable{
 
 	private static final long serialVersionUID = 2987345994051077155L;
@@ -18,8 +22,11 @@ public class Settlements implements Serializable{
 	//是否可以结算
 	private boolean isSettle = true;
 	
+	private String reason = StringUtils.EMPTY;
+	
 	public void builder(){
 		int i = 0;
+		StringBuilder sb = new StringBuilder();
 		for(Settlement s:this.settlements){
 			this.totalPrice = this.totalPrice.add(s.getTotalPrice());
 			this.discountPrice = this.discountPrice.add(s.getDiscountPrice());
@@ -28,10 +35,16 @@ public class Settlements implements Serializable{
 			if(s.isHasChecked()){
 				i++;
 			}
+			if(!s.isSettle()&&StringUtils.isNotEmpty(s.getReason())){
+				sb.append(s.getReason());
+				sb.append("\r\n");
+			}
 		}
 		if(isSettle&&i==0){
 			isSettle = false;
+			sb.append(BusinessException.getMessage(124L));
 		}
+		this.reason = sb.toString();
 	}
 
 	public List<Settlement> getSettlements() {
@@ -72,5 +85,13 @@ public class Settlements implements Serializable{
 
 	public void setSettle(boolean isSettle) {
 		this.isSettle = isSettle;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 }

@@ -18,8 +18,9 @@
     
     <context:property-placeholder location="classpath:jdbc.properties,classpath:jredis.properties"/>
 	
-	<context:component-scan base-package="com.f.services">
+	<context:component-scan base-package="com.f.services,com.f.component">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
 	</context:component-scan>
 	
 	<bean class="framework.context.ApplicationContext"/>

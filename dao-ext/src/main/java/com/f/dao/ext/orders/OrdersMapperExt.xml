@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f.dao.ext.orders.OrdersMapperExt" >
+
+<insert id="insertOrders" parameterType="com.f.dto.orders.Orders" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+	insert into orders (orderNum, state, 
+      status, orderPrice, paidPrice, 
+      payPrice, productPrice, discountPrice, 
+      balancePrice, isPaid, userId, 
+      createtime, merchantId, provinceId, 
+      cityId, areaId, provinceName, 
+      cityName, areaName, remark, 
+      consignee, mobile)
+    values (#{orderNum,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{paidPrice,jdbcType=DECIMAL}, 
+      #{payPrice,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, 
+      #{balancePrice,jdbcType=DECIMAL}, #{isPaid,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+      #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
+</insert>
+<insert id="insertOrderDetail" parameterType="list">
+	insert into odetail (orderId, goodsId, buyPrice, number) values 
+    <foreach collection="list" open="(" separator="," close=")" item="od">
+    #{od.orderId,jdbcType=BIGINT}, #{od.goodsId,jdbcType=BIGINT}, #{od.buyPrice,jdbcType=DECIMAL}, #{od.number,jdbcType=INTEGER}
+    </foreach>
+</insert>
+
+<update id="updateCGoodsStock" parameterType="list">
+	<foreach collection="list" separator=";" item="cg">
+		update cgoods set number - #{cg.number,jdbcType=INTEGER} where id = #{cg.cgid,jdbcType=BIGINT}
+	</foreach>
+</update>
+</mapper>

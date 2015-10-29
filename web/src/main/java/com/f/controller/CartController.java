@@ -191,6 +191,7 @@ public class CartController {
 			User user = (User)uObj;
 			CartStr cs = cartsSer.selectCartStr(user.getId());
 			carts = new Carts(cs.getCartStr());
+			buyer.setUserId(user.getId());
 		}
 		Settlements settlements = new Settlements();
 		if(carts.getCartsSize() > 0){
