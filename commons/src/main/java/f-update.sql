@@ -57,7 +57,7 @@ alter table users modify column mobile varchar(20) comment '手机号';
 /**20151028 已执行*/
 ALTER TABLE uaddress ADD COLUMN isDef INT NOT NULL DEFAULT 0 COMMENT '默认收货地址';
 
-/**20151029 未执行*/
+/**20151029 已执行*/
 ALTER TABLE balancelog MODIFY COLUMN afterBalance DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '交易后余额';
 ALTER TABLE odetail MODIFY COLUMN buyPrice DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '购买价格';
 ALTER TABLE orders MODIFY COLUMN orderPrice DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '订单金额';
