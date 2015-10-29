@@ -7,7 +7,7 @@
       remark, createtime, merchantId, 
       brandId, descript)
     values (#{code,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, 
-      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, now(), #{merchantId,jdbcType=BIGINT}, 
       #{brandId,jdbcType=BIGINT}, #{descript,jdbcType=VARCHAR})
   </insert>
   
@@ -16,7 +16,7 @@
       price, mprice, state, createtime, photo, 
       photo1, photo2, photo3, photo4, sku, number, isDef)
     values (#{gid,jdbcType=BIGINT}, #{cgname,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+      #{price,jdbcType=DECIMAL}, #{mprice,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, now(),
       #{photo,jdbcType=VARCHAR}, #{photo1,jdbcType=VARCHAR}, #{photo2,jdbcType=VARCHAR}, #{photo3,jdbcType=VARCHAR}, 
       #{photo4,jdbcType=VARCHAR}, #{sku,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{isDef,jdbcType=INTEGER})
   </insert>
@@ -195,9 +195,6 @@
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        createtime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="brandId != null" >
         brandId = #{brandId,jdbcType=BIGINT},

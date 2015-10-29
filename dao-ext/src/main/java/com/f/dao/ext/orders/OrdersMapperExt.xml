@@ -15,7 +15,7 @@
       #{status,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{paidPrice,jdbcType=DECIMAL}, 
       #{payPrice,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, 
       #{balancePrice,jdbcType=DECIMAL}, #{isPaid,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
+      now(), #{merchantId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
       #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
       #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})

@@ -7,6 +7,7 @@ public class Buyer implements Serializable{
 	private static final long serialVersionUID = 2069627805942977079L;
 	private Long userId;
 	private Long curMerchantId;
+	private Integer payType;
 	private String payPassword;
 	private Integer provinceId;
 	private String provinceName;
@@ -112,6 +113,14 @@ public class Buyer implements Serializable{
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
 	}
 
 }

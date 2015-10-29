@@ -13,7 +13,7 @@
 	<insert id="insertUsers" parameterType="com.f.dto.users.Users" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		insert into users (username, password, mobile, createtime)
 	    values 
-	    (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP})
+	    (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, now())
 	</insert>
 	
 	<select id="selectMUsers" parameterType="map" resultType="com.f.dto.users.Users">
