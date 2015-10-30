@@ -2,8 +2,11 @@ package com.f.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +23,7 @@ import com.f.services.ICarts;
 import com.f.services.orders.IOrders;
 import com.f.services.settle.ISettle;
 
+import framework.web.ReqBo;
 import framework.web.ResBo;
 import framework.web.auth.Channel;
 import framework.web.session.ISession;
@@ -41,6 +45,10 @@ public class OrdersController {
 	@RequestMapping("commitOrders.htm")
 	@ResponseBody
 	public ResBo<?> commitOrders(@ModelAttribute Buyer buyer){
+		ResBo<?> valid = buyer.validate();
+		if(!valid.isSuccess()){
+			return valid;
+		}
 		User user  = (User)session.get(Constants.USERINFO);
 		buyer.setUserId(user.getId());
 		buyer.setChannel(Constants.M);
@@ -69,5 +77,13 @@ public class OrdersController {
 		ResBo<Settlements> resBo = new ResBo<Settlements>(123L,sb.toString());
 		resBo.setResult(settlements);
 		return resBo;
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("success.htm")
+	public String success(HttpServletRequest req,Model model){
+		ReqBo reqBo = new ReqBo(req);
+		model.addAttribute(reqBo.getParams());
+		return "orders/success";
 	}
 }

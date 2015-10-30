@@ -2,6 +2,8 @@ package com.f.cart;
 
 import java.io.Serializable;
 
+import framework.web.ResBo;
+
 public class Buyer implements Serializable{
 	
 	private static final long serialVersionUID = 2069627805942977079L;
@@ -132,4 +134,13 @@ public class Buyer implements Serializable{
 		this.channel = channel;
 	}
 
+	public ResBo<Boolean> validate(){
+		if(this.payType == null){
+			return new ResBo<Boolean>(134L);
+		}
+		if(this.provinceId == null||this.provinceName == null||this.cityId == null||this.cityName == null||this.areaId == null||this.areaName == null||this.remark == null||this.mobile == null||this.consignee == null){
+			return new ResBo<Boolean>(135L);
+		}
+		return new ResBo<Boolean>(true);
+	}
 }

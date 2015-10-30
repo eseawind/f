@@ -47,8 +47,8 @@ public class OrdersCom implements IOrdersCom{
 			orders.setIsPaid(EIsPaid.YES.getCode());
 			orders.setPaidPrice(settle.getOrderPrice());
 			orders.setPayPrice(BigDecimal.ZERO);
-			
 		}else{
+			orders.setBalancePrice(BigDecimal.ZERO);
 			orders.setIsPaid(EIsPaid.NO.getCode());
 			orders.setPaidPrice(BigDecimal.ZERO);
 			orders.setPayPrice(settle.getOrderPrice());

@@ -234,7 +234,14 @@ $(function(){
 			}
 			param.password = hex_md5(param.password);
 		}
-		console.log(param);
+		$.getJSON(f.dynUrl+"/orders/commitOrders.htm",param,function(d){
+			if(d.success){
+				window.location.href = f.staUrl + "/orders/success.htm?orderNum="+d.resOrders[0].orderNum+"&payPrice="+d.payPrice;
+			}else{
+				f.dialogAlert(d.errMsg);
+			}
+			
+		});
 	});
 	$.getJSON(f.dynUrl+"/cart/settle.htm",function(d){
 		if(d.success){
