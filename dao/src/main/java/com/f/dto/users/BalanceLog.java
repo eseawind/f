@@ -12,7 +12,7 @@ public class BalanceLog {
 
     private Integer platform;
 
-    private Integer money;
+    private BigDecimal money;
 
     private BigDecimal afterBalance;
 
@@ -54,11 +54,11 @@ public class BalanceLog {
         this.platform = platform;
     }
 
-    public Integer getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 

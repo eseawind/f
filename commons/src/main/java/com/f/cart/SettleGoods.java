@@ -19,6 +19,7 @@ public class SettleGoods implements Serializable, Cloneable{
 	private Long brandId;
 	private String code;
 	private Integer state;
+	private String sku;
 	
 	public Long getGid() {
 		return gid;
@@ -91,5 +92,11 @@ public class SettleGoods implements Serializable, Cloneable{
 	}
 	public void setState(Integer state) {
 		this.state = state;
+	}
+	public String getSku() {
+		return sku;
+	}
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
 }

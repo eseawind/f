@@ -21,10 +21,14 @@
       #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
 </insert>
 <insert id="insertOrderDetail" parameterType="list">
-	insert into odetail (orderId, goodsId, buyPrice, number) values 
+	insert into odetail (orderId, cgoodsId, buyPrice, number, sku) values 
     <foreach collection="list" open="(" separator="," close=")" item="od">
-    #{od.orderId,jdbcType=BIGINT}, #{od.goodsId,jdbcType=BIGINT}, #{od.buyPrice,jdbcType=DECIMAL}, #{od.number,jdbcType=INTEGER}
+    #{od.orderId,jdbcType=BIGINT}, #{od.cgoodsId,jdbcType=BIGINT}, #{od.buyPrice,jdbcType=DECIMAL}, #{od.number,jdbcType=INTEGER}, #{od.sku,jdbcType=VARCHAR} 
     </foreach>
+</insert>
+
+<insert id="insertOPayType" parameterType="com.f.dto.orders.OPayType">
+	insert into opaytype (orderId,code,name,createtime) values (#{orderId,jdbcType=BIGINT},#{code,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},now())
 </insert>
 
 <update id="updateCGoodsStock" parameterType="list">

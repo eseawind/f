@@ -27,7 +27,7 @@ import framework.web.session.ISession;
 @Controller
 @RequestMapping("orders")
 public class OrdersController {
-	
+
 	@Autowired
 	private ISession session;
 	@Autowired
@@ -43,6 +43,7 @@ public class OrdersController {
 	public ResBo<?> commitOrders(@ModelAttribute Buyer buyer){
 		User user  = (User)session.get(Constants.USERINFO);
 		buyer.setUserId(user.getId());
+		buyer.setChannel(Constants.M);
 		CartStr cs = cartsSer.selectCartStr(user.getId());
 		Carts carts = new Carts(cs.getCartStr());
 		Settlements settlements = new Settlements();

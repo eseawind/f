@@ -20,6 +20,8 @@ public class Users {
 
     private Date createtime;
 
+    private String ppassword;
+
     public Long getId() {
         return id;
     }
@@ -82,5 +84,13 @@ public class Users {
 
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
+    }
+
+    public String getPpassword() {
+        return ppassword;
+    }
+
+    public void setPpassword(String ppassword) {
+        this.ppassword = ppassword == null ? null : ppassword.trim();
     }
 }

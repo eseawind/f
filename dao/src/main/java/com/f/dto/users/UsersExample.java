@@ -615,6 +615,76 @@ public class UsersExample {
             addCriterion("createtime not between", value1, value2, "createtime");
             return (Criteria) this;
         }
+
+        public Criteria andPpasswordIsNull() {
+            addCriterion("ppassword is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordIsNotNull() {
+            addCriterion("ppassword is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordEqualTo(String value) {
+            addCriterion("ppassword =", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordNotEqualTo(String value) {
+            addCriterion("ppassword <>", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordGreaterThan(String value) {
+            addCriterion("ppassword >", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordGreaterThanOrEqualTo(String value) {
+            addCriterion("ppassword >=", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordLessThan(String value) {
+            addCriterion("ppassword <", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordLessThanOrEqualTo(String value) {
+            addCriterion("ppassword <=", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordLike(String value) {
+            addCriterion("ppassword like", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordNotLike(String value) {
+            addCriterion("ppassword not like", value, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordIn(List<String> values) {
+            addCriterion("ppassword in", values, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordNotIn(List<String> values) {
+            addCriterion("ppassword not in", values, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordBetween(String value1, String value2) {
+            addCriterion("ppassword between", value1, value2, "ppassword");
+            return (Criteria) this;
+        }
+
+        public Criteria andPpasswordNotBetween(String value1, String value2) {
+            addCriterion("ppassword not between", value1, value2, "ppassword");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

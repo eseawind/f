@@ -226,63 +226,63 @@ public class ODetailExample {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdIsNull() {
-            addCriterion("goodsId is null");
+        public Criteria andCgoodsIdIsNull() {
+            addCriterion("cgoodsId is null");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdIsNotNull() {
-            addCriterion("goodsId is not null");
+        public Criteria andCgoodsIdIsNotNull() {
+            addCriterion("cgoodsId is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdEqualTo(Long value) {
-            addCriterion("goodsId =", value, "goodsId");
+        public Criteria andCgoodsIdEqualTo(Long value) {
+            addCriterion("cgoodsId =", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotEqualTo(Long value) {
-            addCriterion("goodsId <>", value, "goodsId");
+        public Criteria andCgoodsIdNotEqualTo(Long value) {
+            addCriterion("cgoodsId <>", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThan(Long value) {
-            addCriterion("goodsId >", value, "goodsId");
+        public Criteria andCgoodsIdGreaterThan(Long value) {
+            addCriterion("cgoodsId >", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("goodsId >=", value, "goodsId");
+        public Criteria andCgoodsIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("cgoodsId >=", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThan(Long value) {
-            addCriterion("goodsId <", value, "goodsId");
+        public Criteria andCgoodsIdLessThan(Long value) {
+            addCriterion("cgoodsId <", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdLessThanOrEqualTo(Long value) {
-            addCriterion("goodsId <=", value, "goodsId");
+        public Criteria andCgoodsIdLessThanOrEqualTo(Long value) {
+            addCriterion("cgoodsId <=", value, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdIn(List<Long> values) {
-            addCriterion("goodsId in", values, "goodsId");
+        public Criteria andCgoodsIdIn(List<Long> values) {
+            addCriterion("cgoodsId in", values, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotIn(List<Long> values) {
-            addCriterion("goodsId not in", values, "goodsId");
+        public Criteria andCgoodsIdNotIn(List<Long> values) {
+            addCriterion("cgoodsId not in", values, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdBetween(Long value1, Long value2) {
-            addCriterion("goodsId between", value1, value2, "goodsId");
+        public Criteria andCgoodsIdBetween(Long value1, Long value2) {
+            addCriterion("cgoodsId between", value1, value2, "cgoodsId");
             return (Criteria) this;
         }
 
-        public Criteria andGoodsIdNotBetween(Long value1, Long value2) {
-            addCriterion("goodsId not between", value1, value2, "goodsId");
+        public Criteria andCgoodsIdNotBetween(Long value1, Long value2) {
+            addCriterion("cgoodsId not between", value1, value2, "cgoodsId");
             return (Criteria) this;
         }
 
@@ -643,6 +643,76 @@ public class ODetailExample {
 
         public Criteria andSendTimeNotBetween(Date value1, Date value2) {
             addCriterion("sendTime not between", value1, value2, "sendTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIsNull() {
+            addCriterion("sku is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIsNotNull() {
+            addCriterion("sku is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuEqualTo(String value) {
+            addCriterion("sku =", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotEqualTo(String value) {
+            addCriterion("sku <>", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuGreaterThan(String value) {
+            addCriterion("sku >", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuGreaterThanOrEqualTo(String value) {
+            addCriterion("sku >=", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLessThan(String value) {
+            addCriterion("sku <", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLessThanOrEqualTo(String value) {
+            addCriterion("sku <=", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuLike(String value) {
+            addCriterion("sku like", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotLike(String value) {
+            addCriterion("sku not like", value, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuIn(List<String> values) {
+            addCriterion("sku in", values, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotIn(List<String> values) {
+            addCriterion("sku not in", values, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuBetween(String value1, String value2) {
+            addCriterion("sku between", value1, value2, "sku");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuNotBetween(String value1, String value2) {
+            addCriterion("sku not between", value1, value2, "sku");
             return (Criteria) this;
         }
     }

@@ -35,4 +35,6 @@ public class DefaultIsLoginHandler implements IsLoginHandler{
 		return true;
 	}
 
+	
+
 }

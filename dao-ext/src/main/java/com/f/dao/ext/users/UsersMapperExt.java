@@ -1,7 +1,10 @@
 package com.f.dao.ext.users;
 
+import java.math.BigDecimal;
+
 import org.apache.ibatis.annotations.Param;
 
+import com.f.dto.users.BalanceLog;
 import com.f.dto.users.UAddress;
 import com.f.dto.users.Users;
 
@@ -20,5 +23,9 @@ public interface UsersMapperExt {
 	public int updateUAddress(UAddress ua);
 	
 	public int clearUAddressIsDef(long userId);
+	
+	public int updateBalance(@Param("userId")long userId,@Param("balance")BigDecimal balance);
+	
+	public int insertBalanceLog(BalanceLog log);
 	
 }

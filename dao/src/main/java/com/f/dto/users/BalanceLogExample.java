@@ -356,52 +356,52 @@ public class BalanceLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andMoneyEqualTo(Integer value) {
+        public Criteria andMoneyEqualTo(BigDecimal value) {
             addCriterion("money =", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotEqualTo(Integer value) {
+        public Criteria andMoneyNotEqualTo(BigDecimal value) {
             addCriterion("money <>", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyGreaterThan(Integer value) {
+        public Criteria andMoneyGreaterThan(BigDecimal value) {
             addCriterion("money >", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyGreaterThanOrEqualTo(Integer value) {
+        public Criteria andMoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("money >=", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyLessThan(Integer value) {
+        public Criteria andMoneyLessThan(BigDecimal value) {
             addCriterion("money <", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyLessThanOrEqualTo(Integer value) {
+        public Criteria andMoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("money <=", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyIn(List<Integer> values) {
+        public Criteria andMoneyIn(List<BigDecimal> values) {
             addCriterion("money in", values, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotIn(List<Integer> values) {
+        public Criteria andMoneyNotIn(List<BigDecimal> values) {
             addCriterion("money not in", values, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyBetween(Integer value1, Integer value2) {
+        public Criteria andMoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("money between", value1, value2, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotBetween(Integer value1, Integer value2) {
+        public Criteria andMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("money not between", value1, value2, "money");
             return (Criteria) this;
         }

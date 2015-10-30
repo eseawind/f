@@ -67,4 +67,16 @@
 	<update id="clearUAddressIsDef" parameterType="long">
 		update uaddress set isDef = 0 where userId = #{value,jdbcType=BIGINT}
 	</update>
+	
+	<update id="updateBalance" parameterType="map">
+		update users set balance = balance + #{balance,jdbcType=DECIMAL} where id = #{userId,jdbcType=BIGINT} and balance + #{balance,jdbcType=DECIMAL} <![CDATA[ > ]]> 0
+	</update>
+	
+	<insert id="insertBalanceLog" parameterType="com.f.dto.users.BalanceLog">
+		insert into balancelog (userId, type, platform, money, afterBalance, operName, createtime, remark)
+	    values (#{userId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+	      #{platform,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL}, #{afterBalance,jdbcType=DECIMAL}, 
+	      #{operName,jdbcType=VARCHAR}, now(), #{remark,jdbcType=VARCHAR}
+	      )
+	</insert>
 </mapper>

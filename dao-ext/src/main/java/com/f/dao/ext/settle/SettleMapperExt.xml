@@ -4,7 +4,7 @@
 
 <select id="selectSSettleGoods" parameterType="map" resultType="com.f.cart.SSettleGoods">
 	select cg.id as cgid,g.id as gid,cg.number as stockNum,cg.price,cg.photo,g.gname,cg.cgname,g.merchantId,
-		   m.name as merchantName,g.brandId,g.code,cg.state
+		   m.name as merchantName,g.brandId,g.code,cg.state,cg.sku
 	from cgoods cg left join goods g on cg.gid = g.id
 	left join merchant m on g.merchantId = m.id
 	where g.merchantId = #{merchantId,jdbcType=BIGINT}

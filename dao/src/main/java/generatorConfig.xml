@@ -32,10 +32,9 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         
-		 <table tableName="uaddress" domainObjectName="UAddress" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
+        <table tableName="balancelog" domainObjectName="BalanceLog" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>
        	 </table>
-       	      	 
        	 <!-- commons -->
        	 <!-- <table tableName="area" domainObjectName="Area" enableDeleteByExample="false" enableDeleteByPrimaryKey="false">
        		<property name="useActualColumnNames" value="true"/>

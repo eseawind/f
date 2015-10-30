@@ -1,5 +1,6 @@
 package com.f.services.users.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -12,6 +13,7 @@ import com.f.dao.users.HUsersMapper;
 import com.f.dao.users.MerchantMapper;
 import com.f.dao.users.UAddressMapper;
 import com.f.dao.users.UsersMapper;
+import com.f.dto.users.BalanceLog;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.HUsersExample;
 import com.f.dto.users.Merchant;
@@ -141,6 +143,18 @@ public class UsersSer implements IUsers{
 		}
 		if(i != 1){
 			throw new BusinessException(121L);
+		}
+	}
+
+	@Override
+	public void updateMUsersBalance(long userId, BigDecimal balance, BalanceLog log) {
+		int i = uext.updateBalance(userId, balance);
+		if(i != 1){
+			throw new BusinessException(132L);
+		}
+		i = uext.insertBalanceLog(log);
+		if(i != 1){
+			throw new BusinessException(133L);
 		}
 	}
 

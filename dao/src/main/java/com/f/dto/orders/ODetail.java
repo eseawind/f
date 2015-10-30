@@ -8,7 +8,7 @@ public class ODetail {
 
     private Long orderId;
 
-    private Long goodsId;
+    private Long cgoodsId;
 
     private BigDecimal buyPrice;
 
@@ -21,6 +21,8 @@ public class ODetail {
     private Date deliveryTime;
 
     private Date sendTime;
+
+    private String sku;
 
     public Long getId() {
         return id;
@@ -38,12 +40,12 @@ public class ODetail {
         this.orderId = orderId;
     }
 
-    public Long getGoodsId() {
-        return goodsId;
+    public Long getCgoodsId() {
+        return cgoodsId;
     }
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
+    public void setCgoodsId(Long cgoodsId) {
+        this.cgoodsId = cgoodsId;
     }
 
     public BigDecimal getBuyPrice() {
@@ -92,5 +94,13 @@ public class ODetail {
 
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku == null ? null : sku.trim();
     }
 }

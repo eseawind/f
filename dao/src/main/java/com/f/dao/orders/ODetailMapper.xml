@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.f.dto.orders.ODetail" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="orderId" property="orderId" jdbcType="BIGINT" />
-    <result column="goodsId" property="goodsId" jdbcType="BIGINT" />
+    <result column="cgoodsId" property="cgoodsId" jdbcType="BIGINT" />
     <result column="buyPrice" property="buyPrice" jdbcType="DECIMAL" />
     <result column="number" property="number" jdbcType="INTEGER" />
     <result column="isDelivery" property="isDelivery" jdbcType="INTEGER" />
     <result column="isSend" property="isSend" jdbcType="INTEGER" />
     <result column="deliveryTime" property="deliveryTime" jdbcType="TIMESTAMP" />
     <result column="sendTime" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="sku" property="sku" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, orderId, goodsId, buyPrice, number, isDelivery, isSend, deliveryTime, sendTime
+    id, orderId, cgoodsId, buyPrice, number, isDelivery, isSend, deliveryTime, sendTime, 
+    sku
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.orders.ODetailExample" >
     select
@@ -94,14 +96,14 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <insert id="insert" parameterType="com.f.dto.orders.ODetail" >
-    insert into odetail (id, orderId, goodsId, 
+    insert into odetail (id, orderId, cgoodsId, 
       buyPrice, number, isDelivery, 
-      isSend, deliveryTime, sendTime
-      )
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      isSend, deliveryTime, sendTime, 
+      sku)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{cgoodsId,jdbcType=BIGINT}, 
       #{buyPrice,jdbcType=DECIMAL}, #{number,jdbcType=INTEGER}, #{isDelivery,jdbcType=INTEGER}, 
-      #{isSend,jdbcType=INTEGER}, #{deliveryTime,jdbcType=TIMESTAMP}, #{sendTime,jdbcType=TIMESTAMP}
-      )
+      #{isSend,jdbcType=INTEGER}, #{deliveryTime,jdbcType=TIMESTAMP}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{sku,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.orders.ODetail" >
     insert into odetail
@@ -112,8 +114,8 @@
       <if test="orderId != null" >
         orderId,
       </if>
-      <if test="goodsId != null" >
-        goodsId,
+      <if test="cgoodsId != null" >
+        cgoodsId,
       </if>
       <if test="buyPrice != null" >
         buyPrice,
@@ -133,6 +135,9 @@
       <if test="sendTime != null" >
         sendTime,
       </if>
+      <if test="sku != null" >
+        sku,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -141,8 +146,8 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=BIGINT},
       </if>
-      <if test="goodsId != null" >
-        #{goodsId,jdbcType=BIGINT},
+      <if test="cgoodsId != null" >
+        #{cgoodsId,jdbcType=BIGINT},
       </if>
       <if test="buyPrice != null" >
         #{buyPrice,jdbcType=DECIMAL},
@@ -162,6 +167,9 @@
       <if test="sendTime != null" >
         #{sendTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="sku != null" >
+        #{sku,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.f.dto.orders.ODetailExample" resultType="java.lang.Integer" >
@@ -179,8 +187,8 @@
       <if test="record.orderId != null" >
         orderId = #{record.orderId,jdbcType=BIGINT},
       </if>
-      <if test="record.goodsId != null" >
-        goodsId = #{record.goodsId,jdbcType=BIGINT},
+      <if test="record.cgoodsId != null" >
+        cgoodsId = #{record.cgoodsId,jdbcType=BIGINT},
       </if>
       <if test="record.buyPrice != null" >
         buyPrice = #{record.buyPrice,jdbcType=DECIMAL},
@@ -200,6 +208,9 @@
       <if test="record.sendTime != null" >
         sendTime = #{record.sendTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.sku != null" >
+        sku = #{record.sku,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,13 +220,14 @@
     update odetail
     set id = #{record.id,jdbcType=BIGINT},
       orderId = #{record.orderId,jdbcType=BIGINT},
-      goodsId = #{record.goodsId,jdbcType=BIGINT},
+      cgoodsId = #{record.cgoodsId,jdbcType=BIGINT},
       buyPrice = #{record.buyPrice,jdbcType=DECIMAL},
       number = #{record.number,jdbcType=INTEGER},
       isDelivery = #{record.isDelivery,jdbcType=INTEGER},
       isSend = #{record.isSend,jdbcType=INTEGER},
       deliveryTime = #{record.deliveryTime,jdbcType=TIMESTAMP},
-      sendTime = #{record.sendTime,jdbcType=TIMESTAMP}
+      sendTime = #{record.sendTime,jdbcType=TIMESTAMP},
+      sku = #{record.sku,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -226,8 +238,8 @@
       <if test="orderId != null" >
         orderId = #{orderId,jdbcType=BIGINT},
       </if>
-      <if test="goodsId != null" >
-        goodsId = #{goodsId,jdbcType=BIGINT},
+      <if test="cgoodsId != null" >
+        cgoodsId = #{cgoodsId,jdbcType=BIGINT},
       </if>
       <if test="buyPrice != null" >
         buyPrice = #{buyPrice,jdbcType=DECIMAL},
@@ -247,19 +259,23 @@
       <if test="sendTime != null" >
         sendTime = #{sendTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="sku != null" >
+        sku = #{sku,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.f.dto.orders.ODetail" >
     update odetail
     set orderId = #{orderId,jdbcType=BIGINT},
-      goodsId = #{goodsId,jdbcType=BIGINT},
+      cgoodsId = #{cgoodsId,jdbcType=BIGINT},
       buyPrice = #{buyPrice,jdbcType=DECIMAL},
       number = #{number,jdbcType=INTEGER},
       isDelivery = #{isDelivery,jdbcType=INTEGER},
       isSend = #{isSend,jdbcType=INTEGER},
       deliveryTime = #{deliveryTime,jdbcType=TIMESTAMP},
-      sendTime = #{sendTime,jdbcType=TIMESTAMP}
+      sendTime = #{sendTime,jdbcType=TIMESTAMP},
+      sku = #{sku,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

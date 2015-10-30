@@ -1,7 +1,9 @@
 package com.f.services.users;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import com.f.dto.users.BalanceLog;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
 import com.f.dto.users.UAddress;
@@ -27,5 +29,7 @@ public interface IUsers {
 	public List<UAddress> selectMUsersAddress(long userId);
 	//m用户修改收货地址
 	public void insertOrUpdateMUsersAddress(UAddress uaddress);
+	
+	public void updateMUsersBalance(long userId,BigDecimal balance,BalanceLog log);
 
 }
