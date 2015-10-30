@@ -16,5 +16,6 @@
 <script src="${staUrl }/js/f.input.js"></script>
 <script src="${staUrl }/js/f.form.js"></script>
 <script src="${staUrl }/js/f.js"></script>
+<script src="${staUrl }/js/area.js"></script>
 <script src="${staUrl }/js/mf.js"></script>
 

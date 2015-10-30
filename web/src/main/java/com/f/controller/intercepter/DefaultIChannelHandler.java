@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.f.commons.Constants;
+import com.f.commons.UType;
 import com.f.commons.User;
 
 import framework.exception.BusinessException;
@@ -23,7 +24,8 @@ public class DefaultIChannelHandler implements IChannelHandler{
 		Object uObj = session.get(Constants.USERINFO);
 		if(uObj instanceof User){
 			User user = (User) uObj;
-			switch(user.getUType()){
+			UType utype = user.getUType();
+			switch(utype){
 			case users: return isExist(values,Constants.M);
 			case merchant: return isExist(values,Constants.B);
 			case husers: return isExist(values,Constants.H);

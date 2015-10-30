@@ -212,6 +212,9 @@ $(function(){
 		param.provinceId = address.provinceId;
 		param.cityId = address.cityId;
 		param.areaId = address.areaId;
+		param.provinceName = f.area_map[param.provinceId];
+		param.cityName = f.area_map[param.cityId];
+		param.areaName = f.area_map[param.areaId];
 		param.remark = address.remark;
 		param.mobile = address.mobile;
 		param.consignee = address.consignee;
@@ -234,14 +237,14 @@ $(function(){
 			}
 			param.password = hex_md5(param.password);
 		}
-		$.getJSON(f.dynUrl+"/orders/commitOrders.htm",param,function(d){
+		$.post(f.dynUrl+"/orders/commitOrders.htm",param,function(d){
 			if(d.success){
-				window.location.href = f.staUrl + "/orders/success.htm?orderNum="+d.resOrders[0].orderNum+"&payPrice="+d.payPrice;
+				window.location.href = f.staUrl + "/orders/success.htm?orderNum="+d.result.resOrders[0].orderNum+"&payPrice="+d.result.payPrice;
 			}else{
 				f.dialogAlert(d.errMsg);
 			}
 			
-		});
+		},"json");
 	});
 	$.getJSON(f.dynUrl+"/cart/settle.htm",function(d){
 		if(d.success){

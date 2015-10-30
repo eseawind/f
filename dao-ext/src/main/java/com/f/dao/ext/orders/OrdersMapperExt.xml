@@ -33,7 +33,7 @@
 
 <update id="updateCGoodsStock" parameterType="list">
 	<foreach collection="list" separator=";" item="cg">
-		update cgoods set number - #{cg.number,jdbcType=INTEGER} where id = #{cg.cgid,jdbcType=BIGINT}
+		update cgoods set number = number - #{cg.number,jdbcType=INTEGER} where id = #{cg.cgid,jdbcType=BIGINT}
 	</foreach>
 </update>
 </mapper>
