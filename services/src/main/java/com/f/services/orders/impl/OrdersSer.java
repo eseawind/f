@@ -1,6 +1,9 @@
 package com.f.services.orders.impl;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,9 @@ import com.f.cart.Settlement;
 import com.f.cart.Settlements;
 import com.f.commons.EPayType;
 import com.f.component.orders.IOrdersCom;
+import com.f.dao.ext.orders.OrdersMapperExt;
+import com.f.dao.orders.OrdersMapper;
+import com.f.dto.orders.Orders;
 import com.f.dto.users.BalanceLog;
 import com.f.dto.users.Users;
 import com.f.orders.ResOrders;
@@ -18,6 +24,7 @@ import com.f.services.orders.IOrders;
 import com.f.services.users.IUsers;
 
 import framework.exception.BusinessException;
+import framework.web.Pager;
 
 @Service
 public class OrdersSer implements IOrders{
@@ -26,6 +33,11 @@ public class OrdersSer implements IOrders{
 	private IUsers usersSer;
 	@Autowired
 	private IOrdersCom ordersCom;
+	
+	@Autowired
+	private OrdersMapperExt oext;
+	@Autowired
+	private OrdersMapper omapper;
 
 	@Override
 	public ResOrders insertCommitOrders(Buyer buyer, Settlements settlements) {
@@ -62,6 +74,26 @@ public class OrdersSer implements IOrders{
 		}
 		ordersCom.updateStockByOrders(settlements);
 		return resOrders;
+	}
+
+	@Override
+	public Pager<List<Map<String, Object>>> selectOrders(Long userId,
+			Long merchantId, String orderNum, Integer isPaid, Integer state,
+			Integer status, int page, int rows) {
+		List<Map<String,Object>> list = oext.selectOrders(userId, merchantId, orderNum, isPaid, state, status, (page-1)*rows, rows);
+		long count = oext.countOrders(userId, merchantId, orderNum, isPaid, state, status);
+		return new Pager<List<Map<String,Object>>>(list,count);
+	}
+
+	@Override
+	public Map<String, Object> selectODetail(long orderId, Long userId,
+			Long merchantId) {
+		Map<String, Object> map = new HashMap<String, Object>(2);
+		Orders orders = omapper.selectByPrimaryKey(orderId);
+		List<Map<String,Object>> list = oext.selectODetail(orderId, userId, merchantId);
+		map.put("order", orders);
+		map.put("ods", list);
+		return map;
 	}
 
 }

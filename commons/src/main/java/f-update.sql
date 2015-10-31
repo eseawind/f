@@ -72,3 +72,9 @@ ALTER TABLE odetail CHANGE goodsId cgoodsId BIGINT NOT NULL COMMENT '商品规�
 ALTER TABLE odetail ADD COLUMN sku VARCHAR(32) NULL COMMENT 'sku';
 ALTER TABLE users ADD COLUMN ppassword VARCHAR(50) NULL COMMENT '支付密码';
 ALTER TABLE balancelog MODIFY COLUMN money DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT '交易金额';
+
+/** 20151031 未执行*/
+ALTER TABLE odetail DROP COLUMN isSend;
+ALTER TABLE odetail DROP COLUMN isDelivery;
+ALTER TABLE odetail DROP COLUMN deliveryTime;
+ALTER TABLE odetail DROP COLUMN sendTime;

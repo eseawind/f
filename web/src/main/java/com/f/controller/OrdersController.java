@@ -1,5 +1,6 @@
 package com.f.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.f.cart.Buyer;
@@ -23,6 +25,7 @@ import com.f.services.ICarts;
 import com.f.services.orders.IOrders;
 import com.f.services.settle.ISettle;
 
+import framework.web.Pager;
 import framework.web.ReqBo;
 import framework.web.ResBo;
 import framework.web.auth.Channel;
@@ -86,4 +89,22 @@ public class OrdersController {
 		model.addAttribute(reqBo.getParams());
 		return "orders/success";
 	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("mdetail.htm")
+	@ResponseBody
+	public ResBo<Map<String, Object>> detail(@RequestParam("orderId")long orderId){
+		User user  = (User)session.get(Constants.USERINFO);
+		return new ResBo<Map<String,Object>>(orderSer.selectODetail(orderId, user.getId(), null));
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("mlist.htm")
+	@ResponseBody
+	public ResBo<Pager<List<Map<String,Object>>>> mlist(HttpServletRequest req){
+		ReqBo reqBo = new ReqBo(req);
+		User user  = (User)session.get(Constants.USERINFO);
+		return new ResBo<Pager<List<Map<String,Object>>>>(orderSer.selectOrders(user.getId(), null, null, reqBo.getParamInt("isPaid"), reqBo.getParamInt("state"), reqBo.getParamInt("status"), reqBo.getParamInt("page"), reqBo.getParamInt("rows")));
+	}
+	
 }

@@ -19,7 +19,7 @@
 	</div>
 </div>
 <ul class="list-group">
-	<li class="list-group-item"><a href="#">我的订单</a></li>
+	<li class="list-group-item"><a href="${staUrl }/page/orders/list.htm">我的订单</a></li>
 	<li class="list-group-item"><a href="#">我的钱包</a></li>
 	<li class="list-group-item"><a href="${staUrl }/page/user/maddress.htm">收货地址管理</a></li>
 	<li class="list-group-item"><a href="#">我的关注</a></li>
