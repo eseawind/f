@@ -15,6 +15,7 @@
 <div id="container">
 	
 </div>
+<button id="mostBtn" class="btn btn-default btn-block">加载更多数据</button>
 <script type="text/tmpl" id="tmpl">
 	<div class="form panel panel-default">
 		<div class="panel-body">
@@ -70,7 +71,8 @@ $(function(){
 	var container = $("#container");
 	var tabs = $("#tabs");
 	var page = 1;
-	var rows = 10;
+	var rows = 1;
+	var curType = 1;
 	tabs.children("li").each(function(){
 		var li = $(this);
 		li.click(function(){
@@ -78,22 +80,36 @@ $(function(){
 			li.addClass("active");
 		});
 	});
+	var mostBtn = $("#mostBtn").click(function(){
+		page ++;
+		loadData();
+	});
 	orderFun = function(type){
 		page = 1;
+		mostBtn.show();
+		curType = type;
+		loadData(true);
+	}
+	function loadData(clear){
 		var param = {}
 		param.page = page;
 		param.rows = rows;
-		switch(type){
+		switch(curType){
 		case 1:param.isPaid = 1;param.state = 1;break;
 		case 2:param.isPaid = 2;param.state = 1;break;
 		}		
 		$.getJSON(f.dynUrl+"/orders/mlist.htm", param, function(d){
 			if(d.success){
-				container.empty();
+				if(clear){
+					container.empty();
+				}
 				$.each(d.result.entry, function(i,obj){
 					obj.dyn = f.dyn;
 					container.append($("#tmpl").tmpl(obj));
 				});
+				if(page*rows >= d.result.total){
+					mostBtn.hide();
+				}
 			}else{
 				f.dialogAlert(d.errMsg);
 			}
