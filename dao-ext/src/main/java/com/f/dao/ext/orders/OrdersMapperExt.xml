@@ -43,6 +43,9 @@
     o.provinceName, o.cityName, o.areaName, o.remark, o.consignee, o.mobile
 	from orders o
 	<where>
+		<if test="orderNum != null">
+			and o.orderNum = #{orderNum,jdbcType=VARCHAR}
+		</if>
 		<if test="userId != null">
 			and o.userId = #{userId,jdbcType=BIGINT}
 		</if>
@@ -57,6 +60,11 @@
 		</if>
 		<if test="status != null">
 			and o.status = #{status,jdbcType=INTEGER}
+		</if>
+		<if test="sdate != null">
+			<if test="edate != null">
+				and o.createtime between #{sdate,jdbcType=TIMESTAMP} and #{edate,jdbcType=TIMESTAMP}
+			</if>
 		</if>
 	</where>
 	order by o.id desc
@@ -67,6 +75,9 @@
 	select count(1)
 	from orders o
 	<where>
+		<if test="orderNum != null">
+			and o.orderNum = #{orderNum,jdbcType=VARCHAR}
+		</if>
 		<if test="userId != null">
 			and o.userId = #{userId,jdbcType=BIGINT}
 		</if>
@@ -82,13 +93,25 @@
 		<if test="status != null">
 			and o.status = #{status,jdbcType=INTEGER}
 		</if>
+		<if test="sdate != null">
+			<if test="edate != null">
+				and o.createtime between #{sdate,jdbcType=TIMESTAMP} and #{edate,jdbcType=TIMESTAMP}
+			</if>
+		</if>
 	</where>
 </select>
 
-<select id="selectODetail" parameterType="map" resultType="long">
-	select od.id, od.orderId, od.cgoodsId, od.buyPrice, od.number, od.sku
-	from odetail od left join cgoods cg on od.cgoodsId = cg.id
+<select id="selectODetail" parameterType="map" resultType="map">
+	select od.id, od.orderId, od.cgoodsId, od.buyPrice, od.number, od.sku, g.gname, cg.cgname, cg.photo
+	from odetail od left join orders o on od.orderId = o.id 
+	left join cgoods cg on od.cgoodsId = cg.id
 	left join goods g on cg.gid = g.id
-	where od.orderId = #{orderId,jdbcType=BIGINT}
+	where od.orderId = #{orderId,jdbcType=BIGINT} 
+	<if test="userId != null">
+		and o.userId = #{userId,jdbcType=BIGINT}
+	</if> 
+	<if test="merchantId != null">
+		and o.merchantId = #{merchantId,jdbcType=BIGINT}
+	</if>
 </select>
 </mapper>

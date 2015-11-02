@@ -1,6 +1,7 @@
 package com.f.services.orders.impl;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,9 +80,9 @@ public class OrdersSer implements IOrders{
 	@Override
 	public Pager<List<Map<String, Object>>> selectOrders(Long userId,
 			Long merchantId, String orderNum, Integer isPaid, Integer state,
-			Integer status, int page, int rows) {
-		List<Map<String,Object>> list = oext.selectOrders(userId, merchantId, orderNum, isPaid, state, status, (page-1)*rows, rows);
-		long count = oext.countOrders(userId, merchantId, orderNum, isPaid, state, status);
+			Integer status,Date sdate,Date edate, int page, int rows) {
+		List<Map<String,Object>> list = oext.selectOrders(userId, merchantId, orderNum, isPaid, state, status,sdate, edate, (page-1)*rows, rows);
+		long count = oext.countOrders(userId, merchantId, orderNum, isPaid, state, status, sdate, edate);
 		return new Pager<List<Map<String,Object>>>(list,count);
 	}
 

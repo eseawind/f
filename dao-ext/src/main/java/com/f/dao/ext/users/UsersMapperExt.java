@@ -18,6 +18,8 @@ public interface UsersMapperExt {
 	
 	public Users selectMUsers(@Param("username")String username,@Param("mobile")String mobile,@Param("password")String password);
 	
+	public Users selectMUsersByMap(@Param("username")String username,@Param("mobile")String mobile);
+	
 	public int insertUAddress(UAddress ua);
 	
 	public int updateUAddress(UAddress ua);

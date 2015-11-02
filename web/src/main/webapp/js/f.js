@@ -134,6 +134,23 @@
 		return o;
 	}
 	
+	f.parseUrlParam = function(url){
+		var param = {};
+		var arr = url.split("?");
+		if(arr.length == 1){
+			return param;
+		}
+		arr = arr[1];
+		arr = arr.split("&");
+		$.each(arr,function(i,kv){
+			kv = kv.split("=");
+			if(kv.length == 2){
+				param[kv[0]] = kv[1];
+			}
+		});
+		return param;
+	}
+	
 	$.fn.f_showTip = function(message){
 		var obj = this;
 		obj.popover({

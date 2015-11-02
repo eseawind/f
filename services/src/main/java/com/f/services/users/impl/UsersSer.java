@@ -158,4 +158,9 @@ public class UsersSer implements IUsers{
 		}
 	}
 
+	@Override
+	public Users selectMUsersByMap(String username, String mobile) {
+		return uext.selectMUsersByMap(username, mobile);
+	}
+
 }

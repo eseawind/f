@@ -24,6 +24,8 @@ public interface IUsers {
 	
 	public Users selectMUsers(String username,String password);
 	
+	public Users selectMUsersByMap(String username, String mobile);
+	
 	public Users selectMUsers(long userId);
 	
 	public List<UAddress> selectMUsersAddress(long userId);
@@ -31,5 +33,5 @@ public interface IUsers {
 	public void insertOrUpdateMUsersAddress(UAddress uaddress);
 	
 	public void updateMUsersBalance(long userId,BigDecimal balance,BalanceLog log);
-
+	
 }

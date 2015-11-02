@@ -28,6 +28,19 @@
 		</if>
 	</select>
 	
+	<select id="selectMUsersByMap" parameterType="map" resultType="com.f.dto.users.Users">
+		select id, username, password, mobile, balance, grade, createtime
+		from users
+		<where> 
+			<if test="username != null">
+				and username = #{username,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				and mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
 	<insert id="insertUAddress" parameterType="com.f.dto.users.UAddress">
 		insert into uaddress 
 		(userId, provinceId, cityId, areaId, remark, mobile, consignee, isDef)

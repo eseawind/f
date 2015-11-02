@@ -58,7 +58,7 @@
 					{{if isPaid==1}}
 					<a href="javascript:void(0)" class="btn btn-danger">去支付</a>&nbsp;&nbsp;
 					{{/if}}						
-					<a href="{{= dynUrl}}/page/orders/detail.htm?orderId={{= id}}">订单明细 &gt;&gt;</a>
+					<a href="{{= dynUrl}}/page/orders/mdetail.htm?orderId={{= id}}">订单明细 &gt;&gt;</a>
 				</div>
 			</div>
 		</div>

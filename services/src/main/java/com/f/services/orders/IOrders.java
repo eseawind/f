@@ -1,5 +1,6 @@
 package com.f.services.orders;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public interface IOrders {
 	 * 查询订单
 	 * 
 	 * */
-	public Pager<List<Map<String,Object>>> selectOrders(Long userId,Long merchantId,String orderNum,Integer isPaid,Integer state,Integer status, int page, int rows);
+	public Pager<List<Map<String,Object>>> selectOrders(Long userId,Long merchantId,String orderNum,Integer isPaid,Integer state,Integer status,Date sdate,Date edate, int page, int rows);
 	
 	/**
 	 * 根据订单号查询详情
