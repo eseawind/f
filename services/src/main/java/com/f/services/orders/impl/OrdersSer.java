@@ -112,4 +112,18 @@ public class OrdersSer implements IOrders{
 		return map;
 	}
 
+	@Override
+	public void updateOrders(long orderId, Long userId, Long merchantId,
+			Integer state, Integer status, Integer isPaid) {
+		
+		
+	}
+
+	@Override
+	public void updateOrdersBatch(List<Long> orderIds, Long userId,
+			Long merchantId, Integer state, Integer status, Integer isPaid) {
+		
+		
+	}
+
 }

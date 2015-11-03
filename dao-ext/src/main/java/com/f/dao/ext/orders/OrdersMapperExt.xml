@@ -125,4 +125,51 @@
 		and o.merchantId = #{merchantId,jdbcType=BIGINT}
 	</if>
 </select>
+
+<update id="updateOrders" parameterType="map">
+	update orders
+	<set>
+		<if test="state != null">
+			state = #{state,jdbcType=INTEGER},
+		</if>
+		<if test="status != null">
+			status = #{status,jdbcType=INTEGER},
+		</if>
+		<if test="isPaid != null">
+			isPaid = #{isPaid,jdbcType=INTEGER},
+		</if>
+	</set>
+	where id = #{orderId,jdbcType=BIGINT}
+	<if test="userId != null">
+		and userId = #{userId,jdbcType=BIGINT}
+	</if>
+	<if test="merchantId != null">
+		and merchantId = #{merchantId,jdbcType=BIGINT}
+	</if>
+</update>
+
+<update id="updateOrdersBatch" parameterType="map">
+	update orders
+	<set>
+		<if test="state != null">
+			state = #{state,jdbcType=INTEGER},
+		</if>
+		<if test="status != null">
+			status = #{status,jdbcType=INTEGER},
+		</if>
+		<if test="isPaid != null">
+			isPaid = #{isPaid,jdbcType=INTEGER},
+		</if>
+	</set>
+	where id in
+	<foreach collection="os" item="orderId" open="(" separator="," close=")">
+		#{orderId,jdbcType=BIGINT}
+	</foreach>
+	<if test="userId != null">
+		and userId = #{userId,jdbcType=BIGINT}
+	</if>
+	<if test="merchantId != null">
+		and merchantId = #{merchantId,jdbcType=BIGINT}
+	</if>
+</update>
 </mapper>

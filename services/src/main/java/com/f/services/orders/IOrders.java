@@ -27,4 +27,14 @@ public interface IOrders {
 	 * 根据订单号查询详情
 	 * */
 	public Map<String,Object> selectODetail(long orderId,Long userId,Long merchantId);
+	
+	/**
+	 * 修改订单状态
+	 * */
+	public void updateOrders(long orderId,Long userId,Long merchantId,Integer state,Integer status,Integer isPaid);
+	
+	/**
+	 * 批量修改订单状态
+	 * */
+	public void updateOrdersBatch(List<Long> orderIds,Long userId,Long merchantId,Integer state,Integer status,Integer isPaid);
 }

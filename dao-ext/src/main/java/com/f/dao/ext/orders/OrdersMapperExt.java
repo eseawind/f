@@ -34,10 +34,18 @@ public interface OrdersMapperExt {
 			@Param("isPaid") Integer isPaid, @Param("state") Integer state,
 			@Param("status") Integer status, @Param("sdate") Date sdate,
 			@Param("edate") Date edate);
-	
-	public List<Map<String,Object>> selectODetailByOrderIds(List<Long> orderIds);
+
+	public List<Map<String, Object>> selectODetailByOrderIds(List<Long> orderIds);
 
 	public List<Map<String, Object>> selectODetail(
 			@Param("orderId") long orderId, @Param("userId") Long userId,
 			@Param("merchantId") Long merchantId);
+
+	public int updateOrders(@Param("orderId") long orderId,
+			@Param("userId") Long userId,@Param("merchantId") Long merchantId,@Param("state") Integer state,
+			@Param("status")Integer status,@Param("isPaid") Integer isPaid);
+	
+	public int updateOrdersBatch(@Param("os") List<Long> orderIds,
+			@Param("userId") Long userId,@Param("merchantId") Long merchantId,@Param("state") Integer state,
+			@Param("status")Integer status,@Param("isPaid") Integer isPaid);
 }

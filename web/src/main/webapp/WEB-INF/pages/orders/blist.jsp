@@ -28,13 +28,13 @@
 <hr/>
 <div class="row">
 	<div class="btn-group col-md-10">
-		<button class="btn btn-default">全部订单</button>
-		<button class="btn btn-default">未付款</button>
-		<button class="btn btn-default">待出库</button>
-		<button class="btn btn-default">已发库</button>
-		<button class="btn btn-default">买家已收货</button>
-		<button class="btn btn-default">已取消</button>
-		<button class="btn btn-default">退换货订单</button>
+		<button class="btn btn-default" onclick="conditionFun()">全部订单</button>
+		<button class="btn btn-default" onclick="conditionFun(1,null,1)">未付款</button>
+		<button class="btn btn-default" onclick="conditionFun(1,2,2)">待出库</button>
+		<button class="btn btn-default" onclick="conditionFun(1,4,null)">已出库</button>
+		<button class="btn btn-default" onclick="conditionFun(1,5,null)">买家已收货</button>
+		<button class="btn btn-default" onclick="conditionFun(2,null,null)">已取消</button>
+		<button class="btn btn-default" onclick="conditionFun(1,6,null)">退换货订单</button>
 	</div>
 	<div class="btn-group col-md-2">
 		<button class="btn btn-default"><i class="icon-signout"></i>批量导出</button>
@@ -78,7 +78,7 @@
 	<td>
 		<img style="width:80px;height:80px;float:left" src="{{= imgUrl}}{{= od.photo}}">
 		<div>
-		&nbsp;&nbsp;名称：<a href="{{= dynUrl}}/goods/detail/{{= od.cgoodsId}}.htm">{{= od.gname}}</a><br/>
+		&nbsp;&nbsp;名称：<a href="{{= dynUrl}}/goods/detail/{{= od.cgoodsId}}.htm" target="_blank">{{= od.gname}}</a><br/>
 		&nbsp;&nbsp;规格：{{= od.cgname}}
 		</div>
 	</td>
@@ -140,6 +140,10 @@ $(function(){
 			loadData();
 		}
 	});
+	window.conditionFun = function(state,status,isPaid){
+		page = 1;
+		loadData(state,status,isPaid);
+	}
 	var page = 1;
 	var rows = 10;
 	function loadData(state,status,isPaid){
