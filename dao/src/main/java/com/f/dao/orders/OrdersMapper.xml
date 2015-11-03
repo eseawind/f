@@ -9,6 +9,7 @@
     <result column="orderPrice" property="orderPrice" jdbcType="DECIMAL" />
     <result column="paidPrice" property="paidPrice" jdbcType="DECIMAL" />
     <result column="payPrice" property="payPrice" jdbcType="DECIMAL" />
+    <result column="payTime" property="payTime" jdbcType="TIMESTAMP" />
     <result column="productPrice" property="productPrice" jdbcType="DECIMAL" />
     <result column="discountPrice" property="discountPrice" jdbcType="DECIMAL" />
     <result column="balancePrice" property="balancePrice" jdbcType="DECIMAL" />
@@ -85,9 +86,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, orderNum, state, status, orderPrice, paidPrice, payPrice, productPrice, discountPrice, 
-    balancePrice, isPaid, userId, createtime, merchantId, provinceId, cityId, areaId, 
-    provinceName, cityName, areaName, remark, consignee, mobile
+    id, orderNum, state, status, orderPrice, paidPrice, payPrice, payTime, productPrice, 
+    discountPrice, balancePrice, isPaid, userId, createtime, merchantId, provinceId, 
+    cityId, areaId, provinceName, cityName, areaName, remark, consignee, mobile
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f.dto.orders.OrdersExample" >
     select
@@ -112,20 +113,22 @@
   <insert id="insert" parameterType="com.f.dto.orders.Orders" >
     insert into orders (id, orderNum, state, 
       status, orderPrice, paidPrice, 
-      payPrice, productPrice, discountPrice, 
-      balancePrice, isPaid, userId, 
-      createtime, merchantId, provinceId, 
-      cityId, areaId, provinceName, 
-      cityName, areaName, remark, 
-      consignee, mobile)
+      payPrice, payTime, productPrice, 
+      discountPrice, balancePrice, isPaid, 
+      userId, createtime, merchantId, 
+      provinceId, cityId, areaId, 
+      provinceName, cityName, areaName, 
+      remark, consignee, mobile
+      )
     values (#{id,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{paidPrice,jdbcType=DECIMAL}, 
-      #{payPrice,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{discountPrice,jdbcType=DECIMAL}, 
-      #{balancePrice,jdbcType=DECIMAL}, #{isPaid,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, #{provinceId,jdbcType=INTEGER}, 
-      #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR}, 
-      #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
+      #{payPrice,jdbcType=DECIMAL}, #{payTime,jdbcType=TIMESTAMP}, #{productPrice,jdbcType=DECIMAL}, 
+      #{discountPrice,jdbcType=DECIMAL}, #{balancePrice,jdbcType=DECIMAL}, #{isPaid,jdbcType=INTEGER}, 
+      #{userId,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, #{merchantId,jdbcType=BIGINT}, 
+      #{provinceId,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
+      #{provinceName,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{consignee,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.f.dto.orders.Orders" >
     insert into orders
@@ -150,6 +153,9 @@
       </if>
       <if test="payPrice != null" >
         payPrice,
+      </if>
+      <if test="payTime != null" >
+        payTime,
       </if>
       <if test="productPrice != null" >
         productPrice,
@@ -221,6 +227,9 @@
       </if>
       <if test="payPrice != null" >
         #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
       </if>
       <if test="productPrice != null" >
         #{productPrice,jdbcType=DECIMAL},
@@ -302,6 +311,9 @@
       <if test="record.payPrice != null" >
         payPrice = #{record.payPrice,jdbcType=DECIMAL},
       </if>
+      <if test="record.payTime != null" >
+        payTime = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.productPrice != null" >
         productPrice = #{record.productPrice,jdbcType=DECIMAL},
       </if>
@@ -364,6 +376,7 @@
       orderPrice = #{record.orderPrice,jdbcType=DECIMAL},
       paidPrice = #{record.paidPrice,jdbcType=DECIMAL},
       payPrice = #{record.payPrice,jdbcType=DECIMAL},
+      payTime = #{record.payTime,jdbcType=TIMESTAMP},
       productPrice = #{record.productPrice,jdbcType=DECIMAL},
       discountPrice = #{record.discountPrice,jdbcType=DECIMAL},
       balancePrice = #{record.balancePrice,jdbcType=DECIMAL},
@@ -404,6 +417,9 @@
       </if>
       <if test="payPrice != null" >
         payPrice = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        payTime = #{payTime,jdbcType=TIMESTAMP},
       </if>
       <if test="productPrice != null" >
         productPrice = #{productPrice,jdbcType=DECIMAL},
@@ -464,6 +480,7 @@
       orderPrice = #{orderPrice,jdbcType=DECIMAL},
       paidPrice = #{paidPrice,jdbcType=DECIMAL},
       payPrice = #{payPrice,jdbcType=DECIMAL},
+      payTime = #{payTime,jdbcType=TIMESTAMP},
       productPrice = #{productPrice,jdbcType=DECIMAL},
       discountPrice = #{discountPrice,jdbcType=DECIMAL},
       balancePrice = #{balancePrice,jdbcType=DECIMAL},

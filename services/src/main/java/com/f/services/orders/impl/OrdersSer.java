@@ -1,6 +1,7 @@
 package com.f.services.orders.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -77,12 +78,26 @@ public class OrdersSer implements IOrders{
 		return resOrders;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Pager<List<Map<String, Object>>> selectOrders(Long userId,
 			Long merchantId, String orderNum, Integer isPaid, Integer state,
 			Integer status,Date sdate,Date edate, int page, int rows) {
 		List<Map<String,Object>> list = oext.selectOrders(userId, merchantId, orderNum, isPaid, state, status,sdate, edate, (page-1)*rows, rows);
 		long count = oext.countOrders(userId, merchantId, orderNum, isPaid, state, status, sdate, edate);
+		if(list.size() > 0){
+			Map<Long, Map<String,Object>> map = new HashMap<Long, Map<String,Object>>();
+			List<Long> orderIds = new ArrayList<Long>();
+			for(Map<String,Object> m:list){
+				m.put("ods", new ArrayList<Map<String,Object>>());
+				map.put((Long) m.get("id"), m);
+				orderIds.add((Long) m.get("id"));
+			}
+			List<Map<String,Object>> ods = oext.selectODetailByOrderIds(orderIds);
+			for(Map<String, Object> od:ods){
+				((List<Map<String,Object>>) map.get(od.get("orderId")).get("ods")).add(od);
+			}
+		}
 		return new Pager<List<Map<String,Object>>>(list,count);
 	}
 

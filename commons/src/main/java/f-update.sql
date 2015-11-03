@@ -78,3 +78,6 @@ ALTER TABLE odetail DROP COLUMN isSend;
 ALTER TABLE odetail DROP COLUMN isDelivery;
 ALTER TABLE odetail DROP COLUMN deliveryTime;
 ALTER TABLE odetail DROP COLUMN sendTime;
+
+/**2015113 未执行*/
+ALTER TABLE orders ADD COLUMN payTime DATETIME NULL COMMENT '付款时间' AFTER payPrice;

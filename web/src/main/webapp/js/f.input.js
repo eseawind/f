@@ -962,6 +962,7 @@
 				}else{
 					config.target.data('f-change',true);
 				}
+				config.defValue = '';
 				hide(config);
 				e.preventDefault();
 				e.stopPropagation();

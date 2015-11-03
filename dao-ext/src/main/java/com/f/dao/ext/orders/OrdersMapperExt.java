@@ -34,6 +34,8 @@ public interface OrdersMapperExt {
 			@Param("isPaid") Integer isPaid, @Param("state") Integer state,
 			@Param("status") Integer status, @Param("sdate") Date sdate,
 			@Param("edate") Date edate);
+	
+	public List<Map<String,Object>> selectODetailByOrderIds(List<Long> orderIds);
 
 	public List<Map<String, Object>> selectODetail(
 			@Param("orderId") long orderId, @Param("userId") Long userId,

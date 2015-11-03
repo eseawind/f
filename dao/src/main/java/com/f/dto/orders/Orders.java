@@ -18,6 +18,8 @@ public class Orders {
 
     private BigDecimal payPrice;
 
+    private Date payTime;
+
     private BigDecimal productPrice;
 
     private BigDecimal discountPrice;
@@ -104,6 +106,14 @@ public class Orders {
 
     public void setPayPrice(BigDecimal payPrice) {
         this.payPrice = payPrice;
+    }
+
+    public Date getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Date payTime) {
+        this.payTime = payTime;
     }
 
     public BigDecimal getProductPrice() {

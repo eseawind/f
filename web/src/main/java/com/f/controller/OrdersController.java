@@ -113,6 +113,10 @@ public class OrdersController {
 	public ResBo<Pager<List<Map<String, Object>>>> mlist(HttpServletRequest req) {
 		ReqBo reqBo = new ReqBo(req);
 		User user = (User) session.get(Constants.USERINFO);
+		int rows = reqBo.getParamInt("rows");
+		if(rows > 10){
+			return new ResBo<Pager<List<Map<String,Object>>>>(137L);
+		}
 		return new ResBo<Pager<List<Map<String, Object>>>>(
 				orderSer.selectOrders(user.getId(), null, null,
 						reqBo.getParamInt("isPaid"),
@@ -120,7 +124,7 @@ public class OrdersController {
 						reqBo.getParamInt("status"),
 						reqBo.getParamDate("sdate"),
 						reqBo.getParamDate("edate"), reqBo.getParamInt("page"),
-						reqBo.getParamInt("rows")));
+						rows));
 	}
 
 	@Channel(Constants.B)
@@ -143,6 +147,10 @@ public class OrdersController {
 			}
 			userId = users.getId();
 		}
+		int rows = reqBo.getParamInt("rows");
+		if(rows > 10){
+			return new ResBo<Pager<List<Map<String,Object>>>>(137L);
+		}
 		return new ResBo<Pager<List<Map<String, Object>>>>(
 				orderSer.selectOrders(userId, user.getId(),
 						reqBo.getParamStr("orderNum"),
@@ -151,7 +159,7 @@ public class OrdersController {
 						reqBo.getParamInt("status"),
 						reqBo.getParamDate("sdate"),
 						reqBo.getParamDate("edate"), reqBo.getParamInt("page"),
-						reqBo.getParamInt("rows")));
+						rows));
 	}
 
 }

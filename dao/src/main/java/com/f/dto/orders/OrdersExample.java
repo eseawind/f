@@ -536,6 +536,66 @@ public class OrdersExample {
             return (Criteria) this;
         }
 
+        public Criteria andPayTimeIsNull() {
+            addCriterion("payTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeIsNotNull() {
+            addCriterion("payTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeEqualTo(Date value) {
+            addCriterion("payTime =", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeNotEqualTo(Date value) {
+            addCriterion("payTime <>", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeGreaterThan(Date value) {
+            addCriterion("payTime >", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("payTime >=", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeLessThan(Date value) {
+            addCriterion("payTime <", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeLessThanOrEqualTo(Date value) {
+            addCriterion("payTime <=", value, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeIn(List<Date> values) {
+            addCriterion("payTime in", values, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeNotIn(List<Date> values) {
+            addCriterion("payTime not in", values, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeBetween(Date value1, Date value2) {
+            addCriterion("payTime between", value1, value2, "payTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andPayTimeNotBetween(Date value1, Date value2) {
+            addCriterion("payTime not between", value1, value2, "payTime");
+            return (Criteria) this;
+        }
+
         public Criteria andProductPriceIsNull() {
             addCriterion("productPrice is null");
             return (Criteria) this;
