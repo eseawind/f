@@ -3,6 +3,7 @@ package com.f.services.users;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.f.commons.User;
 import com.f.dto.users.BalanceLog;
 import com.f.dto.users.HUsers;
 import com.f.dto.users.Merchant;
@@ -33,5 +34,9 @@ public interface IUsers {
 	public void insertOrUpdateMUsersAddress(UAddress uaddress);
 	
 	public void updateMUsersBalance(long userId,BigDecimal balance,BalanceLog log);
+	
+	public void updatePassword(User user,String password);
+	
+	public void updatePayPassword(long userId,String password);
 	
 }

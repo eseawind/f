@@ -10,7 +10,7 @@
 <div class="container" style="width:500px;margin-top:100px">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			商家登陆
+			管理登陆
 		</div>
 		<div class="panel-body" id="form">
 			<form class="form">

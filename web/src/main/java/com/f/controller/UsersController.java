@@ -78,4 +78,12 @@ public class UsersController {
 		usersSer.insertOrUpdateMUsersAddress(ua);
 		return new ResBo<Object>();
 	}
+	
+	@RequestMapping("updpass.htm")
+	@ResponseBody
+	public ResBo<?> updpass(@RequestParam("password")String password){
+		User user = (User) session.get(Constants.USERINFO);
+		usersSer.updatePassword(user, password);
+		return new ResBo<Object>();
+	}
 }

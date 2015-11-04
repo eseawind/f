@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.f.commons.User;
 import com.f.dao.ext.users.UsersMapperExt;
 import com.f.dao.users.HUsersMapper;
 import com.f.dao.users.MerchantMapper;
@@ -161,6 +162,27 @@ public class UsersSer implements IUsers{
 	@Override
 	public Users selectMUsersByMap(String username, String mobile) {
 		return uext.selectMUsersByMap(username, mobile);
+	}
+
+	@Override
+	public void updatePassword(User user, String password) {
+		int i = 0;
+		switch(user.getUType()){
+		case users: i=uext.updateMPassword(user.getId(), password);break;
+		case merchant: i=uext.updateBPassword(user.getId(), password);break;
+		case husers: i=uext.updateHPassword(user.getId(), password);break;
+		}
+		if(i != 1){
+			throw new BusinessException(139L,user.getId());
+		}
+	}
+
+	@Override
+	public void updatePayPassword(long userId, String password) {
+		int i = uext.updateMPayPassword(userId, password);
+		if(i != 1){
+			throw new BusinessException(140L, userId);
+		}
 	}
 
 }

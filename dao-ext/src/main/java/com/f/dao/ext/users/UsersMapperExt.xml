@@ -92,4 +92,20 @@
 	      #{operName,jdbcType=VARCHAR}, now(), #{remark,jdbcType=VARCHAR}
 	      )
 	</insert>
+	
+	<update id="updateMPassword" parameterType="map">
+		update users set password = #{password,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateHPassword" parameterType="map">
+		update husers set password = #{password,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateBPassword" parameterType="map">
+		update merchant set password = #{password,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateMPayPassword" parameterType="map">
+		update users set ppassword = #{password,jdbcType=VARCHAR} where id = #{userId,jdbcType=BIGINT}
+	</update>
 </mapper>

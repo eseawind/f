@@ -30,4 +30,12 @@ public interface UsersMapperExt {
 	
 	public int insertBalanceLog(BalanceLog log);
 	
+	public int updateMPassword(@Param("userId")long userId,@Param("password")String password);
+	
+	public int updateBPassword(@Param("userId")long userId,@Param("password")String password);
+	
+	public int updateHPassword(@Param("userId")long userId,@Param("password")String password);
+	
+	public int updateMPayPassword(@Param("userId")long userId,@Param("password")String password);
+	
 }
