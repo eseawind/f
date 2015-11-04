@@ -17,4 +17,13 @@ public enum EOrdersState {
 	public String getName() {
 		return name;
 	}
+	
+	public static EOrdersState getEOrdersState(int code){
+		switch(code){
+		case 1:return State_1;
+		case 2:return State_2;
+		case 3:return State_3;
+		}
+		return null;
+	}
 }

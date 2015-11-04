@@ -37,4 +37,9 @@ public interface IOrders {
 	 * 批量修改订单状态
 	 * */
 	public void updateOrdersBatch(List<Long> orderIds,Long userId,Long merchantId,Integer state,Integer status,Integer isPaid);
+	
+	/**
+	 * 商家导出自己的订单包括明细
+	 * */
+	public List<Map<String,Object>> selectOrdersExcel(long merchantId,Integer isPaid,Integer state,Integer status,Date sdate,Date edate);
 }

@@ -19,16 +19,16 @@
 		</div>
 		<div class="form-group">
 			<label>时间范围：</label>
-			<input class="form-control" name="sdate" f-type="datepicker"/>-
-			<input class="form-control" name="edate" f-type="datepicker"/>
+			<input class="form-control" name="sdate" f-type="datepicker" id="sdate"/>-
+			<input class="form-control" name="edate" f-type="datepicker" id="edate"/>
 		</div>
 		<button class="btn btn-default" id="queryBtn"><i class="icon-search"></i>查询</button>
 	</div>
 </div>
 <hr/>
 <div class="row">
-	<div class="btn-group col-md-10">
-		<button class="btn btn-default" onclick="conditionFun()">全部订单</button>
+	<div class="btn-group col-md-10" id="btns">
+		<button class="btn btn-default btn-primary" onclick="conditionFun()">全部订单</button>
 		<button class="btn btn-default" onclick="conditionFun(1,null,1)">未付款</button>
 		<button class="btn btn-default" onclick="conditionFun(1,2,2)">待出库</button>
 		<button class="btn btn-default" onclick="conditionFun(1,4,null)">已出库</button>
@@ -37,12 +37,12 @@
 		<button class="btn btn-default" onclick="conditionFun(1,6,null)">退换货订单</button>
 	</div>
 	<div class="btn-group col-md-2">
-		<button class="btn btn-default"><i class="icon-signout"></i>批量导出</button>
+		<button class="btn btn-default" onclick="excel()"><i class="icon-signout"></i>批量导出</button>
 	</div>
 </div>
 <hr/>
 <div class="btn-group">
-	<button class="btn btn-default">批量出库</button>
+	<button class="btn btn-default" onclick="outstocks()">批量出库</button>
 	<button class="btn btn-default">批量打印快递单</button>
 </div>
 <table class="table table-bordered table-condensed">
@@ -115,7 +115,9 @@
 		{{/if}}
 	</td>
 	<td style="width:100px;vertical-align: middle" class="text-center" rowspan="{{= ods.length}}">
-		<button class="btn btn-xs btn-primary">出库</button><br/>
+		{{if status < 4&&state == 1}}
+		<button class="btn btn-xs btn-primary" onclick="outstock({{= id}})">出库</button><br/>
+		{{/if}}
 	</td>
 	{{/if}}
 </tr>
@@ -140,13 +142,73 @@ $(function(){
 			loadData();
 		}
 	});
-	window.conditionFun = function(state,status,isPaid){
+	window.conditionFun = function(_state,_status,_isPaid){
 		page = 1;
-		loadData(state,status,isPaid);
+		state = _state;
+		status = _status;
+		isPaid = _isPaid;
+		loadData();
+	}
+	window.outstock = function(orderId){
+		container.startMask();
+		$.post(f.dynUrl+"/orders/boutstock.htm",{orderId:orderId},function(d){
+			container.closeMask();
+			if(d.success){
+				reLoadData();
+			}else{
+				f.alertError(d.errMsg);
+			}
+		},"json");
+	}
+	window.outstocks = function(){
+		if(status >= 4)return;
+		var orderIds;
+		container.find("input[type=checkbox][f-id]").each(function(){
+			var obj = $(this);
+			if(obj.prop("checked")){
+				orderIds = obj.attr("f-id") + ",";
+			}
+		});
+		if(orderIds){
+			container.startMask();
+			$.post(f.dynUrl+"/orders/boutstocks.htm",{orderIds:orderIds},function(d){
+				container.closeMask();
+				if(d.success){
+					reLoadData();
+				}else{
+					f.alertError(d.errMsg);
+				}
+			},"json");
+		}else{
+			f.alertError("请勾选要出库的订单");			
+		}
+	}
+	var allCheck = $("#allCheck").change(function(){
+		if($(this).prop("checked")){
+			container.find("input[type=checkbox][f-id]").each(function(){
+				$(this).prop("checked","checked");
+			});
+		}else{
+			container.find("input[type=checkbox][f-id]").each(function(){
+				$(this).removeProp("checked");
+			});
+		}
+	});
+	container.delegate("input[type=checkbox][f-id]","change",function(){
+		if(!$(this).prop("checked")){
+			allCheck.removeProp("checked");
+		}
+	});
+	function reLoadData(){
+		page = page - 1;
+		loadData();
 	}
 	var page = 1;
 	var rows = 10;
-	function loadData(state,status,isPaid){
+	var state;
+	var status;
+	var isPaid;
+	function loadData(){
 		var param = {page:page++,rows:rows};
 		$.extend(param,f.filterEmpty($("#queryForm").f_serialized()));
 		if(state){
@@ -180,7 +242,7 @@ $(function(){
 					nextBtn.removeProp("disabled");
 				}
 			}else{
-				f.dialogAlert(d.errMsg);
+				f.alertError(d.errMsg);
 			}
 		});
 	}
@@ -189,6 +251,35 @@ $(function(){
 		loadData();
 	});
 	loadData();
+	$("#btns").children("button").click(function(){
+		$("#btns").children("button").removeClass("btn-primary");
+		$(this).addClass("btn-primary");
+	});
+	window.excel = function(){
+		var qs = "";
+		if(state){
+			qs = qs + "state=" + state;
+		}
+		if(status){
+			qs = qs + "status=" + status;
+		}
+		if(isPaid){
+			qs = qs + "isPaid=" + isPaid;
+		}
+		var sdate = $("#sdate").f_input_datepicker("getValue");
+		var edate = $("#edate").f_input_datepicker("getValue");
+		if(sdate == ''||edate == ''){
+			f.alertError("订单导出一次最多导出31天数据请正确选择时间范围");
+			return;
+		}
+		var range = $("#edate").f_input_datepicker("getDate").getTime() - $("#sdate").f_input_datepicker("getDate").getTime();
+		if(range > 100*60*60*24*31||range <= 0){
+			f.alertError("订单导出一次最多导出31天数据请正确选择时间范围");
+			return;
+		}
+		qs = qs + "sdate=" + sdate + "&edate=" + edate;
+		window.open(encodeURI(f.dynUrl+"/orders/bexcel.htm?"+qs));
+	}
 });
 </script>
 </body>

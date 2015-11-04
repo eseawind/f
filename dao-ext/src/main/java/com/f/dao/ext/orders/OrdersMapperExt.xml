@@ -139,12 +139,15 @@
 			isPaid = #{isPaid,jdbcType=INTEGER},
 		</if>
 	</set>
-	where id = #{orderId,jdbcType=BIGINT}
+	where id = #{orderId,jdbcType=BIGINT} and state = 1
 	<if test="userId != null">
 		and userId = #{userId,jdbcType=BIGINT}
 	</if>
 	<if test="merchantId != null">
 		and merchantId = #{merchantId,jdbcType=BIGINT}
+	</if>
+	<if test="status != null">
+		and status <![CDATA[ < ]]> #{status,jdbcType=INTEGER}
 	</if>
 </update>
 
@@ -161,7 +164,7 @@
 			isPaid = #{isPaid,jdbcType=INTEGER},
 		</if>
 	</set>
-	where id in
+	where state = 1 and id in
 	<foreach collection="os" item="orderId" open="(" separator="," close=")">
 		#{orderId,jdbcType=BIGINT}
 	</foreach>
@@ -171,5 +174,29 @@
 	<if test="merchantId != null">
 		and merchantId = #{merchantId,jdbcType=BIGINT}
 	</if>
+	<if test="status != null">
+		and status <![CDATA[ < ]]> #{status,jdbcType=INTEGER}
+	</if>
 </update>
+
+<select id="excelOrders" parameterType="map" resultType="map">
+	select o.orderNum, o.state, o.status, o.orderPrice, o.productPrice, o.discountPrice, o.isPaid, o.createtime,
+    o.provinceName, o.cityName, o.areaName, o.remark, o.consignee, o.mobile, op.name as payname, od.buyPrice, od.number, od.sku, g.gname, cg.cgname
+	from orders o left join odetail od on o.id = od.orderId
+	left join opaytype op on o.id = op.orderId
+	left join cgoods cg on od.cgoodsId = cg.id
+	left join goods g on cg.gid = g.id
+	where o.merchantId = #{merchantId,jdbcType=BIGINT} 
+	<if test="state != null">
+		and o.state = #{state,jdbcType=INTEGER}
+	</if>
+	<if test="status != null">
+		and o.status = #{status,jdbcType=INTEGER}
+	</if>
+	<if test="isPaid != null">
+		and o.isPaid = #{isPaid,jdbcType=INTEGER}
+	</if>
+	and o.createtime between #{sdate,jdbcType=TIMESTAMP} and #{edate,jdbcType=TIMESTAMP}
+</select>
+
 </mapper>

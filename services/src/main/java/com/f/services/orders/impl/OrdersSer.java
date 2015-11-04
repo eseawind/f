@@ -115,15 +115,20 @@ public class OrdersSer implements IOrders{
 	@Override
 	public void updateOrders(long orderId, Long userId, Long merchantId,
 			Integer state, Integer status, Integer isPaid) {
-		
-		
+		oext.updateOrders(orderId, userId, merchantId, state, status, isPaid);
 	}
 
 	@Override
 	public void updateOrdersBatch(List<Long> orderIds, Long userId,
 			Long merchantId, Integer state, Integer status, Integer isPaid) {
-		
-		
+		oext.updateOrdersBatch(orderIds, userId, merchantId, state, status, isPaid);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectOrdersExcel(long merchantId,
+			Integer isPaid, Integer state, Integer status, Date sdate,
+			Date edate) {
+		return oext.excelOrders(merchantId, isPaid, state, status, sdate, edate);
 	}
 
 }

@@ -88,7 +88,6 @@ public class GoodsController {
 	}
 	
 	@IsLogin(false)
-	@Channel(Constants.M)
 	@RequestMapping("/sta/cgids.htm")
 	@ResponseBody
 	public ResBo<List<GoodsStaInfo>> selGoodsStaInfoByCgIds(@RequestParam("cgids")String cgids){
@@ -105,7 +104,6 @@ public class GoodsController {
 	}
 	
 	@IsLogin(false)
-	@Channel(Constants.M)
 	@RequestMapping("/detail/{cgid}.htm")
 	public String selGoodsDetail(@PathVariable("cgid")long cgid,Model model){
 		List<GoodsStaInfo> list = goodsSer.selectCGoodsStaInfoByCgId(cgid);
@@ -121,7 +119,6 @@ public class GoodsController {
 	}
 	
 	@IsLogin(false)
-	@Channel(Constants.M)
 	@RequestMapping("/dyn/cgids.htm")
 	@ResponseBody
 	public ResBo<List<GoodsDynInfo>> selGoodsDynInfoByCgIds(@RequestParam("cgids")String cgids){

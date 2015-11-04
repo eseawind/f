@@ -21,4 +21,17 @@ public enum EOrdersStatus {
 	public String getName() {
 		return name;
 	}
+	
+	public static EOrdersStatus getEOrdersStatus(int code){
+		switch(code){
+		case 1:return Status_1;
+		case 2:return Status_2;
+		case 3:return Status_3;
+		case 4:return Status_4;
+		case 5:return Status_5;
+		case 6:return Status_6;
+		case 7:return Status_7;
+		}
+		return null;
+	}
 }

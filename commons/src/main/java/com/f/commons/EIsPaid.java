@@ -16,4 +16,12 @@ public enum EIsPaid {
 	public String getName() {
 		return name;
 	}
+	
+	public static EIsPaid getEIsPaid(int code){
+		switch(code){
+		case 1:return NO;
+		case 2:return YES;
+		}
+		return null;
+	}
 }
