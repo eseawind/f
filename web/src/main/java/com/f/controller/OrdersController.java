@@ -140,6 +140,24 @@ public class OrdersController {
 						reqBo.getParamDate("edate"), reqBo.getParamInt("page"),
 						rows));
 	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("cancel.htm")
+	@ResponseBody
+	public ResBo<?> cancelOrder(@RequestParam("orderId")long orderId){
+		User user = (User) session.get(Constants.USERINFO);
+		orderSer.updateOrders(orderId, user.getId(), null, EOrdersState.State_2.getCode(), null, null);
+		return new ResBo<Object>();
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("confirmReceipt.htm")
+	@ResponseBody
+	public ResBo<?> confirmReceipt(@RequestParam("orderId")long orderId){
+		User user = (User) session.get(Constants.USERINFO);
+		orderSer.updateOrders(orderId, user.getId(), null, null, EOrdersStatus.Status_5.getCode(), null);
+		return new ResBo<Object>();
+	}
 
 	@Channel(Constants.B)
 	@RequestMapping("blist.htm")

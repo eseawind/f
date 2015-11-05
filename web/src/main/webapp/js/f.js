@@ -168,6 +168,7 @@
 	
 	$.fn.f_alertError = function(message,timeout){
 		var alertError = $('<div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+message+'</div>');
+		timeout&&$(this).empty();
 		$(this).append(alertError);
 		if(timeout){
 			setTimeout(function(){alertError.remove();},timeout);

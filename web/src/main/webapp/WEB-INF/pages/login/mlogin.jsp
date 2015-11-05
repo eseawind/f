@@ -38,7 +38,11 @@ $(function(){
 			$.post(f.dynUrl+"/login/mlogin.htm",param,function(d){
 				form.closeMask();
 				if(d.success){
-					window.location.href = f.staUrl + "/page/index/mindex.htm";
+					if(window.document.referrer){
+						window.location.href = window.document.referrer;
+					}else{
+						window.location.href = f.staUrl + "/page/index/mindex.htm";
+					}
 				}else{
 					alert.empty();
 					alert.f_alertError(d.errMsg);

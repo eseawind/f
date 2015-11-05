@@ -30,7 +30,9 @@
 			<div class="form-group">
 				<label>订单状态：</label>
 				<span>
-				{{if isPaid==1}}
+				{{if state == 2||state == 3}}
+					已取消
+				{{else isPaid==1}}
 					未付款
 				{{else status == 1}}
 					未确认
@@ -57,7 +59,7 @@
 				<div class="text-right">
 					{{if isPaid==1}}
 					<a href="javascript:void(0)" class="btn btn-danger">去支付</a>&nbsp;&nbsp;
-					{{/if}}						
+					{{/if}}					
 					<a href="{{= dynUrl}}/page/orders/mdetail.htm?orderId={{= id}}">订单明细 &gt;&gt;</a>
 				</div>
 			</div>
@@ -66,12 +68,11 @@
 </script>
 <script type="text/javascript">
 $(function(){
-	console.log(window.location.href);
 	f.setTitle("我的订单");
 	var container = $("#container");
 	var tabs = $("#tabs");
 	var page = 1;
-	var rows = 1;
+	var rows = 10;
 	var curType = 1;
 	tabs.children("li").each(function(){
 		var li = $(this);

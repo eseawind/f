@@ -79,11 +79,25 @@ public class UsersController {
 		return new ResBo<Object>();
 	}
 	
+	@Channel(Constants.M)
 	@RequestMapping("updpass.htm")
 	@ResponseBody
-	public ResBo<?> updpass(@RequestParam("password")String password){
+	public ResBo<?> updpass(@RequestParam("password")String password,@RequestParam("oldpass")String oldpass){
 		User user = (User) session.get(Constants.USERINFO);
+		Users users = usersSer.selectMUsers(user.getId());
+		if(!users.getPassword().equals(oldpass)){
+			return new ResBo<Object>(141);
+		}
 		usersSer.updatePassword(user, password);
+		return new ResBo<Object>();
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("updppass.htm")
+	@ResponseBody
+	public ResBo<?> updppass(@RequestParam("password")String password,@RequestParam("verifycode")String verifycode){
+		User user = (User) session.get(Constants.USERINFO);
+		usersSer.updatePayPassword(user.getId(), password);
 		return new ResBo<Object>();
 	}
 }

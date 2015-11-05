@@ -20,7 +20,9 @@
 			<div class="form-group">
 				<label>订单状态：</label>
 				<span>
-				{{if order.isPaid==1}}
+				{{if order.state == 2||order.state == 3}}
+					已取消
+				{{else order.isPaid==1}}
 					未付款
 				{{else order.status == 1}}
 					未确认
@@ -42,6 +44,17 @@
 			<div class="form-group">
 				<label>订单金额：</label>
 				<span>{{= order.orderPrice}}</span>
+			</div>
+			<div class="form-group text-right">
+			{{if order.isPaid == 1&&order.state == 1}}	
+				<a class="btn btn-danger" href="#">去支付</a>
+			{{/if}}
+			{{if order.status == 4&&order.state == 1}}	
+				<button class="btn btn-danger" onclick="confirmReceipt({{= order.id}})">确认收货</button>
+			{{/if}}
+			{{if order.status < 3&&order.state == 1}}	
+				<button class="btn btn-danger" onclick="cancelOrder({{= order.id}})">取消订单</button>
+			{{/if}}
 			</div>
 		</div>
 	</div>
@@ -87,6 +100,24 @@ $(function(){
 			f.dialogAlert(d.errMsg);
 		}
 	});
+	confirmReceipt = function(orderId){
+		$.getJSON(f.dynUrl+"/orders/confirmReceipt.htm",{orderId:orderId},function(d){
+			if(d.success){
+				window.location.reload();
+			}else{
+				f.dialogAlert(d.errMsg);
+			}
+		});
+	}
+	cancelOrder = function(orderId){
+		$.getJSON(f.dynUrl+"/orders/cancel.htm",{orderId:orderId},function(d){
+			if(d.success){
+				window.location.reload();
+			}else{
+				f.dialogAlert(d.errMsg);
+			}
+		});
+	}
 })
 </script>
 </body>

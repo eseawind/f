@@ -39,7 +39,11 @@ $(function(){
 			$.post(f.dynUrl+"/login/blogin.htm",param,function(d){
 				form.closeMask();
 				if(d.success){
-					window.location.href = f.staUrl + "/page/goods/bgoods.htm";
+					if(window.document.referrer){
+						window.location.href = window.document.referrer;
+					}else{
+						window.location.href = f.staUrl + "/page/goods/bgoods.htm";
+					}
 				}else{
 					$("#error").f_alertError(d.errMsg);
 				}
