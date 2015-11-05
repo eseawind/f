@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.f.commons.Constants;
 import com.f.commons.GoodsDynInfo;
 import com.f.commons.GoodsStaInfo;
+import com.f.commons.UType;
 import com.f.commons.User;
 import com.f.dto.goods.CGoods;
 import com.f.dto.goods.Goods;
@@ -115,6 +116,13 @@ public class GoodsController {
 		}
 		model.addAttribute("def", def);
 		model.addAttribute("cgs", list);
+		Object obj = session.get(Constants.USERINFO);
+		if(obj != null){
+			User user = (User) obj;
+			if(user.getUType() == UType.users){
+				model.addAttribute("isCollect", goodsSer.selectIsCollect(user.getId(), cgid));
+			}
+		}
 		return "goods/mdetail";
 	}
 	
@@ -133,4 +141,35 @@ public class GoodsController {
 		}
 		return resBo;
 	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("/collect.htm")
+	@ResponseBody
+	public ResBo<?> collect(@RequestParam("cgid")long cgid){
+		User user = (User) session.get(Constants.USERINFO);
+		if(goodsSer.selectIsCollect(user.getId(), cgid)){
+			return new ResBo<Object>(142);
+		}else{
+			goodsSer.insertCollect(user.getId(), cgid);
+		}
+		return new ResBo<Object>();
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("/collect/list.htm")
+	@ResponseBody
+	public ResBo<?> collects(@RequestParam("page")int page,@RequestParam("rows")int rows){
+		User user = (User) session.get(Constants.USERINFO);
+		return new ResBo<Object>(goodsSer.selectCollects(user.getId(), page, rows));
+	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("/collect/delete.htm")
+	@ResponseBody
+	public ResBo<?> delCollect(@RequestParam("cgid")long cgid){
+		User user = (User) session.get(Constants.USERINFO);
+		goodsSer.deleteCollect(user.getId(), cgid);
+		return new ResBo<Object>();
+	}
+	
 }

@@ -15,8 +15,11 @@ import com.f.commons.GoodsStaInfo;
 import com.f.dao.ext.goods.GoodsMapperExt;
 import com.f.dao.goods.CGoodsMapper;
 import com.f.dao.goods.GoodsMapper;
+import com.f.dao.users.FavoriteMapper;
 import com.f.dto.goods.CGoods;
 import com.f.dto.goods.Goods;
+import com.f.dto.users.Favorite;
+import com.f.dto.users.FavoriteExample;
 import com.f.services.goods.IGoods;
 
 import framework.exception.BusinessException;
@@ -31,6 +34,8 @@ public class GoodsSer implements IGoods{
 	private CGoodsMapper cgmapper;
 	@Autowired
 	private GoodsMapperExt gext;
+	@Autowired
+	private FavoriteMapper fmapper;
 
 	@Override
 	public void insertGoodsInfo(Goods goods, CGoods cg) {
@@ -122,6 +127,40 @@ public class GoodsSer implements IGoods{
 			return new ArrayList<GoodsStaInfo>();
 		}
 		return gext.selectCGoodsStaInfoByGId(gid);
+	}
+
+	@Override
+	public boolean selectIsCollect(long userId, long cgid) {
+		FavoriteExample e = new FavoriteExample();
+		e.createCriteria().andCgoodsIdEqualTo(cgid).andUserIdEqualTo(userId);
+		if(fmapper.selectByExample(e).size() == 0) return false;
+		return true;
+	}
+
+	@Override
+	public void insertCollect(long userId, long cgid) {
+		Favorite f = new Favorite();
+		f.setCgoodsId(cgid);
+		f.setCreatetime(new Date());
+		f.setUserId(userId);
+		fmapper.insertSelective(f);
+	}
+
+	@Override
+	public Pager<List<Map<String, Object>>> selectCollects(long userId, int page,
+			int rows) {
+		List<Map<String,Object>> list = gext.selectCollects(userId, (page-1)*rows, rows);
+		long count = gext.countCollects(userId);
+		return new Pager<List<Map<String,Object>>>(list,count);
+	}
+
+	@Override
+	public void deleteCollect(long userId, long cgid) {
+		FavoriteExample e = new FavoriteExample();
+		e.createCriteria().andCgoodsIdEqualTo(cgid).andUserIdEqualTo(userId);
+		Favorite f = new Favorite();
+		f.setIsDel(127);
+		fmapper.updateByExampleSelective(f, e);
 	}
 
 }

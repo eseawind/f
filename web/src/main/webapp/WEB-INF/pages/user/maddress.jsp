@@ -75,6 +75,7 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	f.setTitle("我的收货地址");
 	var container = $("#container");
 	var win = $("#win");
 	win.f_modal({});

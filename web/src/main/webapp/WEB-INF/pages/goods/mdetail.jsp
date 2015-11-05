@@ -97,9 +97,19 @@
 	</div>
 </div>
 <div class="btn-group" style="position:fixed;bottom:0;left:0;width:100%">
-	<button class="btn btn-default btn-lg" style="width:30%">
-		<i class="icon-heart-empty"></i>&nbsp;&nbsp;收藏
-	</button>
+	<c:choose>
+		<c:when test="${isCollect }">
+			<button class="btn btn-default btn-lg" style="width:30%" id="collectBtn" f-id="${def.cgid}" disabled="disabled">
+				已收藏
+			</button>
+		</c:when>
+		<c:otherwise>
+			<button class="btn btn-default btn-lg" style="width:30%" id="collectBtn" f-id="${def.cgid}">
+				<i class="icon-heart-empty"></i>&nbsp;&nbsp;收藏
+			</button>
+		</c:otherwise>
+	</c:choose>
+	
 	<button class="btn btn-default btn-lg" style="width:30%" id="buyBtn" disabled="disabled">
 		立刻购买
 	</button>
@@ -168,8 +178,24 @@ $(function(){
 	addCartFun = function(merchantId,cgids){
 		f.addCart(merchantId, cgids, buyNum.val(),function(){
 			f.transientAlert("成功加入购物车");
-		})
+		});
 	}
+	$("#collectBtn").click(function(){
+		var obj = $(this);
+		f.addCollect(obj.attr("f-id"),function(){
+			obj.empty();
+			obj.prop("disabled","disabled");
+			obj.text("已收藏");
+		},function(code,errMsg){
+			if(parseInt(code) == 142){
+				obj.empty();
+				obj.prop("disabled","disabled");
+				obj.text("已收藏");
+			}else{
+				f.dialogAlert(errMsg);
+			}
+		});
+	});
 })
 </script>
 </body>

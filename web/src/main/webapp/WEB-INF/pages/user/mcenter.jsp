@@ -22,7 +22,7 @@
 	<li class="list-group-item"><a href="${staUrl }/page/orders/mlist.htm">我的订单</a></li>
 	<li class="list-group-item"><a href="#">我的钱包</a></li>
 	<li class="list-group-item"><a href="${staUrl }/page/user/maddress.htm">收货地址管理</a></li>
-	<li class="list-group-item"><a href="#">我的关注</a></li>
+	<li class="list-group-item"><a href="${staUrl }/page/user/mcollect.htm">我的收藏</a></li>
 	<li class="list-group-item"><a href="${staUrl }/page/user/msecurity.htm">账户安全</a></li>
 	<li class="list-group-item"><a href="#">联系我们</a></li>
 </ul>

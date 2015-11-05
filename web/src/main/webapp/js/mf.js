@@ -39,6 +39,16 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
+	f.tmpl.goodsSimpleContainer = '<div class="f-goods-container">' +
+										'<div class="f-goods-block" f-id="${cgid}">' + 
+											'<div class="f-goods-img">' + 
+												'<a href="${dynUrl}/goods/detail/${cgid}.htm"><img alt="${gname}" {{if photo}}src="${imgUrl}${photo}"{{/if}}/></a>' + 
+											'</div>' + 
+											'<ul>' + 
+												'<li class="gname"><a href="${dynUrl}/goods/detail/${cgid}.htm">${gname}</a></li>' + 
+											'</ul>' + 
+										'</div>' + 
+									'</div>';
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
 	};
@@ -114,6 +124,20 @@
 		},"json");
 	}
 	
+	f.addCollect = function(cgid,fun,errFun){
+		$.getJSON(f.dynUrl+"/goods/collect.htm",{cgid:cgid},function(d){
+			if(d.success){
+				fun&&fun.call(null,d.result);
+			}else{
+				if(errFun){
+					errFun.call(null,d.errCode,d.errMsg);
+				}else{
+					f.transientAlert(d.errMsg);
+				}
+			}
+		});
+	}
+	
 	f.checkCart = function(cartStrs,checked,fun,errFun){
 		$.post(f.dynUrl+"/cart/check.htm",{cartStrs:cartStrs,checked:checked},function(d){
 			if(d.success){
@@ -155,7 +179,9 @@
 	
 	$.fn.goodsContainerBuilder = function(obj){
 		if($.isPlainObject(obj)){
-			obj.imgUrl = f.imgUrl
+			obj.imgUrl = f.imgUrl;
+			obj.dynUrl = f.dynUrl;
+			obj.staUrl = f.staUrl;
 			var goodsCon = $.tmpl(f.tmpl.goodsContainer,obj);
 			goodsCon.appendTo(this);
 			goodsCon.find(".f-addcart").click(function(){
@@ -167,8 +193,25 @@
 				});
 				
 			});
+			goodsCon.find(".f-collect").click(function(){
+				var th = $(this);
+				var cgid = $.trim(th.attr("f-id"));
+				f.addCollect(cgid, function(){
+					f.transientAlert("成功收藏");
+				});
+			});
 		}
 	};
+	
+	$.fn.goodsSimpleContainerBuilder = function(obj){
+		if($.isPlainObject(obj)){
+			obj.imgUrl = f.imgUrl;
+			obj.dynUrl = f.dynUrl;
+			obj.staUrl = f.staUrl;
+			var goodsCon = $.tmpl(f.tmpl.goodsSimpleContainer,obj);
+			goodsCon.appendTo(this);
+		}
+	}
 	
 	//自定义页面加载完成事件
 	$(function(){

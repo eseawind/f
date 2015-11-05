@@ -47,4 +47,19 @@ public interface IGoods {
 	 * 详情页商品信息
 	 * */
 	public List<GoodsStaInfo> selectCGoodsStaInfoByCgId(long cgid);
+	
+	/**
+	 * 是否收藏
+	 * */
+	public boolean selectIsCollect(long userId,long cgid);
+	/**
+	 * 收藏
+	 * */
+	public void insertCollect(long userId,long cgid);
+	
+	public void deleteCollect(long userId,long cgid);
+	/**
+	 * 收藏列表
+	 * */
+	public Pager<List<Map<String,Object>>> selectCollects(long userId,int page,int rows);
 }

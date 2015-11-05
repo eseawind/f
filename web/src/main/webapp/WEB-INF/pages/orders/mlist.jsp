@@ -12,6 +12,7 @@
   <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(2)">待收货</a></li>
   <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(3)">全部</a></li>
 </ul>
+<hr/>
 <div id="container">
 	
 </div>

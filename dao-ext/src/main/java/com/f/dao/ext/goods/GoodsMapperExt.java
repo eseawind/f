@@ -37,4 +37,8 @@ public interface GoodsMapperExt {
 	public int updCGoods(@Param("cg")CGoods cg,@Param("merchantId")long merchantId);
 	
 	public int clearCGoodsIsDef(long gid);
+	
+	public List<Map<String,Object>> selectCollects(@Param("userId")long userId,@Param("start")int start,@Param("rows")int rows);
+	
+	public long countCollects(long userId);
 }

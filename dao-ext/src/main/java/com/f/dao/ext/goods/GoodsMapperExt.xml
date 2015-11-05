@@ -253,4 +253,19 @@
   <update id="clearCGoodsIsDef" parameterType="long">
   	update cgoods set isDef = 0 where gid = #{value,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectCollects" parameterType="map" resultType="map">
+  	select cg.id as cgid,cg.gid,cg.photo,g.gname,cg.cgname
+  	from favorite f left join cgoods cg on f.cgoodsId = cg.id
+  	left join goods g on cg.gid = g.id
+  	where f.userId = #{userId,jdbcType=BIGINT}
+  	order by f.id desc
+  	limit #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="countCollects" parameterType="long" resultType="long">
+  	select count(1)
+  	from favorite
+  	where userId = #{value,jdbcType=BIGINT}
+  </select>
 </mapper>
