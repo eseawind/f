@@ -39,16 +39,21 @@
 									'</ul>' + 
 								'</div>' + 
 							'</div>';
-	f.tmpl.goodsSimpleContainer = '<div class="f-goods-container">' +
-										'<div class="f-goods-block" f-id="${cgid}">' + 
-											'<div class="f-goods-img">' + 
-												'<a href="${dynUrl}/goods/detail/${cgid}.htm"><img alt="${gname}" {{if photo}}src="${imgUrl}${photo}"{{/if}}/></a>' + 
-											'</div>' + 
-											'<ul>' + 
-												'<li class="gname"><a href="${dynUrl}/goods/detail/${cgid}.htm">${gname}</a></li>' + 
-											'</ul>' + 
+	f.tmpl.simpleGoodsContainer = '<div class="f-goods-container">' +
+									'<div class="f-goods-block" f-id="${cgid}">' + 
+										'<div class="f-goods-img">' + 
+											'<a href="${dynUrl}/goods/detail/${cgid}.htm"><img alt="${gname}" {{if photo}}src="${imgUrl}${photo}"{{/if}}/></a>' + 
 										'</div>' + 
-									'</div>';
+										'<ul>' + 
+											'<li class="gprice"><font style="font-size:80%">￥&nbsp;</font><span f-id="${cgid}"></span></li>' + 
+											'<li class="gname"><a href="${dynUrl}/goods/detail/${cgid}.htm">${gname}</a></li>' + 
+											'<li class="goper text-right">' + 
+												'<button class="btn btn-default f-share" f-id="${cgid}">分享</button>' + 
+												'<button class="btn btn-default f-addcart" f-id="${cgid}" f-merchant="${merchantId}">加入购物车</button>' + 
+											'</li>' + 
+										'</ul>' + 
+									'</div>' + 
+								'</div>';
 	f.setTitle = function(title){
 		$("#f_gloal_mhead_title").html(title);
 	};
@@ -203,12 +208,12 @@
 		}
 	};
 	
-	$.fn.goodsSimpleContainerBuilder = function(obj){
+	$.fn.simpleGoodsContainerBuilder = function(obj){
 		if($.isPlainObject(obj)){
 			obj.imgUrl = f.imgUrl;
 			obj.dynUrl = f.dynUrl;
 			obj.staUrl = f.staUrl;
-			var goodsCon = $.tmpl(f.tmpl.goodsSimpleContainer,obj);
+			var goodsCon = $.tmpl(f.tmpl.simpleGoodsContainer,obj);
 			goodsCon.appendTo(this);
 		}
 	}
