@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <div>
 	<ul class="nav nav-pills">
-      <li class="active"><a href="#">后台管理系统</a></li>
+      <li class="active"><a>后台管理系统</a></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
           	商家

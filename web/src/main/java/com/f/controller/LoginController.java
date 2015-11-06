@@ -80,10 +80,9 @@ public class LoginController {
 		return new ResBo<Boolean>(true);
 	}
 	
-	@Channel(Constants.M)
-	@RequestMapping("munlogin.htm")
+	@RequestMapping("unlogin.htm")
 	@ResponseBody
-	public ResBo<Boolean> munlogin(){
+	public ResBo<Boolean> unlogin(){
 		session.flush();
 		return new ResBo<Boolean>(true);
 	}

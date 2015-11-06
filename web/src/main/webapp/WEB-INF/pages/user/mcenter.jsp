@@ -26,6 +26,7 @@
 	<li class="list-group-item"><a href="${staUrl }/page/user/msecurity.htm">账户安全</a></li>
 	<li class="list-group-item"><a href="#">联系我们</a></li>
 </ul>
+<button class="btn btn-block btn-danger" onclick="unlogin()">退出登录</button>
 <script type="text/javascript">
 $(function(){
 	f.setTitle("个人中心");
@@ -37,6 +38,11 @@ $(function(){
 			f.dialogAlert(d.errMsg);
 		}
 	});
+	unlogin = function(){
+		$.getJSON(f.dynUrl+"/login/unlogin.htm",function(){
+			window.location.href = f.staUrl+"/page/index/mindex.htm";
+		});
+	}
 });
 </script>
 </body>

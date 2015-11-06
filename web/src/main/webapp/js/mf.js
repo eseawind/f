@@ -215,6 +215,14 @@
 			obj.staUrl = f.staUrl;
 			var goodsCon = $.tmpl(f.tmpl.simpleGoodsContainer,obj);
 			goodsCon.appendTo(this);
+			goodsCon.find(".f-addcart").click(function(){
+				var th = $(this);
+				var cgids = $.trim(th.attr("f-id"));
+				var merchantId = $.trim(th.attr("f-merchant"));
+				f.addCart(merchantId,cgids,1,function(){
+					f.transientAlert("成功加入购物车");
+				});
+			});
 		}
 	}
 	

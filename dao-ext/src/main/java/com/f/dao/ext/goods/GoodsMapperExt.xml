@@ -255,7 +255,7 @@
   </update>
   
   <select id="selectCollects" parameterType="map" resultType="map">
-  	select cg.id as cgid,cg.gid,cg.photo,g.gname,cg.cgname
+  	select cg.id as cgid,cg.gid,cg.photo,g.gname,cg.cgname,g.merchantId
   	from favorite f left join cgoods cg on f.cgoodsId = cg.id
   	left join goods g on cg.gid = g.id
   	where f.userId = #{userId,jdbcType=BIGINT}
