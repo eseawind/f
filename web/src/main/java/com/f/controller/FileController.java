@@ -54,9 +54,7 @@ public class FileController implements InitializingBean{
 		for(MultipartFile file:files){
 			if(!file.isEmpty()){
 				count++;
-				if(file.getBytes()){
-					
-				}
+				
 				String filename = fileNameBuilder();
 				File f = new File(dir,filename);
 				f.deleteOnExit();

@@ -32,6 +32,7 @@
           <li><a href="#">订单统计</a></li>
         </ul>
       </li>
+      <li><a href="javascript:f.unlogin()">退出</a></li>
     </ul>
 <div style="position:fixed;bottom:0px;left:0px;width:100%;z-index:99999" class="text-center" id="hhead_errorAlert"></div>
 </div>

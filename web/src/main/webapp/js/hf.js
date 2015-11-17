@@ -25,4 +25,13 @@
 	f.alertError = function(message){
 		$("#hhead_errorAlert").f_alertError(message);
 	}
+	f.unlogin = function(){
+		$.getJSON(f.dynUrl+"/login/unlogin.htm",function(d){
+			if(d.success){
+				window.location.href = window.f.staUrl + "/page/login/hlogin.htm";
+			}else{
+				f.alertError(d.errMsg);
+			}
+		})
+	}
 })(jQuery);
