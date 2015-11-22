@@ -17,4 +17,6 @@ public interface IMerchant {
 	public Pager<List<Map<String,Object>>> selectMerchants(Long id,String name,int page, int rows);
 	
 	public void insertOrUpdateMerchant(Merchant merchant);
+	
+	public List<Map<String,Object>> selectMerchantsCombobox(String q);
 }

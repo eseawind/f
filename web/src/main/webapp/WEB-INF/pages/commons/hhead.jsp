@@ -27,7 +27,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="#">订单查询</a></li>
+          <li><a href="${staUrl }/page/orders/hlist.htm">订单查询</a></li>
           <li role="separator" class="divider"></li>
           <li><a href="#">订单统计</a></li>
         </ul>

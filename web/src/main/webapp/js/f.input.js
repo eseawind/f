@@ -223,8 +223,8 @@
 			config.target.after(config.body);
 			dataBuilder(config);
 		}
-		function dataBuilder(config){
-			if(config.url){
+		function dataBuilder(config,local){
+			if(config.url&&!local){
 				var param = {};
 				config.before.call(null,param);
 				param[config.queryField] = config.target.val();
@@ -362,6 +362,7 @@
 					if(e.which == 32&&config.url){
 						var query = $.trim(config.target.val());
 						config.target.val(query);
+						dataBuilder(config);
 					}else{
 						var key = config.target.val();
 						if(key == ''){
@@ -375,8 +376,8 @@
 							});
 							config.datas = arr;
 						}
+						dataBuilder(config,true);
 					}
-					dataBuilder(config);
 				}};
 				config.target.keyup(event.fun);
 				config.events.push(event);
@@ -1166,6 +1167,9 @@
 				case 'getDate':return getDate(config);
 				case 'isValid':return isValid(config);
 				case 'setValue':setValue(config,arguments[1]);break;
+				case 'reset':reset(config);break;
+				case 'clear':clear(config);break;
+				case 'destory':destory(config);break;
 				default:return undefined;
 				}
 			}

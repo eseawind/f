@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.f.commons.Constants;
@@ -43,5 +44,12 @@ public class MerchantController {
 	public ResBo<?> addOrUpdMerchant(@ModelAttribute Merchant merchant) {
 		merchantSer.insertOrUpdateMerchant(merchant);
 		return new ResBo<Object>();
+	}
+	
+	@Channel(Constants.H)
+	@RequestMapping("hcombobox.htm")
+	@ResponseBody
+	public ResBo<?> selMerchantCombobox(@RequestParam(value="q",required=false)String q){
+		return new ResBo<List<Map<String,Object>>>(merchantSer.selectMerchantsCombobox(q));
 	}
 }

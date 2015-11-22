@@ -45,4 +45,9 @@ public class MerchantSer implements IMerchant{
 		}
 	}
 
+	@Override
+	public List<Map<String, Object>> selectMerchantsCombobox(String q) {
+		return merchantExt.combobox(q);
+	}
+
 }

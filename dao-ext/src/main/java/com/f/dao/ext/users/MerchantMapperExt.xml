@@ -28,4 +28,14 @@
 	</where>
 </select>
 
+<select id="combobox" parameterType="string" resultType="map">
+	select id,name from merchant
+	<where> 
+		<if test="value != null">
+			and name like concat('%',#{value,jdbcType=VARCHAR},'%')
+		</if>
+	</where>
+	limit 0,100
+</select>
+
 </mapper>
