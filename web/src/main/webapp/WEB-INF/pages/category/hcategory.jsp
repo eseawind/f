@@ -97,7 +97,7 @@ $(function(){
 					$.each(resData.result,function(i,d){
 						var node = {};
 						node.id = d.id;
-						node.pId = d.fid;
+						node.fid = d.fid;
 						node.code = d.code;
 						node.name = d.name+":"+d.code+":"+(d.isUse == 0?"隐藏":"启用");
 						node.relName = d.name;

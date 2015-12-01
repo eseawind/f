@@ -14,11 +14,12 @@
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          	分类
+          	区域和分类
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
           <li><a href="${staUrl }/page/category/hcategory.htm">分类维护</a></li>
+          <li><a href="${staUrl }/page/area/area.htm">区域维护</a></li>
         </ul>
       </li>
       <li class="dropdown">
