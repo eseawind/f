@@ -131,4 +131,17 @@ public class OrdersSer implements IOrders{
 		return oext.excelOrders(merchantId, isPaid, state, status, sdate, edate);
 	}
 
+	@Override
+	public Pager<List<Map<String, Object>>> selectHOrders(Long userId,
+			Long merchantId, String orderNum, Integer isPaid, Integer state,
+			Integer status, Date sdate, Date edate, Integer page, Integer rows) {
+		Integer start = null;
+		if(page != null && rows != null){
+			start = (page-1)*rows;
+		}
+		List<Map<String,Object>> list = oext.selectHOrders(userId, merchantId, orderNum, isPaid, state, status, sdate, edate, start, rows);
+		long count = oext.countOrders(userId, merchantId, orderNum, isPaid, state, status, sdate, edate);
+		return new Pager<List<Map<String,Object>>>(list, count);
+	}
+
 }

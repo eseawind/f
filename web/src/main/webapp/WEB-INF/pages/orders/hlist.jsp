@@ -39,27 +39,44 @@ $(function(){
 		},{
 			field:"orderNum",title:'订单号',showTip:true
 		},{
-			field:"userName",title:'订单号',showTip:true
+			field:"username",title:'用户名',showTip:true
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"state",title:'订单状态',showTip:true,formatter:function(v){
+				switch(parseInt(v)){
+				case 1:return "正常";
+				case 2:return "取消";
+				case 3:return "异常";
+				}
+			}
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"status",title:'订单处理状态',showTip:true,formatter:function(v){
+				switch(parseInt(v)){
+				case 1:return "未确认";
+				case 2:return "已确认";
+				case 3:return "处理中";
+				case 4:return "已发货";
+				case 5:return "确认收货";
+				case 6:return "退货中";
+				case 7:return "已退货";
+				}
+			}
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"orderPrice",title:'订单金额',showTip:true
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"paidPrice",title:'已付金额',showTip:true
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"payPrice",title:'应付金额',showTip:true
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"isPaid",title:'付款',showTip:true,formatter:function(v){
+				switch(parseInt(v)){
+				case 1:return "未付款";
+				case 2:return "已付款";
+				}
+			}
 		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"createtime",title:'下单时间',showTip:true
 		},{
-			field:"orderNum",title:'订单号',showTip:true
-		},{
-			field:"orderNum",title:'订单号',showTip:true
-		},{
-			field:"orderNum",title:'订单号',showTip:true
+			field:"payTime",title:'付款时间',showTip:true
 		}],
 		rownumber:true,
 		filter:function(d){
@@ -74,6 +91,10 @@ $(function(){
 			$.extend(param,$("#query").f_serialized());
 		},
 		pagination:true,
+		url:f.dynUrl+"/orders/hlist.htm"
+	});
+	$("#queryBtn").click(function(){
+		dg.f_dg("load");
 	});
 })
 </script>

@@ -39,7 +39,7 @@
 
 <select id="selectOrders" parameterType="map" resultType="map">
 	select o.id, o.orderNum, o.state, o.status, o.orderPrice, o.paidPrice, o.payPrice, o.productPrice, o.discountPrice, 
-    o.balancePrice, o.isPaid, o.userId, o.createtime, o.merchantId, o.provinceId, o.cityId, o.areaId, 
+    o.balancePrice, o.isPaid, o.userId, o.createtime, o.merchantId, o.provinceId, o.cityId, o.areaId, o.payTime,
     o.provinceName, o.cityName, o.areaName, o.remark, o.consignee, o.mobile, op.code as paycode, op.name as payname
 	from orders o left join opaytype op on o.id = op.orderId
 	<where>
@@ -69,6 +69,47 @@
 	</where>
 	order by o.id desc
 	limit #{start,jdbcType=INTEGER}, #{rows,jdbcType=INTEGER}
+</select>
+
+<select id="selectHOrders" parameterType="map" resultType="map">
+	select o.id, o.orderNum, o.state, o.status, o.orderPrice, o.paidPrice, o.payPrice, o.productPrice, o.discountPrice, 
+    o.balancePrice, o.isPaid, o.userId, o.createtime, o.merchantId, o.provinceId, o.cityId, o.areaId, o.payTime,
+    o.provinceName, o.cityName, o.areaName, o.remark, o.consignee, o.mobile, op.code as paycode, op.name as payname,
+    m.name as merchantName, u.username
+	from orders o left join opaytype op on o.id = op.orderId
+	left join merchant m on o.merchantId = m.id
+	left join users u on o.userId = u.id
+	<where>
+		<if test="orderNum != null">
+			and o.orderNum = #{orderNum,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+			and o.userId = #{userId,jdbcType=BIGINT}
+		</if>
+		<if test="merchantId != null">
+			and o.merchantId = #{merchantId,jdbcType=BIGINT}
+		</if>
+		<if test="isPaid != null">
+			and o.isPaid = #{isPaid,jdbcType=INTEGER}
+		</if>
+		<if test="state != null">
+			and o.state = #{state,jdbcType=INTEGER}
+		</if>
+		<if test="status != null">
+			and o.status = #{status,jdbcType=INTEGER}
+		</if>
+		<if test="sdate != null">
+			<if test="edate != null">
+				and o.createtime between #{sdate,jdbcType=TIMESTAMP} and #{edate,jdbcType=TIMESTAMP}
+			</if>
+		</if>
+	</where>
+	order by o.id desc
+	<if test="start != null">
+		<if test="rows != null">
+			limit #{start,jdbcType=INTEGER}, #{rows,jdbcType=INTEGER}
+		</if>
+	</if>
 </select>
 
 <select id="countOrders" parameterType="map" resultType="long">

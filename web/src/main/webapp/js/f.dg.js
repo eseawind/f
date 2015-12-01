@@ -3,13 +3,13 @@
  * jquery 1.11
  */
 (function($){
-	function wrapContent(value,column){
+	function wrapContent(value,column,isHead){
 		var content = $('<div style="white-space:nowrap;overflow:hidden;text-overflow:clip;padding-right:5px"></div>');
-		if(column.showTip){
+		if(column.showTip&&!isHead){
 			content.popover({
 				placement: "auto top",
 				trigger: "hover",
-				content: value
+				content: value + ""
 			});
 		}
 		content.html(value);
@@ -40,46 +40,42 @@
 		}
 		$.each(config.columns,function(i,column){
 			var td = $('<td></td>');
-			var span = $('<span style="cursor:e-resize;float:left">&nbsp;</span>');
-			var state = false;
+			td.css({'-moz-user-select': 'none', '-khtml-user-select': 'none', 'user-select': 'none'});
+			var span = $('<div style="cursor:e-resize;display:table-cell">&nbsp;</div>');
 			var x = 0;
+			var pageX = 0;
 			span.mousedown(function(e){
 				x = e.pageX;
-				state = true;
-			});
-			thead.mouseup(function(){
-				state = false;
-			});
-			thead.mouseleave(function(){
-				state = false;
-			});
-			thead.mousemove(function(e){
-				if(state){
-					var width = td.width();
-					var range = e.pageX-x;
-					x = e.pageX;
-					if(range < width - 20){
-						td.width(width - range);
-					}
+				function mousemove(e){
+					pageX = e.pageX;
 				}
+				$(document).mousemove(mousemove);
+				$(document).one('mouseup',function(){
+					$(this).unbind('mousemove',mousemove);
+					var range = pageX - x;
+					td.width(td.width() + range);
+				});
 			});
 			td.append(span);
-			var content = wrapContent(column.title,column);
-			td.append(content);
+			var content = wrapContent(column.title,column,true);
+			content.css('display','table-cell');
+			content.css('width','100%');
+			td.prepend(content);
 			if(column.sort){
 				content.css('cursor','pointer');
 				content.click(function(){
 					if(content.attr('sort') == 'asc'){
 						content.attr('sort','desc');
 						content.children('i').remove();
-						content.append('<i class="icon-sort-down" style="padding-left:10px"></i>');
+						content.prepend('<i class="icon-sort-down" style="padding-right:10px"></i>');
 						config.defParam.sort = 'desc';
 					}else{
 						content.attr('sort','asc');
 						content.children('i').remove();
-						content.append('<i class="icon-sort-up" style="padding-left:10px"></i>');
+						content.prepend('<i class="icon-sort-up" style="padding-right:10px"></i>');
 						config.defParam.sort = 'asc';
 					}
+					config.defParam.sort = column.field;
 					dataBuilder(config);
 				});
 			}

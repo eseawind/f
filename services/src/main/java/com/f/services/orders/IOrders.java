@@ -24,6 +24,11 @@ public interface IOrders {
 	public Pager<List<Map<String,Object>>> selectOrders(Long userId,Long merchantId,String orderNum,Integer isPaid,Integer state,Integer status,Date sdate,Date edate, int page, int rows);
 	
 	/**
+	 * 后台查询订单
+	 * */
+	public Pager<List<Map<String,Object>>> selectHOrders(Long userId,Long merchantId,String orderNum,Integer isPaid,Integer state,Integer status,Date sdate,Date edate, Integer page, Integer rows);
+	
+	/**
 	 * 根据订单号查询详情
 	 * */
 	public Map<String,Object> selectODetail(long orderId,Long userId,Long merchantId);

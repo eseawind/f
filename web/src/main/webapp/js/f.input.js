@@ -498,13 +498,8 @@
 				config.datas.unshift(emptyObj);
 			}
 			$.each(config.datas,function(i,d){
-				var options = $('<option f-id="'+i+'" value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
-				options.click(function(e){
-					config.select.call(config.target,d);
-					e.preventDefault();
-					e.stopPropagation();
-				});
-				config.target.append(options);
+				var option = $('<option f-id="'+i+'" value="'+d[config.valueField]+'">'+d[config.textField]+'</option>');
+				config.target.append(option);
 			});
 			config.renderAfter.call(config.target,config.datas);
 		}
@@ -579,6 +574,11 @@
 					config.blur.call(config.target);
 				}};
 				config.target.blur(event.fun);
+				config.events.push(event);
+				event = {type:'change',fun:function(){
+					config.select.call(config.target,getSelectedData(config));
+				}};
+				config.target.change(event.fun);
 				config.events.push(event);
 				if(config.url){
 					var param = {};

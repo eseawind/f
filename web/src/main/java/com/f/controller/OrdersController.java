@@ -281,4 +281,23 @@ public class OrdersController {
 		res.setHeader("Content-Disposition", "attachment; filename=excel.xlsx");
 		wb.write(res.getOutputStream());
 	}
+	
+	@Channel(Constants.H)
+	@RequestMapping("hlist.htm")
+	@ResponseBody
+	public ResBo<?> hlist(HttpServletRequest req){
+		ReqBo reqBo = new ReqBo(req);
+		int rows = reqBo.getParamInt("rows");
+		if(rows > 50){
+			return new ResBo<Pager<List<Map<String,Object>>>>(143L);
+		}
+		return new ResBo<Pager<List<Map<String, Object>>>>(
+				orderSer.selectHOrders(null, reqBo.getParamLong("merchantId"), reqBo.getParamStr("orderNum"),
+						reqBo.getParamInt("isPaid"),
+						reqBo.getParamInt("state"),
+						reqBo.getParamInt("status"),
+						reqBo.getParamDate("sdate"),
+						reqBo.getParamDate("edate"), reqBo.getParamInt("page"),
+						rows));
+	}
 }

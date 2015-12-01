@@ -27,6 +27,14 @@ public interface OrdersMapperExt {
 			@Param("status") Integer status, @Param("sdate") Date sdate,
 			@Param("edate") Date edate, @Param("start") int start,
 			@Param("rows") int rows);
+	
+	public List<Map<String, Object>> selectHOrders(@Param("userId") Long userId,
+			@Param("merchantId") Long merchantId,
+			@Param("orderNum") String orderNum,
+			@Param("isPaid") Integer isPaid, @Param("state") Integer state,
+			@Param("status") Integer status, @Param("sdate") Date sdate,
+			@Param("edate") Date edate, @Param("start") Integer start,
+			@Param("rows") Integer rows);
 
 	public long countOrders(@Param("userId") Long userId,
 			@Param("merchantId") Long merchantId,
