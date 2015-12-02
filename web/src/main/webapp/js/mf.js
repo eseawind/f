@@ -167,7 +167,7 @@
 			$.each(arr,function(i,obj){
 				if(obj instanceof $){
 					if(i == 0){
-						imgContainer.append($('<div class="active item" f-id="'+i+'">').append(obj));
+						imgContainer.append($('<div align="center" class="active item" f-id="'+i+'">').append(obj));
 					}else{
 						imgContainer.append($('<div class="item" f-id="'+i+'">').append(obj));
 					}
