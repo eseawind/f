@@ -85,6 +85,9 @@
 			</ul>
 		</div>
 	</div>
+	{{if order.status == 5&&order.state == 1}}
+	<button class="btn btn-block btn-danger" onclick="refund({{= order.id}})">申请退换货</button>
+	{{/if}}
 </script>
 <script type="text/javascript">
 $(function(){
@@ -108,16 +111,33 @@ $(function(){
 				f.dialogAlert(d.errMsg);
 			}
 		});
-	}
+	};
 	cancelOrder = function(orderId){
-		$.getJSON(f.dynUrl+"/orders/cancel.htm",{orderId:orderId},function(d){
-			if(d.success){
-				window.location.reload();
-			}else{
-				f.dialogAlert(d.errMsg);
+		f.dialogConfirm("确定要取消订单？", function(r){
+			if(r){
+				$.getJSON(f.dynUrl+"/orders/cancel.htm",{orderId:orderId},function(d){
+					if(d.success){
+						window.location.reload();
+					}else{
+						f.dialogAlert(d.errMsg);
+					}
+				});
 			}
 		});
-	}
+	};
+	refund = function(orderId){
+		f.dialogConfirm("提交申请后，客服会即时联系您", function(r){
+			if(r){
+				$.getJSON(f.dynUrl+"/orders/mrefund.htm",{orderId:orderId},function(d){
+					if(d.success){
+						window.location.reload();
+					}else{
+						f.dialogAlert(d.errMsg);
+					}
+				});
+			}
+		});
+	};
 })
 </script>
 </body>

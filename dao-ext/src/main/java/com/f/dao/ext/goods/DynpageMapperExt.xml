@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f.dao.ext.goods.DynpageMapperExt" >
+  <select id="selectDcgoods" parameterType="map" resultType="long">
+  	select dcg.cgid from dynpage d left join dcgoods dcg on d.id = dcg.pageId
+  	where d.isDel = 1 and dcg.isDel = 1
+  	<if test="merchantId !=null ">
+  		and d.merchantId = #{merchantId,jdbcType=BIGINT}
+  	</if>
+	<if test="pageId != null">
+		and d.id = #{pageId,jdbcType=BIGINT}
+	</if>
+	<if test="type != null">
+		and d.type = #{type,jdbcType=INTEGER}
+	</if>
+  	order by dcg.sort
+  	limit #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectDynpage" parameterType="map" resultType="map">
+  	select g.gname,cg.cgname,cg.number,cg.state,cg.sku,dcg.sort
+  	from dynpage d 
+  	left join dcgoods dcg on d.id = dcg.pageId 
+  	left join cgoods cg on dcg.cgid = cg.id
+  	left join goods g on g.id = cg.gid
+  	where d.isDel = 1 and dcg.isDel = 1
+  	<if test="merchantId !=null ">
+  		and d.merchantId = #{merchantId,jdbcType=BIGINT}
+  	</if>
+	<if test="pageId != null">
+		and d.id = #{pageId,jdbcType=BIGINT}
+	</if>
+	<if test="type != null">
+		and d.type = #{type,jdbcType=INTEGER}
+	</if>
+  	order by dcg.sort
+  	limit #{start,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+  </select>
+  
+  <select id="countDynpage" parameterType="map" resultType="long">
+  	select count(1) from dynpage d left join dcgoods dcg on d.id = dcg.pageId
+  	where d.isDel = 1 and dcg.isDel = 1
+  	<if test="merchantId !=null ">
+  		and d.merchantId = #{merchantId,jdbcType=BIGINT}
+  	</if>
+	<if test="pageId != null">
+		and d.id = #{pageId,jdbcType=BIGINT}
+	</if>
+	<if test="type != null">
+		and d.type = #{type,jdbcType=INTEGER}
+	</if>
+  </select>
+  
+  <insert id="insertDynpage" parameterType="com.f.dto.goods.Dynpage" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+  	insert into dynpage (name, type, merchantId, createtime)
+    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{merchantId,jdbcType=BIGINT}, now())
+  </insert>
+  
+  <insert id="insertDcgoods" parameterType="list">
+  	insert into dcgoods (pageId, cgid, sort)
+    values 
+    <foreach collection="list" item="dcg" separator=",">
+    	(#{dcg.pageId,jdbcType=BIGINT}, #{dcg.cgid,jdbcType=BIGINT}, #{dcg.sort,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+</mapper>

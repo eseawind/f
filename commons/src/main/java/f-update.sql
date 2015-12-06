@@ -81,3 +81,22 @@ ALTER TABLE odetail DROP COLUMN sendTime;
 
 /**2015113 已执行*/
 ALTER TABLE orders ADD COLUMN payTime DATETIME NULL COMMENT '付款时间' AFTER payPrice;
+
+CREATE TABLE `dynpage` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(254) DEFAULT NULL COMMENT '活动名称',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '活动类型',
+  `merchantId` bigint(20) NOT NULL COMMENT '商家',
+  `isDel` int(11) NOT NULL DEFAULT '1' COMMENT '1正常127删除',
+  `createtime` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `dcgoods` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `cgid` bigint(20) NOT NULL COMMENT '商品规格id',
+  `isDel` int(11) NOT NULL DEFAULT '1' COMMENT '1正常127删除',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

@@ -118,6 +118,9 @@
 		{{if status < 4&&state == 1}}
 		<button class="btn btn-xs btn-primary" onclick="outstock({{= id}})">出库</button><br/>
 		{{/if}}
+		{{if status == 6&&state == 1}}
+		<button class="btn btn-xs btn-primary" onclick="refundComplete({{= id}})">退换货</button><br/>
+		{{/if}}
 	</td>
 	{{/if}}
 </tr>
@@ -279,6 +282,17 @@ $(function(){
 		}
 		qs = qs + "sdate=" + sdate + "&edate=" + edate;
 		window.open(encodeURI(f.dynUrl+"/orders/bexcel.htm?"+qs));
+	};
+	window.refundComplete = function(orderId){
+		container.startMask();
+		$.getJSON(f.dynUrl+"/orders/brefundComplete.htm",{orderId:orderId},function(d){
+			container.closeMask();
+			if(d.success){
+				reLoadData();
+			}else{
+				f.alertError(d.errMsg);
+			}
+		});
 	}
 });
 </script>

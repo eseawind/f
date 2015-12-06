@@ -8,9 +8,9 @@
 <body class="container">
 <%@include file="../commons/mhead.jsp" %>
 <ul class="nav nav-tabs row text-center" id="tabs">
-  <li role="presentation" class="active col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(1)">待付款</a></li>
-  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(2)">待收货</a></li>
-  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(3)">全部</a></li>
+  <li role="presentation" class="active col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(3)">全部</a></li>
+  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(1)">待付款</a></li>
+  <li role="presentation" class="col-md-4 col-sm-4 col-xs-4"><a href="javascript:void(0)" onclick="orderFun(2)">已发货</a></li>
 </ul>
 <hr/>
 <div id="container">
@@ -98,7 +98,7 @@ $(function(){
 		param.rows = rows;
 		switch(curType){
 		case 1:param.isPaid = 1;param.state = 1;break;
-		case 2:param.isPaid = 2;param.state = 1;break;
+		case 2:param.isPaid = 2;param.state = 1;param.status = 4;break;
 		}		
 		$.getJSON(f.dynUrl+"/orders/mlist.htm", param, function(d){
 			if(d.success){
@@ -117,7 +117,7 @@ $(function(){
 			}
 		});
 	}
-	orderFun(1);
+	orderFun(3);
 })
 </script>
 </body>

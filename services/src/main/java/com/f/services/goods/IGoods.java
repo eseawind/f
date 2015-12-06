@@ -62,4 +62,5 @@ public interface IGoods {
 	 * 收藏列表
 	 * */
 	public Pager<List<Map<String,Object>>> selectCollects(long userId,int page,int rows);
+	
 }

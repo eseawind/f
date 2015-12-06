@@ -11,7 +11,7 @@ public class MybatisGeneratorBuilder {
 	public static void main(String[] args) throws Exception{
 		List<String> warnings = new ArrayList<String>();  
 		boolean overwrite = true;  
-	    File configFile = new File("E:\\f-workspace\\parent\\dao\\src\\main\\java\\generatorConfig.xml");  
+	    File configFile = new File("D:\\f-workspace\\f\\dao\\src\\main\\java\\generatorConfig.xml");  
 	    ConfigurationParser cp = new ConfigurationParser(warnings);  
 	    org.mybatis.generator.config.Configuration config = cp.parseConfiguration(configFile);  
 	    DefaultShellCallback callback = new DefaultShellCallback(overwrite);  

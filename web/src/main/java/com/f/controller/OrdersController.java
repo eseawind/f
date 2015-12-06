@@ -300,4 +300,22 @@ public class OrdersController {
 						reqBo.getParamDate("edate"), reqBo.getParamInt("page"),
 						rows));
 	}
+	
+	@Channel(Constants.M)
+	@RequestMapping("mrefund.htm")
+	@ResponseBody
+	public ResBo<?> refund(@RequestParam("orderId")long orderId){
+		User user = (User) session.get(Constants.USERINFO);
+		orderSer.updateOrders(orderId, user.getId(), null, null, EOrdersStatus.Status_6.getCode(), null);
+		return new ResBo<Object>();
+	}
+	
+	@Channel(Constants.B)
+	@RequestMapping("brefundComplete.htm")
+	@ResponseBody
+	public ResBo<?> refundComplete(@RequestParam("orderId")long orderId){
+		User user = (User) session.get(Constants.USERINFO);
+		orderSer.updateOrders(orderId, null, user.getId(), null, EOrdersStatus.Status_7.getCode(), null);
+		return new ResBo<Object>();
+	}
 }
