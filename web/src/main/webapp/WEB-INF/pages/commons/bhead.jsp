@@ -31,6 +31,7 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
+          <li><a href="${staUrl }/page/dynpage/bdynpage.htm">活动页</a></li>
           <li><a href="#">优惠券</a></li>
         </ul>
       </li>

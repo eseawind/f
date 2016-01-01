@@ -7,6 +7,30 @@
 </head>
 <body class="container">
 <%@include file="../commons/bhead.jsp" %>
-
+<button class="btn btn-success"><i class="icon-plus"></i>新增活动</button>
+<hr/>
+<div id="dg"></div>
+<script type="text/javascript">
+$(function(){
+	$("#dg").f_dg({
+		filter:function(d){
+			return {rows:d.result.entry,count:d.result.total};
+		},
+		url:f.dynUrl+"/dynpage/list.htm",
+		pagination:true,
+		columns:[{
+			field:"id",title:"ID"
+		},{
+			field:"name",title:"名称"
+		},{
+			field:"typeName",title:"类型名称"
+		},{
+			field:"createtime",title:"创建时间"
+		},{
+			field:"id",title:"操作"
+		}]
+	});
+})
+</script>
 </body>
 </html>

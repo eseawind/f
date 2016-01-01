@@ -51,12 +51,23 @@ public class ActivityController {
 	@Channel(Constants.B)
 	@RequestMapping("dynpage/list.htm")
 	@ResponseBody
-	public ResBo<?> list(HttpServletRequest req){
+	public ResBo<?> dynpage_list(HttpServletRequest req){
 		ReqBo reqBo = new ReqBo(req);
 		int rows = reqBo.getParamInt("rows", 50);
 		int page = reqBo.getParamInt("page",1);
 		User user = (User) session.get(Constants.USERINFO);
-		return new ResBo<Object>(dynSer.selectDynpage(user.getId(), reqBo.getParamLong("pageId"), reqBo.getParamInt("type"), page, rows));
+		return new ResBo<Object>(dynSer.selectDynpage(user.getId(), reqBo.getParamInt("type"), page, rows));
+	}
+	
+	@Channel(Constants.B)
+	@RequestMapping("dcgoods/list.htm")
+	@ResponseBody
+	public ResBo<?> dcgoods_list(HttpServletRequest req){
+		ReqBo reqBo = new ReqBo(req);
+		int rows = reqBo.getParamInt("rows", 50);
+		int page = reqBo.getParamInt("page",1);
+		User user = (User) session.get(Constants.USERINFO);
+		return new ResBo<Object>(dynSer.selectDcgoods(user.getId(),reqBo.getParamLong("pageId"), reqBo.getParamInt("type"), page, rows));
 	}
 	
 	@Channel(Constants.B)

@@ -10,11 +10,15 @@ import com.f.dto.goods.Dynpage;
 
 public interface DynpageMapperExt {
 
-	public List<Map<String,Object>> selectDynpage(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type,@Param("start")int start,@Param("rows")int rows);
+	public List<Map<String,Object>> selectDynpage(@Param("merchantId")Long merchantId,@Param("type")Integer type,@Param("start")int start,@Param("rows")int rows);
 	
-	public List<Long> selectDcgoods(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type,@Param("start")int start,@Param("rows")int rows);
+	public List<Map<String,Object>> selectDcgoods(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type,@Param("start")int start,@Param("rows")int rows);
 	
-	public long countDynpage(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type);
+	public List<Long> selectDcgoodsId(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type,@Param("start")int start,@Param("rows")int rows);
+	
+	public long countDcgoods(@Param("merchantId")Long merchantId,@Param("pageId")Long pageId,@Param("type")Integer type);
+	
+	public long countDynpage(@Param("merchantId")Long merchantId,@Param("type")Integer type);
 	
 	public int insertDynpage(Dynpage dynpage);
 	

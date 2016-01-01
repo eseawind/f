@@ -26,18 +26,17 @@ public class DynpageSer implements IDynpage{
 	private DcgoodsMapper dcgmapper;
 
 	@Override
-	public Pager<List<Map<String, Object>>> selectDynpage(Long merchantId,
-			Long pageId, Integer type, int page, int rows) {
-		List<Map<String,Object>> list = dynext.selectDynpage(merchantId, pageId, type, (page-1)*rows, rows);
-		long count = dynext.countDynpage(merchantId, pageId, type);
+	public Pager<List<Map<String, Object>>> selectDynpage(Long merchantId, Integer type, int page, int rows) {
+		List<Map<String,Object>> list = dynext.selectDynpage(merchantId, type, (page-1)*rows, rows);
+		long count = dynext.countDynpage(merchantId, type);
 		return new Pager<List<Map<String,Object>>>(list,count);
 	}
 
 	@Override
 	public Pager<List<Long>> selectDcgoods(Long merchantId, Long pageId,
 			Integer type, int page, int rows) {
-		List<Long> list = dynext.selectDcgoods(merchantId, pageId, type, (page-1)*rows, rows);
-		long count = dynext.countDynpage(merchantId, pageId, type);
+		List<Long> list = dynext.selectDcgoodsId(merchantId, pageId, type, (page-1)*rows, rows);
+		long count = dynext.countDcgoods(merchantId, pageId, type);
 		return new Pager<List<Long>>(list,count);
 	}
 

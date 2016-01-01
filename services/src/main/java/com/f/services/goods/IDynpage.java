@@ -10,7 +10,7 @@ import framework.web.Pager;
 
 public interface IDynpage {
 
-	public Pager<List<Map<String,Object>>> selectDynpage(Long merchantId,Long pageId,Integer type,int page,int rows);
+	public Pager<List<Map<String,Object>>> selectDynpage(Long merchantId,Integer type,int page,int rows);
 	
 	public Pager<List<Long>> selectDcgoods(Long merchantId,Long pageId,Integer type,int page,int rows);
 	

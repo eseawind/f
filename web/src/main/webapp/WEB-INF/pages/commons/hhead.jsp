@@ -20,6 +20,7 @@
         <ul class="dropdown-menu">
           <li><a href="${staUrl }/page/category/hcategory.htm">分类维护</a></li>
           <li><a href="${staUrl }/page/area/area.htm">区域维护</a></li>
+          <li><a href="${staUrl }/page/dict/dict.htm">字典维护</a></li>
         </ul>
       </li>
       <li class="dropdown">
