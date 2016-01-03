@@ -94,9 +94,17 @@ CREATE TABLE `dynpage` (
 
 CREATE TABLE `dcgoods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `pageId` bigint(20) NOT NULL COMMENT '动态页id',
   `cgid` bigint(20) NOT NULL COMMENT '商品规格id',
   `isDel` int(11) NOT NULL DEFAULT '1' COMMENT '1正常127删除',
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `dict` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(254) NOT NULL,
+  `fid` bigint(20) NOT NULL DEFAULT '0',
+  `isDel` int(11) NOT NULL DEFAULT '1' COMMENT '1正常127删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

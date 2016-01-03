@@ -264,7 +264,7 @@ $(function(){
 		},{
 			field:"cgname",title:"规格"
 		},{
-			field:"isDef",title:"是否默认规格",formatter(v){
+			field:"isDef",title:"是否默认规格",formatter:function(v){
 				switch(parseInt(v)){
 				case 1:return "是";
 				case 0:return "否";

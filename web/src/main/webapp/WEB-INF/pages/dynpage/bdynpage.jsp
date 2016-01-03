@@ -7,9 +7,13 @@
 </head>
 <body class="container">
 <%@include file="../commons/bhead.jsp" %>
-<button class="btn btn-success"><i class="icon-plus"></i>新增活动</button>
+<div id="dgContainer">
+<button class="btn btn-success" id="addBtn"><i class="icon-plus"></i>新增活动</button>
 <hr/>
 <div id="dg"></div>
+</div>
+<div id="addWin">
+</div>
 <script type="text/javascript">
 $(function(){
 	$("#dg").f_dg({
@@ -29,6 +33,12 @@ $(function(){
 		},{
 			field:"id",title:"操作"
 		}]
+	});
+	var dgCon = $("#dgContainer");
+	var addWin = $("#addWin");
+	$("#addBtn").click(function(){
+		dgCon.slideUp();
+		addWin.slideDown();
 	});
 })
 </script>
